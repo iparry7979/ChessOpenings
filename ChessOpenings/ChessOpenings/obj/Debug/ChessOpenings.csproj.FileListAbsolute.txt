@@ -1,0 +1,6 @@
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings\ChessOpenings\bin\Debug\ChessOpenings.dll
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings\ChessOpenings\bin\Debug\ChessOpenings.pdb
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings\ChessOpenings\obj\Debug\ChessOpenings.csproj.CoreCompileInputs.cache
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings\ChessOpenings\obj\Debug\ChessOpenings.dll
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings\ChessOpenings\obj\Debug\ChessOpenings.pdb
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings\ChessOpenings\obj\Debug\ChessOpenings.csprojResolveAssemblyReference.cache
