@@ -33,19 +33,23 @@ namespace ChessOpenings.Droid
             LinearLayout boardLayout = FindViewById<LinearLayout>(Resource.Id.boardLayout);
             TableLayout boardTable = FindViewById<TableLayout>(Resource.Id.board);
 
-            TableRow row1 = new TableRow(this);
-            TextView tv = new TextView(this);
-            tv.Text = "";
+            BuildBoard(boardTable);
 		}
 
-        private void BuildBoard()
+        private void BuildBoard(TableLayout boardTable)
         {
             //Builds the Table Layout from the Board object
 
             TableRow row = new TableRow(this);
-            TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
+            TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent);
 
             TextView tv = new TextView(this);
+            ViewGroup.LayoutParams tvParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
+            tv.LayoutParameters = tvParams;
+            tv.Text = "Table Cell";
+
+            row.AddView(tv);
+            boardTable.AddView(row);
         }
 	}
 }
