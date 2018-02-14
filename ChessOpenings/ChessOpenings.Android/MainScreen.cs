@@ -32,21 +32,14 @@ namespace ChessOpenings.Droid
             // Get our button from the layout resource,
             // and attach an event to it
             LinearLayout boardLayout = FindViewById<LinearLayout>(Resource.Id.boardLayout);
-            TableLayout boardTable = FindViewById<TableLayout>(Resource.Id.board);
+            //TableLayout boardTable = FindViewById<TableLayout>(Resource.Id.board);
 
-            TextView tv = new TextView(this);
-            ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent);
-            tv.LayoutParameters = lp;
-            tv.Text = "Code TV";
-            tv.SetTextColor(Color.Black);
-            tv.SetBackgroundColor(Color.White);
-            boardLayout.AddView(tv);
+            TableLayout boardTable = new TableLayout(this);
+            boardTable.LayoutParameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.WrapContent);
 
             BuildBoard(boardTable);
 
-            
-
-
+            boardLayout.AddView(boardTable);
         }
 
         private void BuildBoard(TableLayout boardTable)
@@ -66,21 +59,6 @@ namespace ChessOpenings.Droid
                 }
                 boardTable.AddView(currentRow);
             }
-
-            /*TableRow tr = new TableRow(this);
-            TableRow.LayoutParams tlp = new TableRow.LayoutParams(TableRow.LayoutParams.WrapContent, TableRow.LayoutParams.WrapContent);
-            tr.LayoutParameters = tlp;
-
-            TextView tvr = new TextView(this);
-            ViewGroup.LayoutParams lpr = new TableRow.LayoutParams(TableRow.LayoutParams.WrapContent, TableRow.LayoutParams.WrapContent);
-            tvr.LayoutParameters = lpr;
-            tvr.Text = "Code TR";
-            tvr.SetTextColor(Color.Black);
-            tvr.SetBackgroundColor(Color.White);
-
-            tr.AddView(tvr);
-
-            boardTable.AddView(tr);*/
         }
 
         public View BuildSquare(Square squareModel)
@@ -98,7 +76,7 @@ namespace ChessOpenings.Droid
             else
             {
                 rtn.Text = "EMP";
-                rtn.SetTextColor(Color.Gray);
+                rtn.SetTextColor(squareColor);
             }
             return rtn;
         }
