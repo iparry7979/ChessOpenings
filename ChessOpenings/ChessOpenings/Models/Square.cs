@@ -10,10 +10,10 @@ namespace ChessOpenings.Models
 {
     public class Square
     {
-        Colour Colour { get; set; }
-        Piece Piece { get; set; }
-        char File { get; set; }
-        byte Rank { get; set; }
+        public Colour Colour { get; set; }
+        public Piece Piece { get; set; }
+        public char File { get; set; }
+        public byte Rank { get; set; }
 
         public Square(Piece p, Colour c)
         {

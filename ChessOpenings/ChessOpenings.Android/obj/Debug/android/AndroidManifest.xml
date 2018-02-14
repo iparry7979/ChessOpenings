@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.ChessOpenings" android:installLocation="auto">
-  <!--suppress UsesMinSdkAttributes-->
-  <uses-sdk android:minSdkVersion="21" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.ChessOpenings">
+  <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="4" />
   <uses-permission android:name="android.permission.INTERNET" />
   <application android:label="ChessOpenings.Android" android:name="android.app.Application" android:allowBackup="true" android:icon="@drawable/icon" android:debuggable="true">
     <activity android:icon="@drawable/icon" android:label="ChessOpenings.Android" android:name="md5b2087b8258f3e5f0c671b286c6848f3b.MainScreen">

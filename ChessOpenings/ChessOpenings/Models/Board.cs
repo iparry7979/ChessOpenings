@@ -10,7 +10,7 @@ namespace ChessOpenings.Models
 {
     public class Board
     {
-        Square[,] squaresArray { get; }
+        public Square[,] squaresArray { get; }
 
         public Board()
         {

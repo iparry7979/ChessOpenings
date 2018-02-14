@@ -16,5 +16,10 @@ namespace ChessOpenings.Pieces
         {
             return true;
         }
+
+        public override string ToString()
+        {
+            return "Rook";
+        }
     }
 }

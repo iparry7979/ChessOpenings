@@ -10,7 +10,7 @@ namespace ChessOpenings.Pieces
 {
     public abstract class Piece
     {
-        Colour colour { get; set; }
+        public Colour colour { get; set; }
 
         public Piece(Colour c)
         {
@@ -18,6 +18,8 @@ namespace ChessOpenings.Pieces
         }
 
         public abstract bool ValidateMove(Square start, Square end, Board board);
+
+        public abstract override string ToString();
 
         //protected abstract Square[] DeterminePath(Square start, Square end);
     }
