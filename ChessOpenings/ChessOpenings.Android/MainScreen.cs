@@ -9,6 +9,7 @@ using Android.OS;
 using ChessOpenings.Models;
 using ChessOpenings.ViewInterfaces;
 using Android.Graphics;
+using ChessOpenings.Droid.Views;
 
 namespace ChessOpenings.Droid
 {
@@ -34,7 +35,7 @@ namespace ChessOpenings.Droid
             LinearLayout boardLayout = FindViewById<LinearLayout>(Resource.Id.boardLayout);
             //TableLayout boardTable = FindViewById<TableLayout>(Resource.Id.board);
 
-            TableLayout boardTable = new TableLayout(this);
+            SquareTableLayout boardTable = new SquareTableLayout(this);
             boardTable.LayoutParameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.WrapContent);
 
             BuildBoard(boardTable);
@@ -48,7 +49,7 @@ namespace ChessOpenings.Droid
 
             for (int i = 0; i < Board.squaresArray.GetLength(0); i++)
             {
-                TableRow currentRow = new TableRow(this);
+                BoardTableRow currentRow = new BoardTableRow(this);
                 TableRow.LayoutParams rowParams = new TableRow.LayoutParams(TableRow.LayoutParams.WrapContent, TableRow.LayoutParams.WrapContent);
                 currentRow.LayoutParameters = rowParams;
 
@@ -63,7 +64,7 @@ namespace ChessOpenings.Droid
 
         public View BuildSquare(Square squareModel)
         {
-            TextView rtn = new TextView(this);
+            BoardSquareView rtn = new BoardSquareView(this);
             rtn.LayoutParameters = new TableRow.LayoutParams(TableRow.LayoutParams.WrapContent, TableRow.LayoutParams.WrapContent);
             Color squareColor = squareModel.Colour == Enums.Colour.White ? Color.White : Color.Black;
             rtn.SetBackgroundColor(squareColor);

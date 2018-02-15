@@ -19,7 +19,7 @@ namespace ChessOpenings.Pieces
 
         public override string ToString()
         {
-            return "Knight";
+            return "N";
         }
     }
 }

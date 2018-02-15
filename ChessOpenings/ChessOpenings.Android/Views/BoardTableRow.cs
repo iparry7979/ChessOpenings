@@ -12,21 +12,18 @@ using Android.Widget;
 
 namespace ChessOpenings.Droid.Views
 {
-    class SquareTableLayout : TableLayout
+    public class BoardTableRow : TableRow
     {
-        public SquareTableLayout(Context context) : base(context)
-        {
-
-        }
+        public BoardTableRow(Context context) : base(context) { }
 
         protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
         {
             //base.OnMeasure(widthMeasureSpec, heightMeasureSpec);
             int parentWidth = MeasureSpec.GetSize(widthMeasureSpec);
             int parentHeight = MeasureSpec.GetSize(heightMeasureSpec);
-            int maxSquareWidth = Math.Min(parentWidth, parentHeight);
-            this.SetMeasuredDimension(maxSquareWidth, maxSquareWidth);
-            this.LayoutParameters = new LinearLayout.LayoutParams(maxSquareWidth, maxSquareWidth);
+            int rowHeight = parentHeight / 8;
+            this.SetMeasuredDimension(parentWidth, rowHeight);
+            this.LayoutParameters = new TableLayout.LayoutParams(parentWidth, rowHeight);
             base.OnMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }
