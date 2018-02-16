@@ -5,6 +5,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -24,6 +25,7 @@ namespace ChessOpenings.Droid.Views
             int rowHeight = parentHeight / 8;
             this.SetMeasuredDimension(parentWidth, rowHeight);
             this.LayoutParameters = new TableLayout.LayoutParams(parentWidth, rowHeight);
+            this.SetBackgroundColor(Color.Blue);
             base.OnMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }

@@ -7,7 +7,9 @@
         android:id="@+id/boardLayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@android:color/holo_blue_bright"
+        android:gravity="center">
         <!--<TableLayout
             android:id="@+id/board"
             android:layout_width="match_parent"

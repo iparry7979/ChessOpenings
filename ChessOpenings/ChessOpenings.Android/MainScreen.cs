@@ -37,6 +37,7 @@ namespace ChessOpenings.Droid
 
             SquareTableLayout boardTable = new SquareTableLayout(this);
             boardTable.LayoutParameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.WrapContent);
+            boardTable.SetBackgroundColor(Color.Red); //Remove once layout complete
 
             BuildBoard(boardTable);
 
