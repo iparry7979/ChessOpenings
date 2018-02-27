@@ -15,18 +15,31 @@ namespace ChessOpenings.Droid.Views
 {
     public class BoardTableRow : TableRow
     {
+        public int measuredHeight;
+
         public BoardTableRow(Context context) : base(context) { }
 
         protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
         {
             //base.OnMeasure(widthMeasureSpec, heightMeasureSpec);
-            int parentWidth = MeasureSpec.GetSize(widthMeasureSpec);
+            /*int parentWidth = MeasureSpec.GetSize(widthMeasureSpec);
             int parentHeight = MeasureSpec.GetSize(heightMeasureSpec);
-            int rowHeight = parentHeight / 8;
+            SquareTableLayout parent = (SquareTableLayout)this.Parent;
+            int rowHeight = parent.MeasuredHeight / 8;
+            measuredHeight = rowHeight;
             this.SetMeasuredDimension(parentWidth, rowHeight);
             this.LayoutParameters = new TableLayout.LayoutParams(parentWidth, rowHeight);
-            this.SetBackgroundColor(Color.Blue);
+            this.SetBackgroundColor(Color.Blue);*/
             base.OnMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
+
+        protected override void OnDraw(Canvas canvas)
+        {
+            /*SquareTableLayout parent = (SquareTableLayout)this.Parent;
+            int h = parent.MeasuredHeight / 8;
+            this.SetMeasuredDimension(parent.MeasuredWidth, h); */
+            int h1 = this.Height;
+            base.OnDraw(canvas);
         }
     }
 }
