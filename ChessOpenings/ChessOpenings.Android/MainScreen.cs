@@ -30,10 +30,7 @@ namespace ChessOpenings.Droid
 			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.Main);
 
-            // Get our button from the layout resource,
-            // and attach an event to it
             LinearLayout boardLayout = FindViewById<LinearLayout>(Resource.Id.boardLayout);
-            //TableLayout boardTable = FindViewById<TableLayout>(Resource.Id.board);
 
             SquareGridLayout boardTable = new SquareGridLayout(this);
             boardTable.LayoutParameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.WrapContent);
@@ -52,23 +49,17 @@ namespace ChessOpenings.Droid
 
             for (int i = 0; i < Board.squaresArray.GetLength(0); i++)
             {
-                //BoardTableRow currentRow = new BoardTableRow(this);
-                //TableRow.LayoutParams rowParams = new TableRow.LayoutParams(TableRow.LayoutParams.WrapContent, TableRow.LayoutParams.WrapContent);
-                //currentRow.LayoutParameters = rowParams;
-
                 for (int j = 0; j < Board.squaresArray.GetLength(1); j++)
                 {
                     View squareLayout = BuildSquare(Board.squaresArray[i, j]);
                     boardGrid.AddView(squareLayout);
                 }
-                //boardGrid.AddView(currentRow);
             }
         }
 
         public View BuildSquare(Square squareModel)
         {
             TextView rtn = new TextView(this);
-            //rtn.LayoutParameters = new TableRow.LayoutParams(TableRow.LayoutParams.WrapContent, TableRow.LayoutParams.WrapContent);
             Color squareColor = squareModel.Colour == Enums.Colour.White ? Color.White : Color.Black;
             rtn.SetBackgroundColor(squareColor);
             if (squareModel.Piece != null)
