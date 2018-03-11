@@ -19,17 +19,21 @@ namespace ChessOpenings.Droid.Views
 
         protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
         {
-            //base.OnMeasure(widthMeasureSpec, heightMeasureSpec);
-            /*int parentWidth = MeasureSpec.GetSize(widthMeasureSpec);
+
+            base.OnMeasure(widthMeasureSpec, heightMeasureSpec);
+            int parentWidth = MeasureSpec.GetSize(widthMeasureSpec);
             int parentHeight = MeasureSpec.GetSize(heightMeasureSpec);
-            int pHeight = ((BoardTableRow)this.Parent).MeasuredHeight;
-            if (pHeight > 0)
+            //int pHeight = ((BoardTableRow)this.Parent).MeasuredHeight;
+            int squareWidth = parentWidth / 8;
+            /*if (pHeight > 0)
             {
                 int squareSize = ((BoardTableRow)this.Parent).MeasuredHeight;
                 this.SetMeasuredDimension(squareSize, squareSize);
                 this.LayoutParameters = new TableRow.LayoutParams(squareSize, squareSize);
             }*/
-            base.OnMeasure(heightMeasureSpec, heightMeasureSpec);
+            this.SetMeasuredDimension(squareWidth, squareWidth);
+            //this.LayoutParameters = new GridLayout.LayoutParams(squareWidth, squareWidth);
+            base.OnMeasure(widthMeasureSpec, heightMeasureSpec);
         }
 
         protected override void OnDraw(Canvas canvas)

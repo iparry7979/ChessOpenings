@@ -59,6 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\BoardSquareView.cs" />
     <Compile Include="Views\BoardTableRow.cs" />
+    <Compile Include="Views\SquareGridLayout.cs" />
     <Compile Include="Views\SquareTableLayout.cs" />
   </ItemGroup>
   <ItemGroup>

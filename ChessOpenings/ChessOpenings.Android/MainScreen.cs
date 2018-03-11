@@ -35,38 +35,40 @@ namespace ChessOpenings.Droid
             LinearLayout boardLayout = FindViewById<LinearLayout>(Resource.Id.boardLayout);
             //TableLayout boardTable = FindViewById<TableLayout>(Resource.Id.board);
 
-            SquareTableLayout boardTable = new SquareTableLayout(this);
+            SquareGridLayout boardTable = new SquareGridLayout(this);
             boardTable.LayoutParameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.WrapContent);
             boardTable.SetBackgroundColor(Color.Red); //Remove once layout complete
+            boardTable.RowCount = 8;
+            boardTable.ColumnCount = 8;
 
             BuildBoard(boardTable);
 
             boardLayout.AddView(boardTable);
         }
 
-        private void BuildBoard(TableLayout boardTable)
+        private void BuildBoard(GridLayout boardGrid)
         {
             //Builds the Table Layout from the Board object
 
             for (int i = 0; i < Board.squaresArray.GetLength(0); i++)
             {
-                BoardTableRow currentRow = new BoardTableRow(this);
-                TableRow.LayoutParams rowParams = new TableRow.LayoutParams(TableRow.LayoutParams.WrapContent, TableRow.LayoutParams.WrapContent);
-                currentRow.LayoutParameters = rowParams;
+                //BoardTableRow currentRow = new BoardTableRow(this);
+                //TableRow.LayoutParams rowParams = new TableRow.LayoutParams(TableRow.LayoutParams.WrapContent, TableRow.LayoutParams.WrapContent);
+                //currentRow.LayoutParameters = rowParams;
 
                 for (int j = 0; j < Board.squaresArray.GetLength(1); j++)
                 {
                     View squareLayout = BuildSquare(Board.squaresArray[i, j]);
-                    currentRow.AddView(squareLayout);
+                    boardGrid.AddView(squareLayout);
                 }
-                boardTable.AddView(currentRow);
+                //boardGrid.AddView(currentRow);
             }
         }
 
         public View BuildSquare(Square squareModel)
         {
-            BoardSquareView rtn = new BoardSquareView(this);
-            rtn.LayoutParameters = new TableRow.LayoutParams(TableRow.LayoutParams.WrapContent, TableRow.LayoutParams.WrapContent);
+            TextView rtn = new TextView(this);
+            //rtn.LayoutParameters = new TableRow.LayoutParams(TableRow.LayoutParams.WrapContent, TableRow.LayoutParams.WrapContent);
             Color squareColor = squareModel.Colour == Enums.Colour.White ? Color.White : Color.Black;
             rtn.SetBackgroundColor(squareColor);
             if (squareModel.Piece != null)
@@ -80,6 +82,11 @@ namespace ChessOpenings.Droid
                 rtn.Text = "EMP";
                 rtn.SetTextColor(squareColor);
             }
+
+            GridLayout.LayoutParams param = new GridLayout.LayoutParams();
+            param.RowSpec = GridLayout.InvokeSpec(GridLayout.Undefined, 1f);
+            param.ColumnSpec = GridLayout.InvokeSpec(GridLayout.Undefined, 1f);
+            rtn.LayoutParameters = param;
             return rtn;
         }
     }
