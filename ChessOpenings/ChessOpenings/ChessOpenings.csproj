@@ -33,6 +33,7 @@
   <ItemGroup>
     <Compile Include="Enums\enums.cs" />
     <Compile Include="Models\Board.cs" />
+    <Compile Include="Models\Move.cs" />
     <Compile Include="Models\Square.cs" />
     <Compile Include="MyClass.cs" />
     <Compile Include="Pieces\Bishop.cs" />

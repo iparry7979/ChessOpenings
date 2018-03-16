@@ -90,11 +90,32 @@ namespace ChessOpenings.Models
 
                     Square currentSquare = new Square(p, sc);
 
+                    currentSquare.File = (char)(file + 97); //convert int to relevant character
+                    currentSquare.Rank = (byte)(rank + 1);
+
                     board[file, rank] = currentSquare;
                 }
             }
 
             return board;
+        }
+
+        public bool MakeMove(Move move)
+        {
+            bool valid = true;
+            valid = ValidateMove(move);
+            if (valid)
+            {
+                //Update the board with move
+                move.ToSquare.Piece = move.FromSquare.Piece;
+                move.FromSquare.Piece = null;
+            }
+            return valid;
+        }
+
+        public bool ValidateMove(Move move)
+        {
+            return true;
         }
     }
 }

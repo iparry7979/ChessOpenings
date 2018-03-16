@@ -10,5 +10,6 @@ namespace ChessOpenings.ViewInterfaces
     public interface IMainScreen
     {
         Board Board { get; set; }
+        Move NextMove { get; set; }
     }
 }
