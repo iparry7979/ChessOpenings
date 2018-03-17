@@ -11,6 +11,7 @@ namespace ChessOpenings.Models
     public class Board
     {
         public Square[,] squaresArray { get; }
+        public Enums.Colour Turn { get; set; }
 
         public Board()
         {
@@ -19,6 +20,7 @@ namespace ChessOpenings.Models
 
         public Square[,] InitialiseBoard()
         {
+            Turn = Enums.Colour.White;
             Square[,] board = new Square[8, 8];
             for (int file = 0; file < 8; file++)
             {
@@ -27,7 +29,7 @@ namespace ChessOpenings.Models
                     Piece p = null;
                     if (file == 0)
                     {
-                        Colour c = Colour.Black;
+                        Colour c = Colour.White;
                         switch (rank)
                         {
                             case 0:
@@ -52,17 +54,17 @@ namespace ChessOpenings.Models
                     }
                     else if (file == 1)
                     {
-                        Colour c = Colour.Black;
+                        Colour c = Colour.White;
                         p = new Pawn(c);
                     }
                     else if (file == 6)
                     {
-                        Colour c = Colour.White;
+                        Colour c = Colour.Black;
                         p = new Pawn(c);
                     }
                     else if (file == 7)
                     {
-                        Colour c = Colour.White;
+                        Colour c = Colour.Black;
                         switch (rank)
                         {
                             case 0:
@@ -109,13 +111,28 @@ namespace ChessOpenings.Models
                 //Update the board with move
                 move.ToSquare.Piece = move.FromSquare.Piece;
                 move.FromSquare.Piece = null;
+                ChangeTurn();
             }
             return valid;
         }
 
         public bool ValidateMove(Move move)
         {
+            if (move.FromSquare == move.ToSquare)
+            {
+                return false;
+            }
             return true;
+        }
+
+        public void ChangeTurn()
+        {
+            if (Turn == Enums.Colour.White)
+            {
+                Turn = Enums.Colour.Black;
+                return;
+            }
+            Turn = Enums.Colour.White;
         }
     }
 }

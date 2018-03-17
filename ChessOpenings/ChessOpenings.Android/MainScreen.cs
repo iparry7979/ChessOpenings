@@ -10,53 +10,34 @@ using ChessOpenings.Models;
 using ChessOpenings.ViewInterfaces;
 using Android.Graphics;
 using ChessOpenings.Droid.Views;
+using ChessOpenings.Controllers;
 
 namespace ChessOpenings.Droid
 {
     [Activity(Label = "ChessOpenings.Android", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainScreen : Activity, IMainScreen
     {
-
-        public Board Board { get; set; }
-        public Move NextMove { get; set; }
         private GridLayout boardTable {get; set;}
         private LinearLayout boardLayout { get; set; }
-        //private bool fromSquareSet;
-        private SquareView selectedSquare;
+        private BoardController boardController;
 
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
-
-            Board = new Board();
-
-            Board.InitialiseBoard();
-
-			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.Main);
 
-            NextMove = new Move();
-            selectedSquare = null;
+            boardController = new BoardController(this);
 
             boardLayout = FindViewById<LinearLayout>(Resource.Id.boardLayout);
 
-            boardTable = new SquareGridLayout(this);
-            boardTable.LayoutParameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.WrapContent);
-            boardTable.SetBackgroundColor(Color.Red); //Remove once layout complete
-            boardTable.RowCount = 8;
-            boardTable.ColumnCount = 8;
-
-            BuildBoard(boardTable);
-
-            boardLayout.AddView(boardTable);
+            DrawBoard();
         }
 
-        private void DrawBoard()
+        public void DrawBoard()
         {
-            
+            boardLayout.RemoveAllViews();
             boardTable = new SquareGridLayout(this);
             boardTable.LayoutParameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.WrapContent);
-            boardTable.SetBackgroundColor(Color.Red); //Remove once layout complete
             boardTable.RowCount = 8;
             boardTable.ColumnCount = 8;
 
@@ -68,12 +49,13 @@ namespace ChessOpenings.Droid
         private void BuildBoard(GridLayout boardGrid)
         {
             //Builds the Table Layout from the Board object
+            Board board = boardController.Board;
 
-            for (int i = Board.squaresArray.GetLength(0) - 1; i >= 0; i--)
+            for (int i = board.squaresArray.GetLength(0) - 1; i >= 0; i--)
             {
-                for (int j = 0; j < Board.squaresArray.GetLength(1); j++)
+                for (int j = 0; j < board.squaresArray.GetLength(1); j++)
                 {
-                    View squareLayout = BuildSquare(Board.squaresArray[i, j]);
+                    View squareLayout = BuildSquare(board.squaresArray[i, j]);
                     squareLayout.Click += SquareClicked;
                     boardGrid.AddView(squareLayout);
                 }
@@ -108,38 +90,47 @@ namespace ChessOpenings.Droid
             {
                 return;
             }
-            if (selectedSquare == null)
+            boardController.SquareTapped(tappedSquare.squareModel);
+        }
+
+        public void SelectSquare(Square sq)
+        {
+            SquareView s = GetSquareView(sq);
+
+            
+            SelectSquare(s);
+            
+            if (s != null)
             {
-                if (tappedSquare.ContainsPiece())
-                {
-                    NextMove.FromSquare = tappedSquare.squareModel;
-                    SelectSquare(tappedSquare);
-                }
-            }
-            else
-            {
-                NextMove.ToSquare = tappedSquare.squareModel;
-                Board.MakeMove(NextMove);
-                DrawBoard();
-                UnselectSelectedSquare();
-                NextMove = new Move();
+                s.SelectSquare();
             }
         }
 
         private void SelectSquare(SquareView s)
         {
-            UnselectSelectedSquare();
             s.SelectSquare();
-            selectedSquare = s;
         }
 
-        private void UnselectSelectedSquare()
+        public void UnselectSquare(Square sq)
         {
-            if (selectedSquare != null)
+            SquareView s = GetSquareView(sq);
+            s.UnSelectSquare();
+        }
+
+        public SquareView GetSquareView(Square sq)
+        {
+            for (int i = 0; i < boardTable.ChildCount; i++)
             {
-                selectedSquare.UnSelectSquare();
-                selectedSquare = null;
+                View v = boardTable.GetChildAt(i);
+                if (v is SquareView)
+                {
+                    if (((SquareView)v).squareModel.Equals(sq))
+                    {
+                        return (SquareView)v;
+                    }
+                }
             }
+            return null;
         }
     }
 }

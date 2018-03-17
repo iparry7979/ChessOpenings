@@ -9,7 +9,8 @@ namespace ChessOpenings.ViewInterfaces
 {
     public interface IMainScreen
     {
-        Board Board { get; set; }
-        Move NextMove { get; set; }
+        void SelectSquare(Square sq);
+        void UnselectSquare(Square s);
+        void DrawBoard();
     }
 }

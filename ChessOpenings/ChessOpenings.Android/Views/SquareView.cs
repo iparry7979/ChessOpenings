@@ -61,5 +61,14 @@ namespace ChessOpenings.Droid.Views
         {
             return squareModel.Piece != null;
         }
+
+        public Enums.Colour? GetPieceColor()
+        {
+            if (squareModel.Piece != null)
+            {
+                return squareModel.Piece.colour;
+            }
+            return null;
+        }
     }
 }
