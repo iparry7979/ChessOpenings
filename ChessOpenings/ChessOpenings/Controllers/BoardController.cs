@@ -10,12 +10,12 @@ namespace ChessOpenings.Controllers
 {
     public class BoardController
     {
-        public IMainScreen View;
+        public IBoardView View;
         public Square selectedSquare;
         public Move NextMove;
         public Board Board;
 
-        public BoardController(IMainScreen view)
+        public BoardController(IBoardView view)
         {
             View = view;
             Board = new Board();

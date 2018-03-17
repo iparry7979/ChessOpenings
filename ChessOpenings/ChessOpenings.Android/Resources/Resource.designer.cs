@@ -63,6 +63,9 @@ namespace ChessOpenings.Droid
 			// aapt resource value: 0x7f050000
 			public const int boardLayout = 2131034112;
 			
+			// aapt resource value: 0x7f050001
+			public const int board_fragment_container = 2131034113;
+			
 			static Id()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -77,7 +80,10 @@ namespace ChessOpenings.Droid
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Main = 2130903040;
+			public const int boardView = 2130903040;
+			
+			// aapt resource value: 0x7f030001
+			public const int Main = 2130903041;
 			
 			static Layout()
 			{

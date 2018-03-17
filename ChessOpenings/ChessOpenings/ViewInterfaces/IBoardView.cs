@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ChessOpenings.ViewInterfaces
 {
-    public interface IMainScreen
+    public interface IBoardView
     {
         void SelectSquare(Square sq);
         void UnselectSquare(Square s);
