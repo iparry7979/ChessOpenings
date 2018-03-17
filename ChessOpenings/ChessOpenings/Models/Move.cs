@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChessOpenings.Pieces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,6 @@ namespace ChessOpenings.Models
     {
         public Square FromSquare { get; set; }
         public Square ToSquare { get; set; }
+        public Piece PieceTaken { get; set; }
     }
 }

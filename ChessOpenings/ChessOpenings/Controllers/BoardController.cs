@@ -24,11 +24,6 @@ namespace ChessOpenings.Controllers
             Board.InitialiseBoard();
         }
 
-        public void MakeMove(Move move)
-        {
-
-        }
-
         public void SquareTapped(Square tappedSquare)
         {
             if (selectedSquare == null)
@@ -50,6 +45,23 @@ namespace ChessOpenings.Controllers
                 selectedSquare = null;
                 NextMove = new Move();
             }
+        }
+
+        public void GoBackOneMove()
+        {
+            Board.GoBackOneMove();
+            View.UnselectSquare(selectedSquare);
+            selectedSquare = null;
+            NextMove = new Move();
+            View.DrawBoard();
+        }
+
+        public void ResetBoard()
+        {
+            selectedSquare = null;
+            NextMove = new Move();
+            Board = new Board();
+            View.DrawBoard();
         }
     }
 }

@@ -12,15 +12,17 @@ namespace ChessOpenings.Models
     {
         public Square[,] squaresArray { get; }
         public Enums.Colour Turn { get; set; }
+        private Stack<Move> gameHistory { get; set; }
 
         public Board()
         {
+            Turn = Enums.Colour.White;
+            gameHistory = new Stack<Move>();
             squaresArray = InitialiseBoard();
         }
 
         public Square[,] InitialiseBoard()
         {
-            Turn = Enums.Colour.White;
             Square[,] board = new Square[8, 8];
             for (int file = 0; file < 8; file++)
             {
@@ -109,11 +111,30 @@ namespace ChessOpenings.Models
             if (valid)
             {
                 //Update the board with move
+                if (move.ToSquare.ContainsPiece())
+                {
+                    move.PieceTaken = move.ToSquare.Piece;
+                }
                 move.ToSquare.Piece = move.FromSquare.Piece;
                 move.FromSquare.Piece = null;
                 ChangeTurn();
+                gameHistory.Push(move);
             }
             return valid;
+        }
+
+        public Move GoBackOneMove()
+        {
+            Move lastMove = null;
+            if (gameHistory.Count > 0)
+            {
+                lastMove = gameHistory.Peek();
+                lastMove.FromSquare.Piece = lastMove.ToSquare.Piece;
+                lastMove.ToSquare.Piece = lastMove.PieceTaken;
+                ChangeTurn();
+                gameHistory.Pop();
+            }
+            return lastMove;
         }
 
         public bool ValidateMove(Move move)

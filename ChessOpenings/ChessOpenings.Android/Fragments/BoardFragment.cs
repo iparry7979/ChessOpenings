@@ -23,6 +23,7 @@ namespace ChessOpenings.Droid.Fragments
         private GridLayout boardTable { get; set; }
         private LinearLayout boardLayout { get; set; }
         private BoardController boardController;
+        private View view;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -33,9 +34,10 @@ namespace ChessOpenings.Droid.Fragments
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            var view = inflater.Inflate(Resource.Layout.boardView, container, false);
+            view = inflater.Inflate(Resource.Layout.boardView, container, false);
             boardLayout = view.FindViewById<LinearLayout>(Resource.Id.boardLayout);
             DrawBoard();
+            InitialiseButtons();
             return view;
         }
 
@@ -99,6 +101,16 @@ namespace ChessOpenings.Droid.Fragments
             boardController.SquareTapped(tappedSquare.squareModel);
         }
 
+        public void BackClicked(object sender, EventArgs args)
+        {
+            boardController.GoBackOneMove();
+        }
+
+        public void ResetClicked(object sender, EventArgs args)
+        {
+            boardController.ResetBoard();
+        }
+
         public void SelectSquare(Square sq)
         {
             SquareView s = GetSquareView(sq);
@@ -120,7 +132,10 @@ namespace ChessOpenings.Droid.Fragments
         public void UnselectSquare(Square sq)
         {
             SquareView s = GetSquareView(sq);
-            s.UnSelectSquare();
+            if (s != null)
+            {
+                s.UnSelectSquare();
+            }
         }
 
         public SquareView GetSquareView(Square sq)
@@ -137,6 +152,16 @@ namespace ChessOpenings.Droid.Fragments
                 }
             }
             return null;
+        }
+
+        public void InitialiseButtons()
+        {
+            Button backOneButton = view.FindViewById<Button>(Resource.Id.back_one_move_button);
+            Button resetButton = view.FindViewById<Button>(Resource.Id.reset_board_button);
+            Button flipBoardButton = view.FindViewById<Button>(Resource.Id.flip_board_button);
+
+            backOneButton.Click += BackClicked;
+            resetButton.Click += ResetClicked;
         }
     }
 }

@@ -25,5 +25,10 @@ namespace ChessOpenings.Models
         {
             return File + Rank + " " + Piece.ToString();
         }
+
+        public bool ContainsPiece()
+        {
+            return Piece != null;
+        }
     }
 }
