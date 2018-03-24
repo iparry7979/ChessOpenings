@@ -22,4 +22,10 @@ namespace ChessOpenings.Enums
         King,
         None
     }
+
+    public enum BoardOrientation
+    {
+        Standard,
+        Inverted
+    }
 }

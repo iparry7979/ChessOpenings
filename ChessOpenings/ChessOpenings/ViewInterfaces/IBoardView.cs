@@ -11,6 +11,6 @@ namespace ChessOpenings.ViewInterfaces
     {
         void SelectSquare(Square sq);
         void UnselectSquare(Square s);
-        void DrawBoard();
+        void DrawBoard(bool inverted);
     }
 }

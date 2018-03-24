@@ -36,12 +36,12 @@ namespace ChessOpenings.Droid.Fragments
         {
             view = inflater.Inflate(Resource.Layout.boardView, container, false);
             boardLayout = view.FindViewById<LinearLayout>(Resource.Id.boardLayout);
-            DrawBoard();
+            boardController.DrawBoard();
             InitialiseButtons();
             return view;
         }
 
-        public void DrawBoard()
+        public void DrawBoard(bool inverted)
         {
             boardLayout.RemoveAllViews();
             boardTable = new SquareGridLayout(this.Activity);
@@ -49,23 +49,38 @@ namespace ChessOpenings.Droid.Fragments
             boardTable.RowCount = 8;
             boardTable.ColumnCount = 8;
 
-            BuildBoard(boardTable);
+            BuildBoard(boardTable, inverted);
 
             boardLayout.AddView(boardTable);
         }
 
-        private void BuildBoard(GridLayout boardGrid)
+        private void BuildBoard(GridLayout boardGrid, bool inverted = false)
         {
             //Builds the Table Layout from the Board object
             Board board = boardController.Board;
 
-            for (int i = board.squaresArray.GetLength(0) - 1; i >= 0; i--)
+            if (!inverted)
             {
-                for (int j = 0; j < board.squaresArray.GetLength(1); j++)
+                for (int i = board.squaresArray.GetLength(0) - 1; i >= 0; i--)
                 {
-                    View squareLayout = BuildSquare(board.squaresArray[i, j]);
-                    squareLayout.Click += SquareClicked;
-                    boardGrid.AddView(squareLayout);
+                    for (int j = 0; j < board.squaresArray.GetLength(1); j++)
+                    {
+                        View squareLayout = BuildSquare(board.squaresArray[i, j]);
+                        squareLayout.Click += SquareClicked;
+                        boardGrid.AddView(squareLayout);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < board.squaresArray.GetLength(0); i++)
+                {
+                    for (int j = board.squaresArray.GetLength(1) -1; j >= 0; j--)
+                    {
+                        View squareLayout = BuildSquare(board.squaresArray[i, j]);
+                        squareLayout.Click += SquareClicked;
+                        boardGrid.AddView(squareLayout);
+                    }
                 }
             }
         }
@@ -109,6 +124,11 @@ namespace ChessOpenings.Droid.Fragments
         public void ResetClicked(object sender, EventArgs args)
         {
             boardController.ResetBoard();
+        }
+
+        public void FlipBoardClicked(object sender, EventArgs args)
+        {
+            boardController.FlipBoard();
         }
 
         public void SelectSquare(Square sq)
@@ -162,6 +182,7 @@ namespace ChessOpenings.Droid.Fragments
 
             backOneButton.Click += BackClicked;
             resetButton.Click += ResetClicked;
+            flipBoardButton.Click += FlipBoardClicked;
         }
     }
 }

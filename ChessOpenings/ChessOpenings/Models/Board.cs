@@ -24,15 +24,15 @@ namespace ChessOpenings.Models
         public Square[,] InitialiseBoard()
         {
             Square[,] board = new Square[8, 8];
-            for (int file = 0; file < 8; file++)
+            for (int rank = 0; rank < 8; rank++)
             {
-                for (int rank = 0; rank < 8; rank++)
+                for (int file = 0; file < 8; file++)
                 {
                     Piece p = null;
-                    if (file == 0)
+                    if (rank == 0)
                     {
                         Colour c = Colour.White;
-                        switch (rank)
+                        switch (file)
                         {
                             case 0:
                             case 7:
@@ -54,20 +54,20 @@ namespace ChessOpenings.Models
                                 break;
                         }
                     }
-                    else if (file == 1)
+                    else if (rank == 1)
                     {
                         Colour c = Colour.White;
                         p = new Pawn(c);
                     }
-                    else if (file == 6)
+                    else if (rank == 6)
                     {
                         Colour c = Colour.Black;
                         p = new Pawn(c);
                     }
-                    else if (file == 7)
+                    else if (rank == 7)
                     {
                         Colour c = Colour.Black;
-                        switch (rank)
+                        switch (file)
                         {
                             case 0:
                             case 7:
@@ -97,7 +97,7 @@ namespace ChessOpenings.Models
                     currentSquare.File = (char)(file + 97); //convert int to relevant character
                     currentSquare.Rank = (byte)(rank + 1);
 
-                    board[file, rank] = currentSquare;
+                    board[rank, file] = currentSquare;
                 }
             }
 

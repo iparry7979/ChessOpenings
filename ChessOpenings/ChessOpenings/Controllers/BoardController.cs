@@ -14,6 +14,7 @@ namespace ChessOpenings.Controllers
         public Square selectedSquare;
         public Move NextMove;
         public Board Board;
+        public Enums.BoardOrientation Orientation;
 
         public BoardController(IBoardView view)
         {
@@ -21,6 +22,7 @@ namespace ChessOpenings.Controllers
             Board = new Board();
             NextMove = new Move();
             selectedSquare = null;
+            Orientation = Enums.BoardOrientation.Standard;
             Board.InitialiseBoard();
         }
 
@@ -40,7 +42,7 @@ namespace ChessOpenings.Controllers
                 
                 NextMove.ToSquare = tappedSquare;
                 Board.MakeMove(NextMove);
-                View.DrawBoard();
+                DrawBoard();
                 View.UnselectSquare(selectedSquare);
                 selectedSquare = null;
                 NextMove = new Move();
@@ -53,7 +55,7 @@ namespace ChessOpenings.Controllers
             View.UnselectSquare(selectedSquare);
             selectedSquare = null;
             NextMove = new Move();
-            View.DrawBoard();
+            DrawBoard();
         }
 
         public void ResetBoard()
@@ -61,7 +63,25 @@ namespace ChessOpenings.Controllers
             selectedSquare = null;
             NextMove = new Move();
             Board = new Board();
-            View.DrawBoard();
+            DrawBoard();
+        }
+
+        public void FlipBoard()
+        {
+            if (Orientation == Enums.BoardOrientation.Standard)
+            {
+                Orientation = Enums.BoardOrientation.Inverted;
+            }
+            else
+            {
+                Orientation = Enums.BoardOrientation.Standard;
+            }
+            DrawBoard();
+        }
+
+        public void DrawBoard()
+        {
+            View.DrawBoard(Orientation == Enums.BoardOrientation.Inverted);
         }
     }
 }
