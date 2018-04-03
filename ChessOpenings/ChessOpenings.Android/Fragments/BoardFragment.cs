@@ -87,15 +87,16 @@ namespace ChessOpenings.Droid.Fragments
 
         public View BuildSquare(Square squareModel)
         {
-            SquareView rtn = new SquareView(this.Activity, squareModel);
-            rtn.UpdateBackgroundColor();
+            SquareView rtn = new SquareView(this.Activity, squareModel); //SquareView extends ImageView
+            rtn.UpdateBackgroundColor(); //set square color
             if (squareModel.Piece != null)
             {
-                rtn.Text = squareModel.Piece.ToString() + squareModel.File + squareModel.Rank;
-                rtn.SetTextColor(squareModel.Piece.colour == Enums.Colour.White ? Color.LightGray : Color.DarkGray);
+                rtn.DrawPiece();
             }
 
-            GridLayout.LayoutParams param = new GridLayout.LayoutParams();
+            GridLayout.LayoutParams param = new GridLayout.LayoutParams(new ViewGroup.LayoutParams(50, 50));
+
+            //set weight of each row and column to ensure equal size
             param.RowSpec = GridLayout.InvokeSpec(GridLayout.Undefined, 1f);
             param.ColumnSpec = GridLayout.InvokeSpec(GridLayout.Undefined, 1f);
             rtn.LayoutParameters = param;

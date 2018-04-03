@@ -17,6 +17,12 @@ namespace ChessOpenings.Pieces
             colour = c;
         }
 
+        public string GetPieceNotation()
+        {
+            if (colour == Colour.White) return "W" + ToString();
+            return "B" + ToString();
+        }
+
         public abstract bool ValidateMove(Square start, Square end, Board board);
 
         public abstract override string ToString();

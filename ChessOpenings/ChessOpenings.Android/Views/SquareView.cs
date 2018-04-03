@@ -15,7 +15,7 @@ using Android.Graphics;
 
 namespace ChessOpenings.Droid.Views
 {
-    public class SquareView : TextView
+    public class SquareView : ImageView
     {
         public Square squareModel;
 
@@ -55,6 +55,22 @@ namespace ChessOpenings.Droid.Views
         {
             Color squareColor = squareModel.Colour == Enums.Colour.White ? Color.White : Color.Black;
             this.SetBackgroundColor(squareColor);
+        }
+
+        public void DrawPiece()
+        {
+            if (squareModel.Piece == null) return;
+
+            string key = squareModel.Piece.GetPieceNotation();
+            int resource = -1;
+
+            //get the image resource corresponding to the piece on the ssquare
+            if (AndroidConstants.PieceResources.TryGetValue(key, out resource))
+            {
+                this.SetImageResource(resource);
+            }
+            this.SetScaleType(ScaleType.FitXy);    
+            
         }
 
         public bool ContainsPiece()

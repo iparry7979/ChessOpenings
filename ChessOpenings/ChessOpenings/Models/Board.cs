@@ -90,7 +90,7 @@ namespace ChessOpenings.Models
                         }
                     }
 
-                    Colour sc = (file + rank) % 2 == 0 ? Colour.White : Colour.Black;
+                    Colour sc = (file + rank) % 2 == 0 ? Colour.Black : Colour.White;
 
                     Square currentSquare = new Square(p, sc);
 
