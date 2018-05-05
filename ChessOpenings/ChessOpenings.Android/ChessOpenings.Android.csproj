@@ -117,8 +117,5 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\YellowR.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-hdpi\BlackRIcons8.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
