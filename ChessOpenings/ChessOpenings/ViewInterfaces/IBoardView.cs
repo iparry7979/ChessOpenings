@@ -1,6 +1,7 @@
 ﻿using ChessOpenings.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,5 +13,6 @@ namespace ChessOpenings.ViewInterfaces
         void SelectSquare(Square sq);
         void UnselectSquare(Square s);
         void DrawBoard(bool inverted);
+        Stream ParseOpenings();
     }
 }

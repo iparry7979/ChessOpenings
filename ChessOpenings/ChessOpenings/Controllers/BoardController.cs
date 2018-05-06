@@ -1,10 +1,14 @@
 ﻿using ChessOpenings.Models;
 using ChessOpenings.ViewInterfaces;
+using System.Xml.Linq;
+using System.Xml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Reflection;
 
 namespace ChessOpenings.Controllers
 {
@@ -15,6 +19,9 @@ namespace ChessOpenings.Controllers
         public Move NextMove;
         public Board Board;
         public Enums.BoardOrientation Orientation;
+        public XDocument doc;
+
+        private const string OPENINGDATAFILE = "openings.xml";
 
         public BoardController(IBoardView view)
         {
@@ -23,6 +30,7 @@ namespace ChessOpenings.Controllers
             NextMove = new Move();
             selectedSquare = null;
             Orientation = Enums.BoardOrientation.Standard;
+            doc = XDocument.Load(View.ParseOpenings());
             Board.InitialiseBoard();
         }
 

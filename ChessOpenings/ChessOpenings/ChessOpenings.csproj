@@ -33,6 +33,7 @@
   <ItemGroup>
     <Compile Include="Controllers\BoardController.cs" />
     <Compile Include="Enums\enums.cs" />
+    <Compile Include="Helpers\AlgebraicNotationGenerator.cs" />
     <Compile Include="Models\Board.cs" />
     <Compile Include="Models\Move.cs" />
     <Compile Include="Models\Square.cs" />
@@ -45,6 +46,15 @@
     <Compile Include="Pieces\Rook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewInterfaces\IBoardView.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Data\ECOtoXML.java" />
+    <Content Include="Data\Opening.java" />
+    <None Include="Data\openings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\scid.eco" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

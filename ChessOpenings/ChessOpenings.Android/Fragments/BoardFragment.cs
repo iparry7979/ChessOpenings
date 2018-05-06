@@ -15,6 +15,8 @@ using ChessOpenings.Controllers;
 using ChessOpenings.Models;
 using ChessOpenings.Droid.Views;
 using Android.Graphics;
+using Java.IO;
+using System.IO;
 
 namespace ChessOpenings.Droid.Fragments
 {
@@ -184,6 +186,21 @@ namespace ChessOpenings.Droid.Fragments
             backOneButton.Click += BackClicked;
             resetButton.Click += ResetClicked;
             flipBoardButton.Click += FlipBoardClicked;
+        }
+
+        public Stream ParseOpenings()
+        {
+            string s = System.Environment.CurrentDirectory;
+            Stream stream = null;
+            try
+            {
+                stream = Activity.Assets.Open("openings.xml");
+            }
+            catch (Java.IO.FileNotFoundException e)
+            {
+                return null;
+            }
+            return stream;
         }
     }
 }

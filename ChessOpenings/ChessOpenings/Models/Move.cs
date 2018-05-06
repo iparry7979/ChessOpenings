@@ -12,5 +12,7 @@ namespace ChessOpenings.Models
         public Square FromSquare { get; set; }
         public Square ToSquare { get; set; }
         public Piece PieceTaken { get; set; }
+        public string AlgebraicNotation { get; set; }
+
     }
 }
