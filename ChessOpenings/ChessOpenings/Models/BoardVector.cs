@@ -44,5 +44,43 @@ namespace ChessOpenings.Models
             }
             return null;
         }
+
+        public override bool Equals(System.Object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            if (!(obj is BoardVector))
+            {
+                return false;
+            }
+
+            BoardVector comparator = obj as BoardVector;
+            if (comparator.Sequence == null && this.Sequence ==null)
+            {
+                return true;
+            }
+
+            if (comparator.Sequence == null || this.Sequence == null)
+            {
+                return false;
+            }
+
+            if (comparator.Sequence.Length != this.Sequence.Length)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < this.Sequence.Length; i++)
+            {
+                if (!(this.Sequence[i].Rank == comparator.Sequence[i].Rank && this.Sequence[i].File == comparator.Sequence[i].File))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

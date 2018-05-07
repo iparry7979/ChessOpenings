@@ -11,7 +11,6 @@ namespace ChessOpenings.Helpers
     class AlgebraicNotationGenerator
     {
         private string SubjectPiece;
-        private string DisambiguationString;
         private string DestinationSquare;
         private string SourceSquare;
         private bool Capture;
@@ -51,10 +50,10 @@ namespace ChessOpenings.Helpers
             {
                 rtn += SubjectPiece;
             }
-            rtn += SourceNotation;
+            rtn += Disambiguation;
             if (Capture)
             {
-                if (SubjectPiece == "P")
+                if (SubjectPiece == "P") 
                 {
                     rtn += SourceSquare[0].ToString();
                 }
@@ -69,6 +68,7 @@ namespace ChessOpenings.Helpers
             {
                 rtn += "+";
             }
+            Notation = rtn;
             return rtn;
         }
 
@@ -94,7 +94,6 @@ namespace ChessOpenings.Helpers
             {
                 if (DestinationSquare == enPassantSquare.Notation && Move.SubjectPiece is Pawn)
                 {
-                    EnPassant = true;
                     return true;
                 }
             }
@@ -155,6 +154,11 @@ namespace ChessOpenings.Helpers
                 }
             }
             return false;
+        }
+
+        private string GenerateDisambiguationString()
+        {
+            return null;
         }
     }
 }
