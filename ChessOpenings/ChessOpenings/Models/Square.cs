@@ -14,6 +14,13 @@ namespace ChessOpenings.Models
         public Piece Piece { get; set; }
         public char File { get; set; }
         public byte Rank { get; set; }
+        public string Notation
+        {
+            get
+            {
+                return File.ToString() + Rank.ToString();
+            }
+        }
 
         public Square(Piece p, Colour c)
         {

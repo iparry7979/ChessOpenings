@@ -47,7 +47,12 @@ namespace ChessOpenings.Controllers
             }
             else
             {
-                
+                if (tappedSquare == selectedSquare)
+                {
+                    selectedSquare = null;
+                    View.UnselectSquare(tappedSquare);
+                    return;
+                }
                 NextMove.ToSquare = tappedSquare;
                 Board.MakeMove(NextMove);
                 DrawBoard();

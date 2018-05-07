@@ -1,4 +1,5 @@
 ﻿using ChessOpenings.Enums;
+using ChessOpenings.Helpers;
 using ChessOpenings.Pieces;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,19 @@ namespace ChessOpenings.Models
         public Square[,] squaresArray { get; }
         public Enums.Colour Turn { get; set; }
         private Stack<Move> gameHistory { get; set; }
+
+        public Square enPassantAllowedSquare
+        {
+            get
+            {
+                if (GetLastMove() == null)
+                {
+                    return null;
+                }
+                string squareNotation = GetLastMove().SquareEnabledForEnPassant();
+                return GetSquareByNotation(squareNotation);
+            }
+        }
 
         public Board()
         {
@@ -106,6 +120,8 @@ namespace ChessOpenings.Models
 
         public bool MakeMove(Move move)
         {
+            AlgebraicNotationGenerator notationGenerator = new AlgebraicNotationGenerator(this, move, move.FromSquare.Piece);
+            move.AlgebraicNotation = notationGenerator.Generate();
             bool valid = true;
             valid = ValidateMove(move);
             if (valid)
@@ -154,6 +170,117 @@ namespace ChessOpenings.Models
                 return;
             }
             Turn = Enums.Colour.White;
+        }
+
+        public Move GetLastMove()
+        {
+            if (gameHistory.Count() > 0)
+            {
+                return gameHistory.Peek();
+            }
+            return null;
+        }
+
+        public Square GetSquare(char file, byte rank)
+        {
+            return GetSquareByNotation(file.ToString() + rank.ToString());
+        }
+
+        public Square GetSquareByNotation(string notation)
+        {
+            //validate
+            if (notation == null)
+            {
+                return null;
+            }
+            if (notation.Length != 2)
+            {
+                return null;
+            }
+            if (!(Char.IsLetter(notation[0]) && Char.IsNumber(notation[1])))
+            {
+                return null;
+            }
+            int file;
+            if (Char.IsLower(notation[0]))
+            {
+                file = notation[0] - 97;
+            }
+            else if (Char.IsUpper(notation[0]))
+            {
+                file = notation[0] - 65;
+            }
+            file = notation[0] - 97;
+            int rank;
+            if (!int.TryParse(notation[1].ToString(), out rank))
+            {
+                return null;
+            }
+            rank--; //convert for 0 starting array
+            return squaresArray[rank, file];
+        }
+
+        public BoardVector[] GetDiagonalsFromSquare(string squareNotation)
+        {
+            if (squareNotation != null)
+            {
+                return GetDiagonalsFromSquare(GetSquareByNotation(squareNotation));
+            }
+            return null;
+        }
+        public BoardVector[] GetDiagonalsFromSquare(Square subjectSquare)
+        {
+            if (subjectSquare == null)
+            {
+                return null;
+            }
+            List<BoardVector> vectorList = new List<BoardVector>();
+            char file = subjectSquare.File;
+            byte rank = subjectSquare.Rank;
+
+            BoardVector bottomLeft = new BoardVector();
+            while (file >= 'a' && rank >= 1)
+            {
+                bottomLeft.AddSquare(GetSquare(file, rank));
+                file--;
+                rank--;
+            }
+            vectorList.Add(bottomLeft);
+
+            file = subjectSquare.File;
+            rank = subjectSquare.Rank;
+            BoardVector bottomRight = new BoardVector();
+            while (file <= 'h' && rank >= 1)
+            {
+                bottomRight.AddSquare(GetSquare(file, rank));
+                file++;
+                rank--;
+            }
+            vectorList.Add(bottomRight);
+
+            file = subjectSquare.File;
+            rank = subjectSquare.Rank;
+            BoardVector topRight = new BoardVector();
+            while (file <= 'h' && rank <= 8)
+            {
+                topRight.AddSquare(GetSquare(file, rank));
+                file++;
+                rank++;
+            }
+            vectorList.Add(topRight);
+
+            file = subjectSquare.File;
+            rank = subjectSquare.Rank;
+            BoardVector topLeft = new BoardVector();
+            while (file >= 'a' && rank <= 8)
+            {
+                topLeft.AddSquare(GetSquare(file, rank));
+                file--;
+                rank++;
+            }
+            vectorList.Add(topLeft);
+
+            return vectorList.ToArray();
         }
     }
 }
