@@ -37,6 +37,7 @@
     <Compile Include="Models\Board.cs" />
     <Compile Include="Models\Move.cs" />
     <Compile Include="Models\Square.cs" />
+    <Compile Include="Models\BoardVector.cs" />
     <Compile Include="Pieces\Bishop.cs" />
     <Compile Include="Pieces\King.cs" />
     <Compile Include="Pieces\Knight.cs" />

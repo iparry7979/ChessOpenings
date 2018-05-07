@@ -78,9 +78,20 @@ namespace ChessOpenings.UnitTests
 
             //RunTests
 
-            //null objects are equal
+            //null object not equal
+            Assert.IsFalse(testVectorLength1.Equals(null));
 
+            //Different length vectors not equal
+            Assert.IsFalse(testVectorLength1.Equals(testVectorLength2));
 
+            //Vectors of same size but different values are not equal
+            Assert.IsFalse(testVectorLength2.Equals(unEqualVector));
+
+            //Vectors containing squares of same rank and file are equal (different piece)
+            Assert.IsTrue(testVectorLength2.Equals(equalVector));
+
+            //Empty vectors are equal
+            Assert.IsTrue(emptyVector.Equals(emptyVector));
         }
     }
 }

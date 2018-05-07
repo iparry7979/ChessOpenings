@@ -8,3 +8,5 @@ ChessOpenings/ChessOpenings.UWP/bin/
 ChessOpenings/ChessOpenings.iOS/obj/
 ChessOpenings/ChessOpenings.iOS/bin/
 ChessOpenings/ChessOpenings.iOS.ChessOpenings.iOS.csproj.user
+ChessOpenings/ChessOpenings.UnitTests/obj/
+ChessOpenings/ChessOpenings.UnitTests/bin/

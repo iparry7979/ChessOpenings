@@ -241,7 +241,10 @@ namespace ChessOpenings.Models
             BoardVector bottomLeft = new BoardVector();
             while (file >= 'a' && rank >= 1)
             {
-                bottomLeft.AddSquare(GetSquare(file, rank));
+                if (rank != subjectSquare.Rank && file != subjectSquare.File)
+                {
+                    bottomLeft.AddSquare(GetSquare(file, rank));
+                }
                 file--;
                 rank--;
             }
@@ -252,7 +255,10 @@ namespace ChessOpenings.Models
             BoardVector bottomRight = new BoardVector();
             while (file <= 'h' && rank >= 1)
             {
-                bottomRight.AddSquare(GetSquare(file, rank));
+                if (rank != subjectSquare.Rank && file != subjectSquare.File)
+                {
+                    bottomRight.AddSquare(GetSquare(file, rank));
+                }
                 file++;
                 rank--;
             }
@@ -263,9 +269,13 @@ namespace ChessOpenings.Models
             BoardVector topRight = new BoardVector();
             while (file <= 'h' && rank <= 8)
             {
-                topRight.AddSquare(GetSquare(file, rank));
+                if (rank != subjectSquare.Rank && file != subjectSquare.File)
+                {
+                    topRight.AddSquare(GetSquare(file, rank));
+                }
                 file++;
                 rank++;
+                
             }
             vectorList.Add(topRight);
 
@@ -274,7 +284,10 @@ namespace ChessOpenings.Models
             BoardVector topLeft = new BoardVector();
             while (file >= 'a' && rank <= 8)
             {
-                topLeft.AddSquare(GetSquare(file, rank));
+                if (rank != subjectSquare.Rank && file != subjectSquare.File)
+                {
+                    topLeft.AddSquare(GetSquare(file, rank));
+                }
                 file--;
                 rank++;
             }

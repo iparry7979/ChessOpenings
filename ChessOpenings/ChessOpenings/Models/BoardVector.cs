@@ -11,7 +11,10 @@ namespace ChessOpenings.Models
     {
         public Square[] Sequence { get; set; }
 
-        public BoardVector() { }
+        public BoardVector()
+        {
+            Sequence = new Square[0];       
+        }
 
         public BoardVector(Square[] sequence)
         {
