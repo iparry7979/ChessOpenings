@@ -10,6 +10,13 @@ namespace ChessOpenings.Models
     public class BoardVector
     {
         public Square[] Sequence { get; set; }
+        public int Count
+        {
+            get
+            {
+                return Sequence.Length;
+            }
+        }
 
         public BoardVector()
         {
@@ -84,6 +91,18 @@ namespace ChessOpenings.Models
                 }
             }
             return true;
+        }
+
+        public bool Contains(Square s)
+        {
+            for (int i = 0; i < Sequence.Length; i++)
+            {
+                if (Sequence[i].Notation == s.Notation)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

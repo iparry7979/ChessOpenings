@@ -83,7 +83,6 @@ namespace ChessOpenings.Helpers
 
         private bool IsCapture()
         {
-            //TODO: Allow for En Passant
             if (Move.ToSquare.ContainsPiece())
             {
                 return true;

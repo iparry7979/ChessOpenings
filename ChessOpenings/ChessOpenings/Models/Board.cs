@@ -217,18 +217,22 @@ namespace ChessOpenings.Models
                 return null;
             }
             rank--; //convert for 0 starting array
-            return squaresArray[rank, file];
-        }
-
-        public BoardVector[] GetDiagonalsFromSquare(string squareNotation)
-        {
-            if (squareNotation != null)
+            if (rank >= 0 && rank <= 7 && file >= 0 && file <= 7)
             {
-                return GetDiagonalsFromSquare(GetSquareByNotation(squareNotation));
+                return squaresArray[rank, file];
             }
             return null;
         }
-        public BoardVector[] GetDiagonalsFromSquare(Square subjectSquare)
+
+        public BoardVector[] GetDiagonalVectorsFromSquare(string squareNotation)
+        {
+            if (squareNotation != null)
+            {
+                return GetDiagonalVectorsFromSquare(GetSquareByNotation(squareNotation));
+            }
+            return null;
+        }
+        public BoardVector[] GetDiagonalVectorsFromSquare(Square subjectSquare)
         {
             if (subjectSquare == null)
             {
@@ -294,6 +298,136 @@ namespace ChessOpenings.Models
             vectorList.Add(topLeft);
 
             return vectorList.ToArray();
+        }
+
+        public BoardVector[] GetLinearVectorsFromSquare(string squareNotation)
+        {
+            if (squareNotation != null)
+            {
+                return GetLinearVectorsFromSquare(GetSquareByNotation(squareNotation));
+            }
+            return null;
+        }
+
+        public BoardVector[] GetLinearVectorsFromSquare(Square subjectSquare)
+        {
+            if (subjectSquare == null)
+            {
+                return null;
+            }
+            List<BoardVector> vectorList = new List<BoardVector>();
+            char file = subjectSquare.File;
+            byte rank = subjectSquare.Rank;
+
+            BoardVector bottom = new BoardVector();
+            while (rank >= 1)
+            {
+                if (rank != subjectSquare.Rank)
+                {
+                    bottom.AddSquare(GetSquare(file, rank));
+                }
+                rank--;
+            }
+            vectorList.Add(bottom);
+
+            file = subjectSquare.File;
+            rank = subjectSquare.Rank;
+            BoardVector right = new BoardVector();
+            while (file <= 'h')
+            {
+                if (file != subjectSquare.File)
+                {
+                    right.AddSquare(GetSquare(file, rank));
+                }
+                file++;
+            }
+            vectorList.Add(right);
+
+            file = subjectSquare.File;
+            rank = subjectSquare.Rank;
+            BoardVector top = new BoardVector();
+            while (rank <= 8)
+            {
+                if (rank != subjectSquare.Rank)
+                {
+                    top.AddSquare(GetSquare(file, rank));
+                }
+                rank++;
+
+            }
+            vectorList.Add(top);
+
+            file = subjectSquare.File;
+            rank = subjectSquare.Rank;
+            BoardVector left = new BoardVector();
+            while (file >= 'a')
+            {
+                if (file != subjectSquare.File)
+                {
+                    left.AddSquare(GetSquare(file, rank));
+                }
+                file--;
+            }
+            vectorList.Add(left);
+
+            return vectorList.ToArray();
+        }
+
+        public BoardVector[] GetAllRadialVectors(string squareNotation)
+        {
+            if (squareNotation != null)
+            {
+                return GetAllRadialVectors(GetSquareByNotation(squareNotation));
+            }
+            return null;
+        }
+
+        public BoardVector[] GetAllRadialVectors(Square subjectSquare)
+        {
+            BoardVector[] diagonals = GetDiagonalVectorsFromSquare(subjectSquare);
+            BoardVector[] linears = GetLinearVectorsFromSquare(subjectSquare);
+            List<BoardVector> allVectors = diagonals.ToList<BoardVector>();
+            allVectors.AddRange(linears.ToList<BoardVector>());
+            return allVectors.ToArray();
+        }
+
+        public BoardVector GetKnightConnections(string squareNotation)
+        {
+            if (squareNotation != null)
+            {
+                return GetKnightConnections(GetSquareByNotation(squareNotation));
+            }
+            return null;
+        }
+
+        public BoardVector GetKnightConnections(Square subjectSquare)
+        {
+            BoardVector rtn = new BoardVector();
+            if (subjectSquare == null)
+            {
+                return null;
+            }
+            char file = subjectSquare.File;
+            byte rank = subjectSquare.Rank;
+
+            List<Square> squares = new List<Square>();
+            squares.Add(GetSquare((char)(file + 2), (byte)(rank - 1)));
+            squares.Add(GetSquare((char)(file + 2), (byte)(rank + 1)));
+            squares.Add(GetSquare((char)(file - 2), (byte)(rank - 1)));
+            squares.Add(GetSquare((char)(file - 2), (byte)(rank + 1)));
+            squares.Add(GetSquare((char)(file + 1), (byte)(rank - 2)));
+            squares.Add(GetSquare((char)(file + 1), (byte)(rank + 2)));
+            squares.Add(GetSquare((char)(file - 1), (byte)(rank - 2)));
+            squares.Add(GetSquare((char)(file - 1), (byte)(rank + 2)));
+
+            foreach(Square s in squares)
+            {
+                if (s != null)
+                {
+                    rtn.AddSquare(s);
+                }
+            }
+            return rtn;
         }
     }
 }
