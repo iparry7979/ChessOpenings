@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ChessOpenings.Models;
 using ChessOpenings.Pieces;
+using System.Collections.Generic;
 
 namespace ChessOpenings.UnitTests
 {
@@ -92,6 +93,43 @@ namespace ChessOpenings.UnitTests
 
             //Empty vectors are equal
             Assert.IsTrue(emptyVector.Equals(emptyVector));
+        }
+
+        [TestMethod]
+        public void TestFirstOccupiedSquare()
+        {
+            Bishop b = new Bishop(Enums.Colour.White);
+            Knight k = new Knight(Enums.Colour.Black);
+            BoardVector testVector = GetTestVector(3);
+            testVector.AddPiece(b, testVector.Count - 1);
+            Square occupiedSquare = testVector.GetFirstOccupiedSquare();
+            Assert.IsTrue(occupiedSquare.Notation == "a3", "Incorrect square returned");
+            Assert.IsTrue(occupiedSquare.Piece == b, "Incorrect Piece");
+
+            testVector = GetTestVector(4);
+            testVector.AddPiece(b, testVector.Count - 1);
+            testVector.AddPiece(k, testVector.Count - 2);
+            occupiedSquare = testVector.GetFirstOccupiedSquare();
+            Assert.IsTrue(occupiedSquare.Notation == "a3", "Incorrect square returned");
+            Assert.IsTrue(occupiedSquare.Piece == k, "Incorrect piece");
+
+            testVector = GetTestVector(4);
+            occupiedSquare = testVector.GetFirstOccupiedSquare();
+            Assert.IsNull(occupiedSquare, "Empty vector did not return null");
+        }
+
+        public BoardVector GetTestVector(int length, bool ordered = true)
+        {
+            BoardVector testVector = new BoardVector();
+            for (int i = 0; i < length; i++)
+            {
+                testVector.AddSquare(new Square(null, Enums.Colour.White)
+                {
+                    File = 'a',
+                    Rank = (byte)(i + 1)
+                });
+            }
+            return testVector;
         }
     }
 }

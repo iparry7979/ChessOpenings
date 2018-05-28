@@ -157,6 +157,97 @@ namespace ChessOpenings.Helpers
 
         private string GenerateDisambiguationString()
         {
+            if (Piece is Bishop)
+            {
+                BoardVector[] diagonals = Board.GetDiagonalVectorsFromSquare(Move.FromSquare);
+                foreach(BoardVector d in diagonals)
+                {
+                    Square s = d.GetFirstOccupiedSquare();
+                    if (s != null)
+                    {
+                        if (s.Piece is Bishop)
+                        {
+                            if (s.File != Move.FromSquare.File)
+                            {
+                                return Move.FromSquare.File.ToString();
+                            }
+                            else
+                            {
+                                if (s.Rank != Move.FromSquare.Rank)
+                                {
+                                    return Move.FromSquare.Rank.ToString();
+                                }
+                                else
+                                {
+                                    return Move.FromSquare.Notation;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else if (Piece is Rook)
+            {
+                BoardVector[] linears = Board.GetLinearVectorsFromSquare(Move.FromSquare);
+                foreach (BoardVector l in linears)
+                {
+                    Square s = l.GetFirstOccupiedSquare();
+                    if (s != null)
+                    {
+                        if (s.Piece is Rook)
+                        {
+                            if (s.File != Move.FromSquare.File)
+                            {
+                                return Move.FromSquare.File.ToString();
+                            }
+                            else
+                            {
+                                if (s.Rank != Move.FromSquare.Rank)
+                                {
+                                    return Move.FromSquare.Rank.ToString();
+                                }
+                                else
+                                {
+                                    return Move.FromSquare.Notation;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else if (Piece is Queen)
+            {
+                BoardVector[] radials = Board.GetAllRadialVectors(Move.FromSquare);
+                foreach (BoardVector r in radials)
+                {
+                    Square s = r.GetFirstOccupiedSquare();
+                    if (s != null)
+                    {
+                        if (s.Piece is Queen)
+                        {
+                            if (s.File != Move.FromSquare.File)
+                            {
+                                return Move.FromSquare.File.ToString();
+                            }
+                            else
+                            {
+                                if (s.Rank != Move.FromSquare.Rank)
+                                {
+                                    return Move.FromSquare.Rank.ToString();
+                                }
+                                else
+                                {
+                                    return Move.FromSquare.Notation;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else if (Piece is Knight)
+            {
+
+            }
             return null;
         }
     }

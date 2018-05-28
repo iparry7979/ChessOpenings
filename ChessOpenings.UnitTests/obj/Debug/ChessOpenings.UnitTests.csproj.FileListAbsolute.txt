@@ -1,0 +1,15 @@
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.UnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.UnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.UnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.UnitTests\bin\Debug\ChessOpenings.UnitTests.dll
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.UnitTests\bin\Debug\ChessOpenings.UnitTests.pdb
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.UnitTests\bin\Debug\ChessOpenings.dll
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.UnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.UnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.UnitTests\bin\Debug\ChessOpenings.pdb
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.UnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.UnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.UnitTests\obj\Debug\ChessOpenings.UnitTests.csprojResolveAssemblyReference.cache
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.UnitTests\obj\Debug\ChessOpenings.UnitTests.csproj.CoreCompileInputs.cache
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.UnitTests\obj\Debug\ChessOpenings.UnitTests.dll
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.UnitTests\obj\Debug\ChessOpenings.UnitTests.pdb

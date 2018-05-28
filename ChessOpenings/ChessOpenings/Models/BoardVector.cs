@@ -18,7 +18,7 @@ namespace ChessOpenings.Models
             }
         }
 
-        public BoardVector()
+        public BoardVector(bool ordered = true)
         {
             Sequence = new Square[0];       
         }
@@ -42,6 +42,11 @@ namespace ChessOpenings.Models
             }
         }
 
+        public void AddPiece(Piece p, int position)
+        {
+            Sequence[position].Piece = p;
+        }
+
         public Piece GetFirstPiece()
         {
             if (Sequence == null) return null;
@@ -53,6 +58,47 @@ namespace ChessOpenings.Models
                 }
             }
             return null;
+        }
+
+        public Square GetFirstOccupiedSquare()
+        {
+            if (Sequence == null) return null;
+            for (int i = 0; i < Sequence.Length; i++)
+            {
+                if (Sequence[i].ContainsPiece())
+                {
+                    return Sequence[i];
+                }
+            }
+            return null;
+        }
+
+        public List<Square> GetSquaresContainingPiece(Piece piece, bool ignoreColour)
+        {
+            List<Square> rtn = new List<Square>();
+            foreach (Square s in Sequence)
+            {
+                if (s.ContainsPiece())
+                {
+                    string pieceNotation1 = s.Piece.GetPieceNotation();
+                    string pieceNotation2 = piece.GetPieceNotation();
+                    if (!ignoreColour)
+                    {
+                        if (pieceNotation1 == pieceNotation2)
+                        {
+                            rtn.Add(s);
+                        }
+                    }
+                    else
+                    {
+                        if (pieceNotation1[1] == pieceNotation2[1])
+                        {
+                            rtn.Add(s);
+                        }
+                    }
+                }
+            }
+            return rtn;
         }
 
         public override bool Equals(System.Object obj)
