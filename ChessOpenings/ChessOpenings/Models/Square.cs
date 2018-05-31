@@ -37,5 +37,17 @@ namespace ChessOpenings.Models
         {
             return Piece != null;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Square)
+            {
+                if (this.Notation == ((Square)obj).Notation)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

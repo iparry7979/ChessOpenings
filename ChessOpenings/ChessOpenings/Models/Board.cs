@@ -14,6 +14,62 @@ namespace ChessOpenings.Models
         public Square[,] squaresArray { get; }
         public Enums.Colour Turn { get; set; }
         private Stack<Move> gameHistory { get; set; }
+        public bool WhiteCanCastleKingSide
+        {
+            get
+            {
+                foreach (Move m in gameHistory)
+                {
+                    if (m.FromSquare.Notation == "e1" || m.FromSquare.Notation == "h1")
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        public bool WhiteCanCastleQueenSide
+        {
+            get
+            {
+                foreach (Move m in gameHistory)
+                {
+                    if (m.FromSquare.Notation == "e1" || m.FromSquare.Notation == "a1")
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        public bool BlackCanCastleKingSide
+        {
+            get
+            {
+                foreach(Move m in gameHistory)
+                {
+                    if (m.FromSquare.Notation == "e8" || m.FromSquare.Notation == "h8")
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        public bool BlackCanCastleQueenSide
+        {
+            get
+            {
+                foreach (Move m in gameHistory)
+                {
+                    if (m.FromSquare.Notation == "e8" || m.FromSquare.Notation == "h1")
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
 
         public Square enPassantAllowedSquare
         {
@@ -33,6 +89,34 @@ namespace ChessOpenings.Models
             Turn = Enums.Colour.White;
             gameHistory = new Stack<Move>();
             squaresArray = InitialiseBoard();
+        }
+
+        public Board(Dictionary<string, Piece> position)
+        {
+            Turn = Enums.Colour.White;
+            gameHistory = new Stack<Move>();
+            Square[,] board = new Square[8, 8];
+            for (int rank = 0; rank < 8; rank++)
+            {
+                for (int file = 0; file < 8; file++)
+                {
+                    Colour sc = (file + rank) % 2 == 0 ? Colour.Black : Colour.White;
+
+                    Square currentSquare = new Square(null, sc);
+
+                    currentSquare.File = (char)(file + 97); //convert int to relevant character
+                    currentSquare.Rank = (byte)(rank + 1);
+
+                    Piece p;
+
+                    position.TryGetValue(currentSquare.Notation, out p);
+
+                    currentSquare.Piece = p;
+
+                    board[rank, file] = currentSquare;
+                }
+            }
+            squaresArray = board;
         }
 
         public Square[,] InitialiseBoard()
@@ -131,8 +215,54 @@ namespace ChessOpenings.Models
                 {
                     move.PieceTaken = move.ToSquare.Piece;
                 }
+                //Castling
+                if (move.IsKingSideCastle())
+                {
+                    if (Turn == Enums.Colour.White)
+                    {
+                        Square rookSourceSquare = GetSquareByNotation("h1");
+                        Square rookDestinationSquare = GetSquareByNotation("f1");
+                        rookDestinationSquare.Piece = rookSourceSquare.Piece;
+                        rookSourceSquare.Piece = null;
+                    }
+                    else
+                    {
+                        Square rookSourceSquare = GetSquareByNotation("h8");
+                        Square rookDestinationSquare = GetSquareByNotation("f8");
+                        rookDestinationSquare.Piece = rookSourceSquare.Piece;
+                        rookSourceSquare.Piece = null;
+                    }
+                }
+                if (move.IsQueenSideCastle())
+                {
+                    if (Turn == Enums.Colour.White)
+                    {
+                        Square rookSourceSquare = GetSquareByNotation("a1");
+                        Square rookDestinationSquare = GetSquareByNotation("d1");
+                        rookDestinationSquare.Piece = rookSourceSquare.Piece;
+                        rookSourceSquare.Piece = null;
+                    }
+                    else
+                    {
+                        Square rookSourceSquare = GetSquareByNotation("a8");
+                        Square rookDestinationSquare = GetSquareByNotation("d8");
+                        rookDestinationSquare.Piece = rookSourceSquare.Piece;
+                        rookSourceSquare.Piece = null;
+                    }
+                }
+                //En passant
+                if (enPassantAllowedSquare != null && enPassantAllowedSquare.Equals(move.ToSquare) && move.SubjectPiece is Pawn)
+                {
+                    Move lastMove = GetLastMove();
+                    move.PieceTaken = lastMove.ToSquare.Piece;
+                    lastMove.ToSquare.Piece = null;
+                }
                 move.ToSquare.Piece = move.FromSquare.Piece;
                 move.FromSquare.Piece = null;
+                if (move.IsPromotion())
+                {
+                    move.ToSquare.Piece = move.PromotionPiece;
+                }
                 ChangeTurn();
                 gameHistory.Push(move);
             }
@@ -145,10 +275,50 @@ namespace ChessOpenings.Models
             if (gameHistory.Count > 0)
             {
                 lastMove = gameHistory.Peek();
-                lastMove.FromSquare.Piece = lastMove.ToSquare.Piece;
+                lastMove.FromSquare.Piece = lastMove.SubjectPiece;
                 lastMove.ToSquare.Piece = lastMove.PieceTaken;
+
+                if (lastMove.IsKingSideCastle())
+                {
+                    if (lastMove.SubjectPiece.colour == Enums.Colour.White)
+                    {
+                        Square rookSourceSquare = GetSquareByNotation("f1");
+                        Square rookDestinationSquare = GetSquareByNotation("h1");
+                        rookDestinationSquare.Piece = rookSourceSquare.Piece;
+                        rookSourceSquare.Piece = null;
+                    }
+                    else
+                    {
+                        Square rookSourceSquare = GetSquareByNotation("f8");
+                        Square rookDestinationSquare = GetSquareByNotation("h8");
+                        rookDestinationSquare.Piece = rookSourceSquare.Piece;
+                        rookSourceSquare.Piece = null;
+                    }
+                }
+                if (lastMove.IsQueenSideCastle())
+                {
+                    if (lastMove.SubjectPiece.colour == Enums.Colour.White)
+                    {
+                        Square rookSourceSquare = GetSquareByNotation("d1");
+                        Square rookDestinationSquare = GetSquareByNotation("a1");
+                        rookDestinationSquare.Piece = rookSourceSquare.Piece;
+                        rookSourceSquare.Piece = null;
+                    }
+                    else
+                    {
+                        Square rookSourceSquare = GetSquareByNotation("d8");
+                        Square rookDestinationSquare = GetSquareByNotation("a8");
+                        rookDestinationSquare.Piece = rookSourceSquare.Piece;
+                        rookSourceSquare.Piece = null;
+                    }
+                }
                 ChangeTurn();
                 gameHistory.Pop();
+                if (enPassantAllowedSquare != null && enPassantAllowedSquare.Equals(lastMove.ToSquare) && lastMove.SubjectPiece is Pawn)
+                {
+                    lastMove.ToSquare.Piece = null;
+                    GetLastMove().ToSquare.Piece = GetLastMove().SubjectPiece;
+                }
             }
             return lastMove;
         }
@@ -222,6 +392,57 @@ namespace ChessOpenings.Models
                 return squaresArray[rank, file];
             }
             return null;
+        }
+
+        public List<Square> GetSquaresContainingPiece(string pieceNotation, Enums.Colour colour)
+        {
+            Piece p = null;
+            switch(pieceNotation)
+            {
+                case "P":
+                    p = new Pawn(colour);
+                    break;
+                case "N":
+                    p = new Knight(colour);
+                    break;
+                case "B":
+                    p = new Bishop(colour);
+                    break;
+                case "R":
+                    p = new Rook(colour);
+                    break;
+                case "Q":
+                    p = new Queen(colour);
+                    break;
+                case "K":
+                    p = new King(colour);
+                    break;
+                default:
+                    p = null;
+                    break;
+            }
+            return GetSquaresContainingPiece(p);
+        }
+
+        public List<Square> GetSquaresContainingPiece(Piece p)
+        {
+            if (p == null)
+            {
+                return null;
+            }
+
+            List<Square> rtn = new List<Square>();
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if (squaresArray[i, j].ContainsPiece() && squaresArray[i, j].Piece.Equals(p))
+                    {
+                        rtn.Add(squaresArray[i, j]);
+                    }
+                }
+            }
+            return rtn;
         }
 
         public BoardVector[] GetDiagonalVectorsFromSquare(string squareNotation)
@@ -428,6 +649,186 @@ namespace ChessOpenings.Models
                 }
             }
             return rtn;
+        }
+
+        public BoardVector GetKingVector(string squareNotation)
+        {
+            if (squareNotation != null)
+            {
+                return GetKingVector(GetSquareByNotation(squareNotation));
+            }
+            return null;
+        }
+
+        public BoardVector GetKingVector(Square subjectSquare)
+        {
+            BoardVector rtn = new BoardVector();
+            if (subjectSquare == null)
+            {
+                return null;
+            }
+            char file = subjectSquare.File;
+            byte rank = subjectSquare.Rank;
+
+            List<Square> squares = new List<Square>();
+            squares.Add(GetSquare((char)(file + 1), (byte)(rank + 1)));
+            squares.Add(GetSquare((char)(file + 1), rank));
+            squares.Add(GetSquare((char)(file + 1), (byte)(rank - 1)));
+            squares.Add(GetSquare((char)(file - 1), (byte)(rank + 1)));
+            squares.Add(GetSquare((char)(file - 1), rank));
+            squares.Add(GetSquare((char)(file - 1), (byte)(rank - 1)));
+            squares.Add(GetSquare(file, (byte)(rank + 1)));
+            squares.Add(GetSquare(file, (byte)(rank - 1)));
+
+            foreach (Square s in squares)
+            {
+                if (s != null)
+                {
+                    rtn.AddSquare(s);
+                }
+            }
+            return rtn;
+        }
+
+        public BoardVector GetPawnAttackVectors(string squareNotation, Enums.Colour oppositionPieceColour)
+        {
+            if (squareNotation != null)
+            {
+                return GetPawnAttackVectors(GetSquareByNotation(squareNotation), oppositionPieceColour);
+            }
+            return null;
+        }
+
+        public BoardVector GetPawnAttackVectors(Square subjectSquare, Enums.Colour oppositionPieceColour)
+        {
+            BoardVector rtn = new BoardVector();
+            if (subjectSquare == null)
+            {
+                return null;
+            }
+            char file = subjectSquare.File;
+            byte rank = subjectSquare.Rank;
+
+            List<Square> squares = new List<Square>();
+            if (oppositionPieceColour == Enums.Colour.White)
+            {
+                squares.Add(GetSquare((char)(file - 1), (byte)(rank - 1)));
+                squares.Add(GetSquare((char)(file + 1), (byte)(rank - 1)));
+            }
+            else
+            {
+                squares.Add(GetSquare((char)(file - 1), (byte)(rank + 1)));
+                squares.Add(GetSquare((char)(file + 1), (byte)(rank + 1)));
+            }
+
+            foreach(Square s in squares)
+            {
+                if (s != null)
+                {
+                    rtn.AddSquare(s);
+                }
+            }
+            return rtn;
+        }
+
+        public bool WhiteKingIsInCheck()
+        {
+            List<Square> sList = GetSquaresContainingPiece("K", Enums.Colour.White);
+            if (sList.Count() > 0)
+            {
+                Square s = sList[0];
+                return SquareIsUnderAttack(s, Enums.Colour.Black);
+            }
+            return false;
+        }
+
+        public bool WhiteKingIsInCheck(Move preceedingMove)
+        {
+            MakeMove(preceedingMove);
+            bool rtn = WhiteKingIsInCheck();
+            GoBackOneMove();
+            return rtn;
+        }
+
+        public bool BlackKingIsInCheck()
+        {
+            List<Square> sList = GetSquaresContainingPiece("K", Enums.Colour.Black);
+            if (sList.Count() > 0)
+            {
+                Square s = sList[0];
+                return SquareIsUnderAttack(s, Enums.Colour.White);
+            }
+            return false;
+        }
+
+        public bool BlackKingIsInCheck(Move preceedingMove)
+        {
+            MakeMove(preceedingMove);
+            bool rtn = BlackKingIsInCheck();
+            GoBackOneMove();
+            return rtn;
+        }
+
+        public bool IsEitherKingInCheck()
+        {
+            return WhiteKingIsInCheck() || BlackKingIsInCheck();
+        }
+
+        public bool IsEitherKingInCheck(Move preceedingMove)
+        {
+            MakeMove(preceedingMove);
+            bool rtn = IsEitherKingInCheck();
+            GoBackOneMove();
+            return rtn;
+        }
+
+        public bool SquareIsUnderAttack(Square s, Enums.Colour oppositionPieceColour)
+        {
+            BoardVector[] diagonals = GetDiagonalVectorsFromSquare(s);
+            BoardVector[] linears = GetLinearVectorsFromSquare(s);
+            BoardVector knightVector = GetKnightConnections(s);
+            BoardVector kingVector = GetKingVector(s);
+            BoardVector pawnVector = GetPawnAttackVectors(s, oppositionPieceColour);
+
+            foreach (BoardVector d in diagonals)
+            {
+                if (d.GetFirstPiece() is Bishop && d.GetFirstPiece().colour == oppositionPieceColour)
+                {
+                    return true;
+                }
+                if (d.GetFirstPiece() is Queen && d.GetFirstPiece().colour == oppositionPieceColour)
+                {
+                    return true;
+                }
+            }
+
+            foreach (BoardVector l in linears)
+            {
+                if (l.GetFirstPiece() is Rook && l.GetFirstPiece().colour == oppositionPieceColour)
+                {
+                    return true;
+                }
+                if (l.GetFirstPiece() is Queen && l.GetFirstPiece().colour == oppositionPieceColour)
+                {
+                    return true;
+                }
+            }
+
+            if (knightVector.GetSquaresContainingPiece(new Knight(oppositionPieceColour), false).Count > 0)
+            {
+                return true;
+            }
+
+            if (kingVector.GetSquaresContainingPiece(new King(oppositionPieceColour), false).Count > 0)
+            {
+                return true;
+            }
+
+            if (pawnVector.GetSquaresContainingPiece(new Pawn(oppositionPieceColour), false).Count > 0)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

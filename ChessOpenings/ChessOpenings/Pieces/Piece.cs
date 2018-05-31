@@ -27,6 +27,13 @@ namespace ChessOpenings.Pieces
 
         public abstract override string ToString();
 
-        //protected abstract Square[] DeterminePath(Square start, Square end);
+        public override bool Equals(object obj)
+        {
+            if (obj is Piece)
+            {
+                return ((Piece)obj).GetPieceNotation() == GetPieceNotation();
+            }
+            return false;
+        }
     }
 }

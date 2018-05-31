@@ -118,6 +118,51 @@ namespace ChessOpenings.UnitTests
             Assert.IsNull(occupiedSquare, "Empty vector did not return null");
         }
 
+        [TestMethod]
+        public void TestGetSquaresContainingPiece()
+        {
+            Knight blackKnight = new Knight(Enums.Colour.White);
+            Knight whiteKnight = new Knight(Enums.Colour.Black);
+            Bishop blackBishop = new Bishop(Enums.Colour.Black);
+
+            BoardVector testVector = GetTestVector(6);
+
+            testVector.AddPiece(blackKnight, 0);
+            testVector.AddPiece(whiteKnight, testVector.Count - 1);
+
+            List<Square> result = testVector.GetSquaresContainingPiece(blackKnight, false);
+
+            //Test correct results when ignoring colour
+            Assert.IsTrue(result.Count == 1, "Array is unexpected size");
+            Assert.IsTrue(result[0].Notation == testVector.Sequence[0].Notation, "Wrong square returned");
+
+            result = testVector.GetSquaresContainingPiece(blackKnight, true);
+
+            //Test correct results when not ignoring colour
+            Assert.IsTrue(result.Count == 2, "Array is unexpected size");
+            Assert.IsTrue(result[0].Notation == testVector.Sequence[0].Notation, "Wrong square returned");
+            Assert.IsTrue(result[1].Notation == testVector.Sequence[testVector.Count - 1].Notation, "Wrong square returned");
+
+            result = testVector.GetSquaresContainingPiece(blackBishop, false);
+
+            //Test correct results when different piece used
+            Assert.IsTrue(result == null || result.Count == 0);
+
+            testVector = GetTestVector(2);
+
+            result = testVector.GetSquaresContainingPiece(blackBishop, false);
+
+            //Test correct results when all squares empty
+            Assert.IsTrue(result == null || result.Count == 0);
+
+            testVector = GetTestVector(0);
+
+            result = testVector.GetSquaresContainingPiece(blackBishop, false);
+
+            //Test zero vector
+            Assert.IsTrue(result == null || result.Count == 0);
+        }
+
         public BoardVector GetTestVector(int length, bool ordered = true)
         {
             BoardVector testVector = new BoardVector();
@@ -131,5 +176,7 @@ namespace ChessOpenings.UnitTests
             }
             return testVector;
         }
+
+
     }
 }

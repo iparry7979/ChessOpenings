@@ -32,13 +32,14 @@ namespace ChessOpenings.Helpers
             SourceSquare = move.FromSquare.Notation;
             DestinationSquare = move.ToSquare.Notation;
             Capture = false;
-            Check = false;
+            //Check = false;
             Promotion = "";
             KingSideCastle = false;
             QueenSideCastle = false;
             Board = board;
             Move = move;
             Piece = subjectPiece;
+            Check = MoveCausesCheck();
         }
 
         private string BuildString()
@@ -78,6 +79,7 @@ namespace ChessOpenings.Helpers
             QueenSideCastle = IsQueenSideCastle();
             Capture = IsCapture();
             Promotion = PromotionString();
+            Disambiguation = GenerateDisambiguationString();
             return BuildString();
         }
 
@@ -113,57 +115,23 @@ namespace ChessOpenings.Helpers
 
         private bool IsKingSideCastle()
         {
-            if (Piece is King)
-            {
-                if (Piece.colour == Enums.Colour.White)
-                {
-                    if (Move.FromSquare.Notation == "e1" && Move.ToSquare.Notation == "g1")
-                    {
-                        return true;
-                    }
-                }
-                else
-                {
-                    if (Move.FromSquare.Notation == "e8" && Move.ToSquare.Notation == "g8")
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return Move.IsKingSideCastle();
         }
 
         private bool IsQueenSideCastle()
         {
-            if (Piece is King)
-            {
-                if (Piece.colour == Enums.Colour.White)
-                {
-                    if (Move.FromSquare.Notation == "e1" && Move.ToSquare.Notation == "c1")
-                    {
-                        return true;
-                    }
-                }
-                else
-                {
-                    if (Move.FromSquare.Notation == "e8" && Move.ToSquare.Notation == "c8")
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return Move.IsQueenSideCastle();
         }
 
         private string GenerateDisambiguationString()
         {
             if (Piece is Bishop)
             {
-                BoardVector[] diagonals = Board.GetDiagonalVectorsFromSquare(Move.FromSquare);
+                BoardVector[] diagonals = Board.GetDiagonalVectorsFromSquare(Move.ToSquare);
                 foreach(BoardVector d in diagonals)
                 {
                     Square s = d.GetFirstOccupiedSquare();
-                    if (s != null)
+                    if (s != null && !(s.Equals(Move.FromSquare)))
                     {
                         if (s.Piece is Bishop)
                         {
@@ -177,10 +145,6 @@ namespace ChessOpenings.Helpers
                                 {
                                     return Move.FromSquare.Rank.ToString();
                                 }
-                                else
-                                {
-                                    return Move.FromSquare.Notation;
-                                }
                             }
                         }
                     }
@@ -188,11 +152,11 @@ namespace ChessOpenings.Helpers
             }
             else if (Piece is Rook)
             {
-                BoardVector[] linears = Board.GetLinearVectorsFromSquare(Move.FromSquare);
+                BoardVector[] linears = Board.GetLinearVectorsFromSquare(Move.ToSquare);
                 foreach (BoardVector l in linears)
                 {
                     Square s = l.GetFirstOccupiedSquare();
-                    if (s != null)
+                    if (s != null && !(s.Equals(Move.FromSquare)))
                     {
                         if (s.Piece is Rook)
                         {
@@ -206,10 +170,6 @@ namespace ChessOpenings.Helpers
                                 {
                                     return Move.FromSquare.Rank.ToString();
                                 }
-                                else
-                                {
-                                    return Move.FromSquare.Notation;
-                                }
                             }
                         }
                     }
@@ -217,11 +177,11 @@ namespace ChessOpenings.Helpers
             }
             else if (Piece is Queen)
             {
-                BoardVector[] radials = Board.GetAllRadialVectors(Move.FromSquare);
+                BoardVector[] radials = Board.GetAllRadialVectors(Move.ToSquare);
                 foreach (BoardVector r in radials)
                 {
                     Square s = r.GetFirstOccupiedSquare();
-                    if (s != null)
+                    if (s != null && !(s.Equals(Move.FromSquare)))
                     {
                         if (s.Piece is Queen)
                         {
@@ -235,10 +195,6 @@ namespace ChessOpenings.Helpers
                                 {
                                     return Move.FromSquare.Rank.ToString();
                                 }
-                                else
-                                {
-                                    return Move.FromSquare.Notation;
-                                }
                             }
                         }
                     }
@@ -246,9 +202,35 @@ namespace ChessOpenings.Helpers
             }
             else if (Piece is Knight)
             {
-
+                BoardVector knightVector = Board.GetKnightConnections(Move.ToSquare);
+                List<Square> knightSquares = knightVector.GetSquaresContainingPiece(Piece, false);
+                if (knightSquares.Count == 2)
+                {
+                    foreach (Square s in knightSquares)
+                    {
+                        if (s != Move.FromSquare)
+                        {
+                            if (s.File != Move.FromSquare.File)
+                            {
+                                return Move.FromSquare.File.ToString();
+                            }
+                            else
+                            {
+                                if (s.Rank != Move.FromSquare.Rank)
+                                {
+                                    return Move.FromSquare.Rank.ToString();
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            return null;
+            return "";
+        }
+
+        public bool MoveCausesCheck()
+        {
+            return false;
         }
     }
 }
