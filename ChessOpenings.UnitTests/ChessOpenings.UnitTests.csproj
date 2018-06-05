@@ -48,9 +48,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\AlgebraicNotaionGenarationTests.cs" />
     <Compile Include="Models\BoardTests.cs" />
     <Compile Include="Models\BoardVectorTests.cs" />
     <Compile Include="Models\PieceTests.cs" />
+    <Compile Include="Models\SquareTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

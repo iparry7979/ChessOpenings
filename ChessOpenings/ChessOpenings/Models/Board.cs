@@ -202,10 +202,13 @@ namespace ChessOpenings.Models
             return board;
         }
 
-        public bool MakeMove(Move move)
+        public bool MakeMove(Move move, bool generateNotaion = true)
         {
-            AlgebraicNotationGenerator notationGenerator = new AlgebraicNotationGenerator(this, move, move.FromSquare.Piece);
-            move.AlgebraicNotation = notationGenerator.Generate();
+            if (generateNotaion)
+            {
+                AlgebraicNotationGenerator notationGenerator = new AlgebraicNotationGenerator(this, move);
+                move.AlgebraicNotation = notationGenerator.Generate();
+            }
             bool valid = true;
             valid = ValidateMove(move);
             if (valid)
@@ -744,7 +747,7 @@ namespace ChessOpenings.Models
 
         public bool WhiteKingIsInCheck(Move preceedingMove)
         {
-            MakeMove(preceedingMove);
+            MakeMove(preceedingMove, false);
             bool rtn = WhiteKingIsInCheck();
             GoBackOneMove();
             return rtn;
@@ -763,7 +766,7 @@ namespace ChessOpenings.Models
 
         public bool BlackKingIsInCheck(Move preceedingMove)
         {
-            MakeMove(preceedingMove);
+            MakeMove(preceedingMove, false);
             bool rtn = BlackKingIsInCheck();
             GoBackOneMove();
             return rtn;
@@ -776,7 +779,7 @@ namespace ChessOpenings.Models
 
         public bool IsEitherKingInCheck(Move preceedingMove)
         {
-            MakeMove(preceedingMove);
+            MakeMove(preceedingMove, false);
             bool rtn = IsEitherKingInCheck();
             GoBackOneMove();
             return rtn;

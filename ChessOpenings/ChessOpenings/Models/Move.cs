@@ -28,6 +28,17 @@ namespace ChessOpenings.Models
         public Piece PromotionPiece { get; set; }
         public string AlgebraicNotation { get; set; }
 
+        public Move(Square fromSquare, Square toSquare)
+        {
+            FromSquare = fromSquare;
+            ToSquare = toSquare;
+        }
+
+        public Move()
+        {
+
+        }
+
         public string FromSquareNotation()
         {
             return GenerateSquareNotation(FromSquare);

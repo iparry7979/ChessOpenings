@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ChessOpenings.Helpers
 {
-    class AlgebraicNotationGenerator
+    public class AlgebraicNotationGenerator
     {
         private string SubjectPiece;
         private string DestinationSquare;
@@ -26,9 +26,9 @@ namespace ChessOpenings.Helpers
 
         public string Notation;
 
-        public AlgebraicNotationGenerator(Board board, Move move, Piece subjectPiece)
+        public AlgebraicNotationGenerator(Board board, Move move)
         {
-            SubjectPiece = subjectPiece.ToString();
+            SubjectPiece = move.SubjectPiece.ToString();
             SourceSquare = move.FromSquare.Notation;
             DestinationSquare = move.ToSquare.Notation;
             Capture = false;
@@ -38,7 +38,7 @@ namespace ChessOpenings.Helpers
             QueenSideCastle = false;
             Board = board;
             Move = move;
-            Piece = subjectPiece;
+            Piece = move.SubjectPiece;
             Check = MoveCausesCheck();
         }
 
@@ -128,31 +128,35 @@ namespace ChessOpenings.Helpers
             if (Piece is Bishop)
             {
                 BoardVector[] diagonals = Board.GetDiagonalVectorsFromSquare(Move.ToSquare);
-                foreach(BoardVector d in diagonals)
+                List<Square> ambiguousSquares = new List<Square>();
+                foreach (BoardVector d in diagonals)
                 {
                     Square s = d.GetFirstOccupiedSquare();
                     if (s != null && !(s.Equals(Move.FromSquare)))
                     {
                         if (s.Piece is Bishop)
                         {
-                            if (s.File != Move.FromSquare.File)
-                            {
-                                return Move.FromSquare.File.ToString();
-                            }
-                            else
-                            {
-                                if (s.Rank != Move.FromSquare.Rank)
-                                {
-                                    return Move.FromSquare.Rank.ToString();
-                                }
-                            }
+                            ambiguousSquares.Add(s);
                         }
                     }
+                }
+                if (ambiguousSquares.Count() > 0)
+                {
+                    if (!FileAmbiguityExists(Move.FromSquare, ambiguousSquares))
+                    {
+                        return Move.FromSquare.File.ToString();
+                    }
+                    if (!RankAmbiguityExists(Move.FromSquare, ambiguousSquares))
+                    {
+                        return Move.FromSquare.Rank.ToString();
+                    }
+                    return Move.FromSquare.File.ToString() + Move.FromSquare.Rank.ToString();
                 }
             }
             else if (Piece is Rook)
             {
                 BoardVector[] linears = Board.GetLinearVectorsFromSquare(Move.ToSquare);
+                List<Square> ambiguousSquares = new List<Square>();
                 foreach (BoardVector l in linears)
                 {
                     Square s = l.GetFirstOccupiedSquare();
@@ -160,24 +164,27 @@ namespace ChessOpenings.Helpers
                     {
                         if (s.Piece is Rook)
                         {
-                            if (s.File != Move.FromSquare.File)
-                            {
-                                return Move.FromSquare.File.ToString();
-                            }
-                            else
-                            {
-                                if (s.Rank != Move.FromSquare.Rank)
-                                {
-                                    return Move.FromSquare.Rank.ToString();
-                                }
-                            }
+                            ambiguousSquares.Add(s);
                         }
                     }
+                }
+                if (ambiguousSquares.Count() > 0)
+                {
+                    if (!FileAmbiguityExists(Move.FromSquare, ambiguousSquares))
+                    {
+                        return Move.FromSquare.File.ToString();
+                    }
+                    if (!RankAmbiguityExists(Move.FromSquare, ambiguousSquares))
+                    {
+                        return Move.FromSquare.Rank.ToString();
+                    }
+                    return Move.FromSquare.File.ToString() + Move.FromSquare.Rank.ToString();
                 }
             }
             else if (Piece is Queen)
             {
                 BoardVector[] radials = Board.GetAllRadialVectors(Move.ToSquare);
+                List<Square> ambiguousSquares = new List<Square>();
                 foreach (BoardVector r in radials)
                 {
                     Square s = r.GetFirstOccupiedSquare();
@@ -185,52 +192,83 @@ namespace ChessOpenings.Helpers
                     {
                         if (s.Piece is Queen)
                         {
-                            if (s.File != Move.FromSquare.File)
-                            {
-                                return Move.FromSquare.File.ToString();
-                            }
-                            else
-                            {
-                                if (s.Rank != Move.FromSquare.Rank)
-                                {
-                                    return Move.FromSquare.Rank.ToString();
-                                }
-                            }
+                            ambiguousSquares.Add(s);
                         }
                     }
+                }
+                if (ambiguousSquares.Count() > 0)
+                {
+                    if (!FileAmbiguityExists(Move.FromSquare, ambiguousSquares))
+                    {
+                        return Move.FromSquare.File.ToString();
+                    }
+                    if (!RankAmbiguityExists(Move.FromSquare, ambiguousSquares))
+                    {
+                        return Move.FromSquare.Rank.ToString();
+                    }
+                    return Move.FromSquare.File.ToString() + Move.FromSquare.Rank.ToString();
                 }
             }
             else if (Piece is Knight)
             {
                 BoardVector knightVector = Board.GetKnightConnections(Move.ToSquare);
                 List<Square> knightSquares = knightVector.GetSquaresContainingPiece(Piece, false);
-                if (knightSquares.Count == 2)
+                if (knightSquares.Count >= 2)
                 {
-                    foreach (Square s in knightSquares)
+                    if (!FileAmbiguityExists(Move.FromSquare, knightSquares))
                     {
-                        if (s != Move.FromSquare)
-                        {
-                            if (s.File != Move.FromSquare.File)
-                            {
-                                return Move.FromSquare.File.ToString();
-                            }
-                            else
-                            {
-                                if (s.Rank != Move.FromSquare.Rank)
-                                {
-                                    return Move.FromSquare.Rank.ToString();
-                                }
-                            }
-                        }
+                        return Move.FromSquare.File.ToString();
                     }
+                    if (!RankAmbiguityExists(Move.FromSquare, knightSquares))
+                    {
+                        return Move.FromSquare.Rank.ToString();
+                    }
+                    return Move.FromSquare.File.ToString() + Move.FromSquare.Rank.ToString();
                 }
             }
             return "";
         }
 
+        private bool FileAmbiguityExists(Square subjectSquare, List<Square> ambiguousSquares)
+        {
+            foreach(Square s in ambiguousSquares)
+            {
+                if (!(s.Equals(subjectSquare)))
+                {
+                    if (s.File == subjectSquare.File)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool RankAmbiguityExists(Square subjectSquare, List<Square> ambiguousSquares)
+        {
+            foreach(Square s in ambiguousSquares)
+            {
+                if (!(s.Equals(subjectSquare)))
+                {
+                    if (s.Rank == subjectSquare.Rank)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         public bool MoveCausesCheck()
         {
-            return false;
+            if (Piece.colour == Enums.Colour.White)
+            {
+                return Board.BlackKingIsInCheck(Move);
+            }
+            else
+            {
+                return Board.WhiteKingIsInCheck(Move);
+            }
         }
     }
 }
