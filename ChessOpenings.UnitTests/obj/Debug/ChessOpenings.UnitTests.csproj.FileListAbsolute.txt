@@ -28,3 +28,5 @@ E:\CO\ChessOpenings\ChessOpenings.UnitTests\obj\Debug\ChessOpenings.UnitTests.cs
 E:\CO\ChessOpenings\ChessOpenings.UnitTests\obj\Debug\ChessOpenings.UnitTests.csproj.CoreCompileInputs.cache
 E:\CO\ChessOpenings\ChessOpenings.UnitTests\obj\Debug\ChessOpenings.UnitTests.dll
 E:\CO\ChessOpenings\ChessOpenings.UnitTests\obj\Debug\ChessOpenings.UnitTests.pdb
+E:\CO\ChessOpenings\ChessOpenings.UnitTests\obj\Debug\ChessOpenings.UnitTests.Properties.Resources.resources
+E:\CO\ChessOpenings\ChessOpenings.UnitTests\obj\Debug\ChessOpenings.UnitTests.csproj.GenerateResource.Cache

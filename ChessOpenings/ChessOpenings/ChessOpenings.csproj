@@ -34,8 +34,10 @@
     <Compile Include="Controllers\BoardController.cs" />
     <Compile Include="Enums\enums.cs" />
     <Compile Include="Helpers\AlgebraicNotationGenerator.cs" />
+    <Compile Include="Helpers\OpeningAccessor.cs" />
     <Compile Include="Models\Board.cs" />
     <Compile Include="Models\Move.cs" />
+    <Compile Include="Models\Opening.cs" />
     <Compile Include="Models\Square.cs" />
     <Compile Include="Models\BoardVector.cs" />
     <Compile Include="Pieces\Bishop.cs" />
@@ -52,7 +54,9 @@
   <ItemGroup>
     <Content Include="Data\ECOtoXML.java" />
     <Content Include="Data\Opening.java" />
-    <None Include="Data\openings.xml" />
+    <None Include="Data\openings.xml">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\scid.eco" />

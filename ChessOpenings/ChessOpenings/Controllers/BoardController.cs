@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
+using ChessOpenings.Helpers;
 
 namespace ChessOpenings.Controllers
 {
@@ -19,7 +20,7 @@ namespace ChessOpenings.Controllers
         public Move NextMove;
         public Board Board;
         public Enums.BoardOrientation Orientation;
-        public XDocument doc;
+        public OpeningAccessor OAccessor;
 
         private const string OPENINGDATAFILE = "openings.xml";
 
@@ -30,7 +31,8 @@ namespace ChessOpenings.Controllers
             NextMove = new Move();
             selectedSquare = null;
             Orientation = Enums.BoardOrientation.Standard;
-            doc = XDocument.Load(View.ParseOpenings());
+            XDocument doc = XDocument.Load(View.ParseOpenings());
+            OAccessor = new OpeningAccessor(doc);
             Board.InitialiseBoard();
         }
 

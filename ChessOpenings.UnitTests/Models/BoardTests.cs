@@ -357,6 +357,7 @@ namespace ChessOpenings.UnitTests
             Assert.IsFalse(testBoard.GetSquareByNotation("e2").ContainsPiece());
             Assert.IsTrue(testBoard.GetSquareByNotation("e4").Piece is Pawn);
             Assert.IsTrue(testBoard.Turn == Enums.Colour.Black);
+            Assert.IsTrue(move.AlgebraicNotation == "e4");
             PrivateObject priv = new PrivateObject(testBoard);
             Stack<Move> hist = (Stack<Move>)(priv.GetFieldOrProperty("gameHistory"));
             Assert.IsTrue(hist.Peek() == move);
@@ -368,6 +369,7 @@ namespace ChessOpenings.UnitTests
             Assert.IsFalse(testBoard.GetSquareByNotation("f5").ContainsPiece());
             Assert.IsTrue(testBoard.GetSquareByNotation("g3").Piece is Knight && testBoard.GetSquareByNotation("g3").Piece.colour == Enums.Colour.Black);
             Assert.IsTrue(testBoard.Turn == Enums.Colour.White);
+            Assert.IsTrue(move.AlgebraicNotation == "Nxg3");
             hist = (Stack<Move>)(priv.GetFieldOrProperty("gameHistory"));
             Assert.IsTrue(hist.Peek() == move);
 
@@ -1119,6 +1121,35 @@ namespace ChessOpenings.UnitTests
             //check that the move has been reversed
             Assert.IsTrue(board.GetSquareByNotation("d3").Piece is Rook);
             Assert.IsFalse(board.GetSquareByNotation("d7").ContainsPiece());
+        }
+
+        [TestMethod]
+        public void TestGetAllMovesByNotation()
+        {
+            Board board = new Board();
+
+            List<string> result = board.GetAllMovesByNotation();
+
+            Assert.IsTrue(result.Count == 0);
+
+            Move m = new Move(board.GetSquareByNotation("e2"), board.GetSquareByNotation("e4"));
+
+            board.MakeMove(m);
+
+            result = board.GetAllMovesByNotation();
+
+            Assert.IsTrue(result.Count == 1);
+            Assert.IsTrue(result[0] == "e4");
+
+            Move m1 = new Move(board.GetSquareByNotation("b8"), board.GetSquareByNotation("c6"));
+
+            board.MakeMove(m1);
+
+            result = board.GetAllMovesByNotation();
+
+            Assert.IsTrue(result.Count == 2);
+            Assert.IsTrue(result[0] == "e4");
+            Assert.IsTrue(result[1] == "Nc6");
         }
     }    
 }

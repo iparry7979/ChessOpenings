@@ -354,6 +354,17 @@ namespace ChessOpenings.Models
             return null;
         }
 
+        public List<string> GetAllMovesByNotation()
+        {
+            List<String> moves = new List<string>();
+            foreach (Move m in gameHistory)
+            {
+                moves.Add(m.AlgebraicNotation);
+            }
+            moves.Reverse();
+            return moves;
+        }
+
         public Square GetSquare(char file, byte rank)
         {
             return GetSquareByNotation(file.ToString() + rank.ToString());
