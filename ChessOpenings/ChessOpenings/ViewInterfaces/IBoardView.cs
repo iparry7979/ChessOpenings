@@ -13,6 +13,8 @@ namespace ChessOpenings.ViewInterfaces
         void SelectSquare(Square sq);
         void UnselectSquare(Square s);
         void DrawBoard(bool inverted);
+        void UpdateOpeningName(string openingName);
         Stream ParseOpenings();
+        void UpdateOpeningList(List<Opening> openings);
     }
 }

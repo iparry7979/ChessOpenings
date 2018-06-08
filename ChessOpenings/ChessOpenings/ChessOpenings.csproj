@@ -49,6 +49,7 @@
     <Compile Include="Pieces\Rook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewInterfaces\IBoardView.cs" />
+    <Compile Include="ViewInterfaces\IOpeningInformationView.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

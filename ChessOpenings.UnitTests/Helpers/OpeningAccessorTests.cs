@@ -72,6 +72,14 @@ namespace ChessOpenings.UnitTests.Helpers
             Assert.IsTrue(blackmar.Name == "Blackmar-Diemer: Accepted");
             Assert.IsTrue(blackmar.lastMove == "exf3");
             Assert.IsTrue(blackmar.Id == "D00v");
+
+            //Test Case Start of game
+
+            Opening start = accessor.GetOpening(new List<string>());
+
+            Assert.IsTrue(start.Name == "Start");
+            Assert.IsTrue(start.Id == "Start");
+            Assert.IsTrue(string.IsNullOrEmpty(start.lastMove));
         }
 
         [TestMethod]
@@ -94,6 +102,12 @@ namespace ChessOpenings.UnitTests.Helpers
             Assert.IsTrue(moves.Contains("b6"));
             Assert.IsTrue(moves.Contains("Nc6"));
             Assert.IsTrue(moves.Contains("c6"));
+
+            //check first move
+
+            List<Opening> firstMoves = accessor.GetChildrenOfOpening(new List<string>());
+
+            Assert.IsTrue(firstMoves.Count() == 20);
         }
     }
 }

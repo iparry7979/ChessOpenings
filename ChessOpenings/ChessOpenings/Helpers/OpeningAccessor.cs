@@ -22,7 +22,7 @@ namespace ChessOpenings.Helpers
         {
             XElement thisOpening = GetOpeningElement(moves);
 
-            if (thisOpening != null && thisOpening.Name != "Start")
+            if (thisOpening != null)
             {
                 return ElementToOpening(thisOpening);
             }
@@ -45,8 +45,8 @@ namespace ChessOpenings.Helpers
         {
             if (element == null) return null;
             Opening rtn = new Opening();
-            rtn.Name = element.Attribute("Name").Value;
-            rtn.lastMove = element.Attribute("Move").Value;
+            rtn.Name = element.Attribute("Name")?.Value;
+            rtn.lastMove = element.Attribute("Move")?.Value;
             rtn.Id = element.Name.LocalName;
             return rtn;
         }
@@ -54,6 +54,10 @@ namespace ChessOpenings.Helpers
         private XElement GetOpeningElement(List<string> moves)
         {
             XElement thisOpening = XmlDocument.Root;
+            if (moves == null || moves.Count() == 0)
+            {
+                return thisOpening;
+            }
             foreach (string move in moves)
             {
                 List<XElement> children = thisOpening.Elements().ToList();

@@ -15,7 +15,7 @@ namespace ChessOpenings.Controllers
 {
     public class BoardController
     {
-        public IBoardView View;
+        public IBoardView BoardView;
         public Square selectedSquare;
         public Move NextMove;
         public Board Board;
@@ -24,16 +24,19 @@ namespace ChessOpenings.Controllers
 
         private const string OPENINGDATAFILE = "openings.xml";
 
-        public BoardController(IBoardView view)
+        public BoardController(IBoardView boardView/*, IOpeningInformationView openingView*/)
         {
-            View = view;
+            BoardView = boardView;
+            //OpeningView = openingView;
             Board = new Board();
             NextMove = new Move();
             selectedSquare = null;
             Orientation = Enums.BoardOrientation.Standard;
-            XDocument doc = XDocument.Load(View.ParseOpenings());
+            XDocument doc = XDocument.Load(BoardView.ParseOpenings());
             OAccessor = new OpeningAccessor(doc);
             Board.InitialiseBoard();
+            UpdateOpening();
+            UpdateOpeningList();
         }
 
         public void SquareTapped(Square tappedSquare)
@@ -44,7 +47,7 @@ namespace ChessOpenings.Controllers
                 {
                     NextMove.FromSquare = tappedSquare;
                     selectedSquare = tappedSquare;
-                    View.SelectSquare(tappedSquare);
+                    BoardView.SelectSquare(tappedSquare);
                 }
             }
             else
@@ -52,13 +55,15 @@ namespace ChessOpenings.Controllers
                 if (tappedSquare == selectedSquare)
                 {
                     selectedSquare = null;
-                    View.UnselectSquare(tappedSquare);
+                    BoardView.UnselectSquare(tappedSquare);
                     return;
                 }
                 NextMove.ToSquare = tappedSquare;
                 Board.MakeMove(NextMove);
                 DrawBoard();
-                View.UnselectSquare(selectedSquare);
+                BoardView.UnselectSquare(selectedSquare);
+                UpdateOpening();
+                UpdateOpeningList();
                 selectedSquare = null;
                 NextMove = new Move();
             }
@@ -67,7 +72,9 @@ namespace ChessOpenings.Controllers
         public void GoBackOneMove()
         {
             Board.GoBackOneMove();
-            View.UnselectSquare(selectedSquare);
+            BoardView.UnselectSquare(selectedSquare);
+            UpdateOpening();
+            UpdateOpeningList();
             selectedSquare = null;
             NextMove = new Move();
             DrawBoard();
@@ -78,6 +85,8 @@ namespace ChessOpenings.Controllers
             selectedSquare = null;
             NextMove = new Move();
             Board = new Board();
+            UpdateOpening();
+            UpdateOpeningList();
             DrawBoard();
         }
 
@@ -96,7 +105,27 @@ namespace ChessOpenings.Controllers
 
         public void DrawBoard()
         {
-            View.DrawBoard(Orientation == Enums.BoardOrientation.Inverted);
+            BoardView.DrawBoard(Orientation == Enums.BoardOrientation.Inverted);
+        }
+
+        public void UpdateOpening()
+        {
+            BoardView.UpdateOpeningName(GetOpening().Name);
+        }
+
+        public void UpdateOpeningList()
+        {
+            BoardView.UpdateOpeningList(GetNextOpenings());
+        }
+
+        public Opening GetOpening()
+        {
+            return OAccessor.GetOpening(Board.GetAllMovesByNotation());
+        }
+
+        public List<Opening> GetNextOpenings()
+        {
+            return OAccessor.GetChildrenOfOpening(Board.GetAllMovesByNotation());
         }
     }
 }

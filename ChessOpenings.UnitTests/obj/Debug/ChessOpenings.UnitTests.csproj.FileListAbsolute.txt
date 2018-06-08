@@ -25,8 +25,8 @@ E:\CO\ChessOpenings\ChessOpenings.UnitTests\bin\Debug\ChessOpenings.pdb
 E:\CO\ChessOpenings\ChessOpenings.UnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
 E:\CO\ChessOpenings\ChessOpenings.UnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
 E:\CO\ChessOpenings\ChessOpenings.UnitTests\obj\Debug\ChessOpenings.UnitTests.csprojResolveAssemblyReference.cache
+E:\CO\ChessOpenings\ChessOpenings.UnitTests\obj\Debug\ChessOpenings.UnitTests.Properties.Resources.resources
+E:\CO\ChessOpenings\ChessOpenings.UnitTests\obj\Debug\ChessOpenings.UnitTests.csproj.GenerateResource.Cache
 E:\CO\ChessOpenings\ChessOpenings.UnitTests\obj\Debug\ChessOpenings.UnitTests.csproj.CoreCompileInputs.cache
 E:\CO\ChessOpenings\ChessOpenings.UnitTests\obj\Debug\ChessOpenings.UnitTests.dll
 E:\CO\ChessOpenings\ChessOpenings.UnitTests\obj\Debug\ChessOpenings.UnitTests.pdb
-E:\CO\ChessOpenings\ChessOpenings.UnitTests\obj\Debug\ChessOpenings.UnitTests.Properties.Resources.resources
-E:\CO\ChessOpenings\ChessOpenings.UnitTests\obj\Debug\ChessOpenings.UnitTests.csproj.GenerateResource.Cache

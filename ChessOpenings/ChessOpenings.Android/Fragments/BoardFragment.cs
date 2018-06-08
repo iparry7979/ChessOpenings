@@ -17,6 +17,7 @@ using ChessOpenings.Droid.Views;
 using Android.Graphics;
 using Java.IO;
 using System.IO;
+using ChessOpenings.Droid.Adapters;
 
 namespace ChessOpenings.Droid.Fragments
 {
@@ -24,20 +25,23 @@ namespace ChessOpenings.Droid.Fragments
     {
         private GridLayout boardTable { get; set; }
         private LinearLayout boardLayout { get; set; }
-        private BoardController boardController;
+        private TextView openingName;
+        private ListView lvNextMoves;
+        public BoardController boardController { get; set; }
         private View view;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-            boardController = new BoardController(this);
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             view = inflater.Inflate(Resource.Layout.boardView, container, false);
             boardLayout = view.FindViewById<LinearLayout>(Resource.Id.boardLayout);
+            openingName = view.FindViewById<TextView>(Resource.Id.openingName);
+            lvNextMoves = view.FindViewById<ListView>(Resource.Id.next_move_list);
+            boardController = new BoardController(this);
             boardController.DrawBoard();
             InitialiseButtons();
             return view;
@@ -201,6 +205,16 @@ namespace ChessOpenings.Droid.Fragments
                 return null;
             }
             return stream;
+        }
+
+        public void UpdateOpeningName(string name)
+        {
+            openingName.Text = name;
+        }
+
+        public void UpdateOpeningList(List<Opening> openings)
+        {
+            lvNextMoves.Adapter = new NextMoveDisplayAdapter(openings);
         }
     }
 }
