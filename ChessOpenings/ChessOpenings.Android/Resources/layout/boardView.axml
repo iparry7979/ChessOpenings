@@ -14,6 +14,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:background="@android:color/holo_blue_bright"
             android:gravity="center" />
         <LinearLayout
@@ -47,15 +48,102 @@
         android:id="@+id/dataLayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/openingName"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp">
+        <LinearLayout
+            android:id="@+id/current_opening_holder"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/openingLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text ="Current Opening"
+                android:textSize="10sp" />
+            <TextView
+                android:id="@+id/openingName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Placeholder"
+                android:textSize="18sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/next_move_tile_layout"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Placeholder" />
-      <ListView
-          android:id="@+id/next_move_list"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content" />
+            android:layout_marginTop="12dp">
+            <LinearLayout
+                android:id="@+id/main_line_layout"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/main_line_heading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Main Line"
+                    android:textColor="#202020"
+                    android:background="#aaaaaa"/>
+                <LinearLayout
+                    android:id="@+id/tileView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+              
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/secondary_lines_layout"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:layout_marginRight="8dp">
+                <TextView
+                      android:id="@+id/secondary_line_heading"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:text="Other Lines"
+                      android:textColor="#202020"
+                      android:background="#aaaaaa"/>
+
+                <HorizontalScrollView
+                      android:id="@+id/tsv"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:minWidth="25px"
+                      android:minHeight="25px" >
+                    <LinearLayout
+                        android:id="@+id/tile_scroll_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                      <!-- <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="button1"/>
+                      <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="button2"/>
+                      <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="button3"/>
+                      <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="button4"/> -->
+                    </LinearLayout>
+                </HorizontalScrollView>
+              
+            </LinearLayout>
+        </LinearLayout>
+        <ListView
+            android:id="@+id/next_move_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
     </LinearLayout>
 </LinearLayout>

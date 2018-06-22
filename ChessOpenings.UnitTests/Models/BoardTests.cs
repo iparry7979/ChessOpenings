@@ -3,11 +3,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ChessOpenings.Models;
 using ChessOpenings.Pieces;
 using System.Collections.Generic;
+using ChessOpenings.Helpers;
 
 namespace ChessOpenings.UnitTests
 {
     [TestClass]
-    public class BoardTests
+    public partial class BoardTests
     {
         public Enums.Colour White
         {
@@ -406,6 +407,9 @@ namespace ChessOpenings.UnitTests
             Assert.IsTrue(testBoard.GetSquareByNotation("d1").Piece is Rook);
             Assert.IsFalse(testBoard.GetSquareByNotation("a1").ContainsPiece());
 
+            testBoard = new Board(boardPosition);
+            testBoard.ChangeTurn();
+
             move = new Move();
             move.FromSquare = testBoard.GetSquareByNotation("e8");
             move.ToSquare = testBoard.GetSquareByNotation("c8");
@@ -424,6 +428,8 @@ namespace ChessOpenings.UnitTests
             };
 
             testBoard = new Board(boardPosition);
+
+            testBoard.ChangeTurn();
 
             move = new Move();
             move.FromSquare = testBoard.GetSquareByNotation("e7");
@@ -446,6 +452,7 @@ namespace ChessOpenings.UnitTests
             };
 
             testBoard = new Board(boardPosition);
+            testBoard.ChangeTurn();
 
             move = new Move();
             move.FromSquare = testBoard.GetSquareByNotation("e7");
@@ -539,7 +546,7 @@ namespace ChessOpenings.UnitTests
 
             move = new Move(); // Black King Side
             move.FromSquare = testBoard.GetSquareByNotation("e1");
-            move.ToSquare = testBoard.GetSquareByNotation("g1");
+            move.ToSquare = testBoard.GetSquareByNotation("d1");
             Move move1 = new Move();
             move1.FromSquare = testBoard.GetSquareByNotation("e8");
             move1.ToSquare = testBoard.GetSquareByNotation("g8");
@@ -588,6 +595,7 @@ namespace ChessOpenings.UnitTests
             };
 
             testBoard = new Board(boardPosition);
+            testBoard.ChangeTurn();
 
             move = new Move();
             move.FromSquare = testBoard.GetSquareByNotation("e7");
@@ -890,8 +898,9 @@ namespace ChessOpenings.UnitTests
         [TestMethod]
         public void testPawnAttackVectors()
         {
+            //Reverse vectors
             Board b = new Board();
-            BoardVector pawnAttackVector = b.GetPawnAttackVectors("e4", Enums.Colour.White);
+            BoardVector pawnAttackVector = b.GetReversePawnAttackVectors("e4", Enums.Colour.White);
             Assert.IsTrue(pawnAttackVector != null, "Board Vector is null");
             Assert.IsTrue(pawnAttackVector.Count == 2, "Incorrect Array Length");
 
@@ -914,7 +923,7 @@ namespace ChessOpenings.UnitTests
                 Assert.IsTrue(pawnAttackVector.Contains(e4Connections.Sequence[i]), "Vector missing square");
             }
 
-            pawnAttackVector = b.GetPawnAttackVectors("e4", Enums.Colour.Black);
+            pawnAttackVector = b.GetReversePawnAttackVectors("e4", Enums.Colour.Black);
             Assert.IsTrue(pawnAttackVector != null, "Board Vector is null");
             Assert.IsTrue(pawnAttackVector.Count == 2, "Incorrect Array Length");
 
@@ -937,7 +946,7 @@ namespace ChessOpenings.UnitTests
                 Assert.IsTrue(pawnAttackVector.Contains(e4BlackConnections.Sequence[i]), "Vector missing square");
             }
 
-            pawnAttackVector = b.GetPawnAttackVectors("h8", Enums.Colour.White);
+            pawnAttackVector = b.GetReversePawnAttackVectors("h8", Enums.Colour.White);
             Assert.IsTrue(pawnAttackVector != null, "Board Vector is null");
             Assert.IsTrue(pawnAttackVector.Count == 1, "Incorrect Array Length");
 
@@ -955,9 +964,131 @@ namespace ChessOpenings.UnitTests
                 Assert.IsTrue(pawnAttackVector.Contains(h8WhiteConnections.Sequence[i]), "Vector missing square");
             }
 
-            pawnAttackVector = b.GetPawnAttackVectors("h8", Enums.Colour.Black);
+            pawnAttackVector = b.GetReversePawnAttackVectors("h8", Enums.Colour.Black);
             Assert.IsTrue(pawnAttackVector == null || pawnAttackVector.Count == 0, "Board Vector is not null");
-            
+
+            //Forward Vectors
+
+            b = new Board();
+            pawnAttackVector = b.GetPawnAttackVectors("e4", Enums.Colour.White);
+            Assert.IsTrue(pawnAttackVector != null, "Board Vector is null");
+            Assert.IsTrue(pawnAttackVector.Count == 2, "Incorrect Array Length");
+
+            e4Connections = new BoardVector(new Square[]
+            {
+                new Square(null, White)
+                {
+                    File = 'd',
+                    Rank = 5
+                },
+                new Square(null, White)
+                {
+                    File = 'f',
+                    Rank = 5
+                },
+            });
+
+            for (int i = 0; i < e4Connections.Count; i++)
+            {
+                Assert.IsTrue(pawnAttackVector.Contains(e4Connections.Sequence[i]), "Vector missing square");
+            }
+
+            pawnAttackVector = b.GetPawnAttackVectors("e4", Enums.Colour.Black);
+            Assert.IsTrue(pawnAttackVector != null, "Board Vector is null");
+            Assert.IsTrue(pawnAttackVector.Count == 2, "Incorrect Array Length");
+
+            e4BlackConnections = new BoardVector(new Square[]
+            {
+                new Square(null, White)
+                {
+                    File = 'd',
+                    Rank = 3
+                },
+                new Square(null, White)
+                {
+                    File = 'f',
+                    Rank = 3
+                },
+            });
+
+            for (int i = 0; i < e4BlackConnections.Count; i++)
+            {
+                Assert.IsTrue(pawnAttackVector.Contains(e4BlackConnections.Sequence[i]), "Vector missing square");
+            }
+
+            pawnAttackVector = b.GetPawnAttackVectors("h7", Enums.Colour.White);
+            Assert.IsTrue(pawnAttackVector != null, "Board Vector is null");
+            Assert.IsTrue(pawnAttackVector.Count == 1, "Incorrect Array Length");
+
+            BoardVector h7WhiteConnections = new BoardVector(new Square[]
+            {
+                new Square(null, White)
+                {
+                    File = 'g',
+                    Rank = 8
+                },
+            });
+
+            for (int i = 0; i < h7WhiteConnections.Count; i++)
+            {
+                Assert.IsTrue(pawnAttackVector.Contains(h7WhiteConnections.Sequence[i]), "Vector missing square");
+            }
+
+            pawnAttackVector = b.GetPawnAttackVectors("h8", Enums.Colour.White);
+            Assert.IsTrue(pawnAttackVector == null || pawnAttackVector.Count == 0, "Board Vector is not null");
+        }
+
+        [TestMethod]
+        public void TestPawnAdvanceVector()
+        {
+            //Reverse vectors
+            Dictionary<string, Piece> boardPosition = new Dictionary<string, Piece>
+            {
+                { "a2", new Pawn(Enums.Colour.White) },
+                { "a5", new Pawn(Enums.Colour.White) },
+                { "h7", new Pawn(Enums.Colour.Black) },
+                { "g2", new Pawn(Enums.Colour.Black) }
+            };
+
+            Board board = new Board(boardPosition);
+
+            BoardVector v1 = board.GetReversePawnAdvanceVector(board.GetSquareByNotation("a4"), Enums.Colour.White);
+            Assert.IsTrue(v1.Count == 2);
+            Assert.IsTrue(v1.Sequence[0].Notation == "a3");
+            Assert.IsTrue(v1.Sequence[1].Notation == "a2");
+
+            v1 = board.GetReversePawnAdvanceVector(board.GetSquareByNotation("a6"), Enums.Colour.White);
+            Assert.IsTrue(v1.Count == 1);
+            Assert.IsTrue(v1.Sequence[0].Notation == "a5");
+
+            v1 = board.GetReversePawnAdvanceVector(board.GetSquareByNotation("h5"), Enums.Colour.Black);
+            Assert.IsTrue(v1.Count == 2);
+            Assert.IsTrue(v1.Sequence[0].Notation == "h6");
+            Assert.IsTrue(v1.Sequence[1].Notation == "h7");
+
+            v1 = board.GetReversePawnAdvanceVector(board.GetSquareByNotation("g1"), Enums.Colour.Black);
+            Assert.IsTrue(v1.Count == 1);
+            Assert.IsTrue(v1.Sequence[0].Notation == "g2");
+
+            //Forward vectors
+
+            v1 = board.GetPawnAdvanceVector(board.GetSquareByNotation("a2"), Enums.Colour.White);
+            Assert.IsTrue(v1.Count == 2);
+            Assert.IsTrue(v1.Sequence[0].Notation == "a3");
+            Assert.IsTrue(v1.Sequence[1].Notation == "a4");
+
+            v1 = board.GetPawnAdvanceVector(board.GetSquareByNotation("a5"), Enums.Colour.White);
+            Assert.IsTrue(v1.Count == 1);
+            Assert.IsTrue(v1.Sequence[0].Notation == "a6");
+
+            v1 = board.GetPawnAdvanceVector(board.GetSquareByNotation("h7"), Enums.Colour.Black);
+            Assert.IsTrue(v1.Count == 2);
+            Assert.IsTrue(v1.Sequence[0].Notation == "h6");
+            Assert.IsTrue(v1.Sequence[1].Notation == "h5");
+
+            v1 = board.GetPawnAdvanceVector(board.GetSquareByNotation("g2"), Enums.Colour.Black);
+            Assert.IsTrue(v1.Count == 1);
+            Assert.IsTrue(v1.Sequence[0].Notation == "g1");
         }
 
         [TestMethod]
@@ -1150,6 +1281,187 @@ namespace ChessOpenings.UnitTests
             Assert.IsTrue(result.Count == 2);
             Assert.IsTrue(result[0] == "e4");
             Assert.IsTrue(result[1] == "Nc6");
+        }
+
+        [TestMethod]
+        public void TestPGNGeneration()
+        {
+            Board board = new Board();
+            string result = board.ToPGN();
+            Assert.IsTrue(result == "");
+
+            board = new Board();
+
+            Move m = new Move(board.GetSquareByNotation("e2"), board.GetSquareByNotation("e4"));
+            board.MakeMove(m);
+            result = board.ToPGN();
+            Assert.IsTrue(result == "1. e4");
+
+            board = new Board();
+            m = new Move(board.GetSquareByNotation("e2"), board.GetSquareByNotation("e4"));
+            board.MakeMove(m);
+            Move m1 = new Move(board.GetSquareByNotation("e7"), board.GetSquareByNotation("e5"));
+            board.MakeMove(m1);
+            Move m2 = new Move(board.GetSquareByNotation("g1"), board.GetSquareByNotation("f3"));
+            board.MakeMove(m2);
+            Move m3 = new Move(board.GetSquareByNotation("b8"), board.GetSquareByNotation("c6"));
+            board.MakeMove(m3);
+            Move m4 = new Move(board.GetSquareByNotation("f1"), board.GetSquareByNotation("b5"));
+            board.MakeMove(m4);
+            Move m5 = new Move(board.GetSquareByNotation("a7"), board.GetSquareByNotation("a6"));
+            board.MakeMove(m5);
+            Move m6 = new Move(board.GetSquareByNotation("b5"), board.GetSquareByNotation("a4"));
+            board.MakeMove(m6);
+            Move m7 = new Move(board.GetSquareByNotation("g8"), board.GetSquareByNotation("f6"));
+            board.MakeMove(m7);
+            Move m8 = new Move(board.GetSquareByNotation("e1"), board.GetSquareByNotation("g1"));
+            board.MakeMove(m8);
+
+            result = board.ToPGN();
+
+            Assert.IsTrue(result == "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O");
+        }
+
+        [TestMethod]
+        public void TestGetBoardPosition()
+        {
+            Dictionary<string, Piece> boardPosition = new Dictionary<string, Piece>
+            {
+                { "e4", new Pawn(Enums.Colour.White) },
+                { "e8", new King(Enums.Colour.Black) }
+            };
+
+            Board board = new Board(boardPosition);
+
+            Dictionary<string, Piece> result = board.GetBoardPosition();
+            Assert.IsTrue(result.Count == 2);
+            Piece p1;
+            Piece p2;
+            result.TryGetValue("e4", out p1);
+            result.TryGetValue("e8", out p2);
+            Assert.IsTrue(p1.GetPieceNotation() == "WP");
+            Assert.IsTrue(p2.GetPieceNotation() == "BK");
+        }
+
+        [TestMethod]
+        public void Constructor_PortableGameNotation()
+        {
+            string start = "";
+            string morphyDefence = "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6";
+            string queensGambitWithComments = "[tag1 \"xx\"] [tag2 \"yy\"] 1. d4 d5 {this is a comment} 2. c4 $44 dxc4";
+
+            Dictionary<string, Piece> morphyDefencePosition = new Dictionary<string, Piece>
+            {
+                { "a1", new Rook(Enums.Colour.White) },
+                { "b1", new Knight(Enums.Colour.White) },
+                { "c1", new Bishop(Enums.Colour.White) },
+                { "d1", new Queen(Enums.Colour.White) },
+                { "e1", new King(Enums.Colour.White) },
+                { "a4", new Bishop(Enums.Colour.White) },
+                { "f3", new Knight(Enums.Colour.White) },
+                { "h1", new Rook(Enums.Colour.White) },
+                { "a2", new Pawn(Enums.Colour.White) },
+                { "b2", new Pawn(Enums.Colour.White) },
+                { "c2", new Pawn(Enums.Colour.White) },
+                { "d2", new Pawn(Enums.Colour.White) },
+                { "e4", new Pawn(Enums.Colour.White) },
+                { "f2", new Pawn(Enums.Colour.White) },
+                { "g2", new Pawn(Enums.Colour.White) },
+                { "h2", new Pawn(Enums.Colour.White) },
+
+                { "a8", new Rook(Enums.Colour.Black) },
+                { "c6", new Knight(Enums.Colour.Black) },
+                { "c8", new Bishop(Enums.Colour.Black) },
+                { "d8", new Queen(Enums.Colour.Black) },
+                { "e8", new King(Enums.Colour.Black) },
+                { "f8", new Bishop(Enums.Colour.Black) },
+                { "f6", new Knight(Enums.Colour.Black) },
+                { "h8", new Rook(Enums.Colour.Black) },
+                { "a6", new Pawn(Enums.Colour.Black) },
+                { "b7", new Pawn(Enums.Colour.Black) },
+                { "c7", new Pawn(Enums.Colour.Black) },
+                { "d7", new Pawn(Enums.Colour.Black) },
+                { "e5", new Pawn(Enums.Colour.Black) },
+                { "f7", new Pawn(Enums.Colour.Black) },
+                { "g7", new Pawn(Enums.Colour.Black) },
+                { "h7", new Pawn(Enums.Colour.Black) },
+            };
+
+            Dictionary<string, Piece> queensGambitPosition = new Dictionary<string, Piece>
+            {
+                { "a1", new Rook(Enums.Colour.White) },
+                { "b1", new Knight(Enums.Colour.White) },
+                { "c1", new Bishop(Enums.Colour.White) },
+                { "d1", new Queen(Enums.Colour.White) },
+                { "e1", new King(Enums.Colour.White) },
+                { "f1", new Bishop(Enums.Colour.White) },
+                { "g1", new Knight(Enums.Colour.White) },
+                { "h1", new Rook(Enums.Colour.White) },
+                { "a2", new Pawn(Enums.Colour.White) },
+                { "b2", new Pawn(Enums.Colour.White) },
+                { "d4", new Pawn(Enums.Colour.White) },
+                { "e2", new Pawn(Enums.Colour.White) },
+                { "f2", new Pawn(Enums.Colour.White) },
+                { "g2", new Pawn(Enums.Colour.White) },
+                { "h2", new Pawn(Enums.Colour.White) },
+
+                { "a8", new Rook(Enums.Colour.Black) },
+                { "b8", new Knight(Enums.Colour.Black) },
+                { "c8", new Bishop(Enums.Colour.Black) },
+                { "d8", new Queen(Enums.Colour.Black) },
+                { "e8", new King(Enums.Colour.Black) },
+                { "f8", new Bishop(Enums.Colour.Black) },
+                { "g8", new Knight(Enums.Colour.Black) },
+                { "h8", new Rook(Enums.Colour.Black) },
+                { "a7", new Pawn(Enums.Colour.Black) },
+                { "b7", new Pawn(Enums.Colour.Black) },
+                { "c7", new Pawn(Enums.Colour.Black) },
+                { "c4", new Pawn(Enums.Colour.Black) },
+                { "e7", new Pawn(Enums.Colour.Black) },
+                { "f7", new Pawn(Enums.Colour.Black) },
+                { "g7", new Pawn(Enums.Colour.Black) },
+                { "h7", new Pawn(Enums.Colour.Black) },
+            };
+
+            Board board = new Board(start);
+
+            Dictionary<string, Piece> result = board.GetBoardPosition();
+
+            Assert.IsTrue(CompareBoardPositions(result, Constants.startPosition));
+
+            board = new Board(morphyDefence);
+
+            result = board.GetBoardPosition();
+
+            Assert.IsTrue(CompareBoardPositions(result, morphyDefencePosition));
+
+            Assert.IsTrue(board.ToPGN() == morphyDefence); 
+
+            board = new Board(queensGambitWithComments);
+
+            result = board.GetBoardPosition();
+
+            Assert.IsTrue(CompareBoardPositions(result, queensGambitPosition));
+        }
+
+        private bool CompareBoardPositions(Dictionary<string, Piece> p1, Dictionary<string, Piece> p2)
+        {
+            bool equal = true;
+            foreach(KeyValuePair<string, Piece> square in p1)
+            {
+                if (p2.ContainsKey(square.Key))
+                {
+                    if (!p2[square.Key].Equals(square.Value))
+                    {
+                        equal = false;
+                    }
+                }
+                else
+                {
+                    equal = false;
+                }
+            }
+            return equal;
         }
     }    
 }

@@ -5,11 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ChessOpenings.Models
 {
-    public class Board
+    public partial class Board
     {
         public Square[,] squaresArray { get; }
         public Enums.Colour Turn { get; set; }
@@ -46,7 +47,7 @@ namespace ChessOpenings.Models
         {
             get
             {
-                foreach(Move m in gameHistory)
+                foreach (Move m in gameHistory)
                 {
                     if (m.FromSquare.Notation == "e8" || m.FromSquare.Notation == "h8")
                     {
@@ -117,6 +118,32 @@ namespace ChessOpenings.Models
                 }
             }
             squaresArray = board;
+        }
+
+        public Board(string portableGameNotation)
+        {
+            Regex squareBrackets = new Regex(@"\[.*\]");
+            Regex curlyBrackets = new Regex(@"{.*}");
+            Regex numericAnnotationGlyphs = new Regex(@"\$\d*");
+            Regex moveNumbers = new Regex(@"\d*\.");
+
+            string strippedNotation = squareBrackets.Replace(portableGameNotation, "");
+            strippedNotation = curlyBrackets.Replace(strippedNotation, "");
+            strippedNotation = numericAnnotationGlyphs.Replace(strippedNotation, "");
+            strippedNotation = moveNumbers.Replace(strippedNotation, "");
+
+            Turn = Enums.Colour.White;
+            gameHistory = new Stack<Move>();
+            squaresArray = InitialiseBoard();
+
+            string[] movesByNotation = strippedNotation.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string moveNotation in movesByNotation)
+            {
+                AlgebraicNotationParser parser = new AlgebraicNotationParser(moveNotation, Turn, this);
+                Move move = parser.GetMove();
+                this.MakeMove(move);
+            }
         }
 
         public Square[,] InitialiseBoard()
@@ -202,7 +229,7 @@ namespace ChessOpenings.Models
             return board;
         }
 
-        public bool MakeMove(Move move, bool generateNotaion = true)
+        public bool MakeMove(Move move, bool generateNotaion = true, bool validate = true)
         {
             if (generateNotaion)
             {
@@ -210,7 +237,7 @@ namespace ChessOpenings.Models
                 move.AlgebraicNotation = notationGenerator.Generate();
             }
             bool valid = true;
-            valid = ValidateMove(move);
+            valid = !validate || ValidateMove(move);
             if (valid)
             {
                 //Update the board with move
@@ -326,15 +353,6 @@ namespace ChessOpenings.Models
             return lastMove;
         }
 
-        public bool ValidateMove(Move move)
-        {
-            if (move.FromSquare == move.ToSquare)
-            {
-                return false;
-            }
-            return true;
-        }
-
         public void ChangeTurn()
         {
             if (Turn == Enums.Colour.White)
@@ -363,6 +381,34 @@ namespace ChessOpenings.Models
             }
             moves.Reverse();
             return moves;
+        }
+
+        public string ToPGN()
+        {
+            string rtn = "";
+
+            bool whitesTurn = true;
+            List<string> moves = GetAllMovesByNotation();
+            int moveNumber = 1;
+
+            foreach (string move in moves)
+            {
+                if (whitesTurn)
+                {
+                    rtn += string.Format("{0}. {1}", moveNumber.ToString(), move);
+                }
+                else
+                {
+                    rtn += string.Format(" {0} ", move);
+                }
+                if (!whitesTurn)
+                {
+                    moveNumber++;
+                }
+                whitesTurn = !whitesTurn;
+            }
+
+            return rtn.Trim();
         }
 
         public Square GetSquare(char file, byte rank)
@@ -713,7 +759,47 @@ namespace ChessOpenings.Models
             return null;
         }
 
-        public BoardVector GetPawnAttackVectors(Square subjectSquare, Enums.Colour oppositionPieceColour)
+        public BoardVector GetPawnAttackVectors(Square sourceSquare, Enums.Colour oppositionPieceColour)
+        {
+            BoardVector rtn = new BoardVector();
+            if (sourceSquare == null)
+            {
+                return null;
+            }
+            char file = sourceSquare.File;
+            byte rank = sourceSquare.Rank;
+
+            List<Square> squares = new List<Square>();
+            if (oppositionPieceColour == Enums.Colour.White)
+            {
+                squares.Add(GetSquare((char)(file - 1), (byte)(rank + 1)));
+                squares.Add(GetSquare((char)(file + 1), (byte)(rank + 1)));
+            }
+            else
+            {
+                squares.Add(GetSquare((char)(file - 1), (byte)(rank - 1)));
+                squares.Add(GetSquare((char)(file + 1), (byte)(rank - 1)));
+            }
+            foreach (Square s in squares)
+            {
+                if (s != null)
+                {
+                    rtn.AddSquare(s);
+                }
+            }
+            return rtn;
+        }
+
+        public BoardVector GetReversePawnAttackVectors(string squareNotation, Enums.Colour oppositionPieceColour)
+        {
+            if (squareNotation != null)
+            {
+                return GetReversePawnAttackVectors(GetSquareByNotation(squareNotation), oppositionPieceColour);
+            }
+            return null;
+        }
+
+        public BoardVector GetReversePawnAttackVectors(Square subjectSquare, Enums.Colour oppositionPieceColour)
         {
             BoardVector rtn = new BoardVector();
             if (subjectSquare == null)
@@ -745,6 +831,78 @@ namespace ChessOpenings.Models
             return rtn;
         }
 
+        public BoardVector GetReversePawnAdvanceVector(Square destinationSquare, Enums.Colour subjectPieceColour)
+        {
+            BoardVector rtn = new BoardVector();
+            if (destinationSquare == null)
+            {
+                return null;
+            }
+            char file = destinationSquare.File;
+            byte rank = destinationSquare.Rank;
+            List <Square> squaresArray = new List<Square>();
+            if (subjectPieceColour == Enums.Colour.White)
+            {
+                squaresArray.Add(GetSquare(file, (byte)(rank - 1)));
+                if (rank == 4)
+                {
+                    squaresArray.Add(GetSquare(file, (byte)(rank - 2)));
+                }
+            }
+            else
+            {
+                squaresArray.Add(GetSquare(file, (byte)(rank + 1)));
+                if (rank == 5)
+                {
+                    squaresArray.Add(GetSquare(file, (byte)(rank + 2)));
+                }
+            }
+            foreach (Square s in squaresArray)
+            {
+                if (s != null)
+                {
+                    rtn.AddSquare(s);
+                }
+            }
+            return rtn;
+        }
+
+        public BoardVector GetPawnAdvanceVector(Square sourceSquare, Enums.Colour subjectPieceColour)
+        {
+            BoardVector rtn = new BoardVector();
+            if (sourceSquare == null)
+            {
+                return null;
+            }
+            char file = sourceSquare.File;
+            byte rank = sourceSquare.Rank;
+            List<Square> squaresArray = new List<Square>();
+            if (subjectPieceColour == Enums.Colour.White)
+            {
+                squaresArray.Add(GetSquare(file, (byte)(rank + 1)));
+                if (rank == 2)
+                {
+                    squaresArray.Add(GetSquare(file, (byte)(rank + 2)));
+                }
+            }
+            else
+            {
+                squaresArray.Add(GetSquare(file, (byte)(rank - 1)));
+                if (rank == 7)
+                {
+                    squaresArray.Add(GetSquare(file, (byte)(rank - 2)));
+                }
+            }
+            foreach (Square s in squaresArray)
+            {
+                if (s != null)
+                {
+                    rtn.AddSquare(s);
+                }
+            }
+            return rtn;
+        }
+
         public bool WhiteKingIsInCheck()
         {
             List<Square> sList = GetSquaresContainingPiece("K", Enums.Colour.White);
@@ -758,7 +916,7 @@ namespace ChessOpenings.Models
 
         public bool WhiteKingIsInCheck(Move preceedingMove)
         {
-            MakeMove(preceedingMove, false);
+            MakeMove(preceedingMove, false, false);
             bool rtn = WhiteKingIsInCheck();
             GoBackOneMove();
             return rtn;
@@ -777,7 +935,7 @@ namespace ChessOpenings.Models
 
         public bool BlackKingIsInCheck(Move preceedingMove)
         {
-            MakeMove(preceedingMove, false);
+            MakeMove(preceedingMove, false, false);
             bool rtn = BlackKingIsInCheck();
             GoBackOneMove();
             return rtn;
@@ -790,7 +948,7 @@ namespace ChessOpenings.Models
 
         public bool IsEitherKingInCheck(Move preceedingMove)
         {
-            MakeMove(preceedingMove, false);
+            MakeMove(preceedingMove, false, false);
             bool rtn = IsEitherKingInCheck();
             GoBackOneMove();
             return rtn;
@@ -802,7 +960,7 @@ namespace ChessOpenings.Models
             BoardVector[] linears = GetLinearVectorsFromSquare(s);
             BoardVector knightVector = GetKnightConnections(s);
             BoardVector kingVector = GetKingVector(s);
-            BoardVector pawnVector = GetPawnAttackVectors(s, oppositionPieceColour);
+            BoardVector pawnVector = GetReversePawnAttackVectors(s, oppositionPieceColour);
 
             foreach (BoardVector d in diagonals)
             {
@@ -843,6 +1001,19 @@ namespace ChessOpenings.Models
                 return true;
             }
             return false;
+        }
+
+        public Dictionary<string, Piece> GetBoardPosition()
+        {
+            Dictionary<string, Piece> rtn = new Dictionary<string, Piece>();
+            foreach(Square s in squaresArray)
+            {
+                if (s.ContainsPiece())
+                {
+                    rtn.Add(s.Notation, s.Piece);
+                }
+            }
+            return rtn;
         }
     }
 }

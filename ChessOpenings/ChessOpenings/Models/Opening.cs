@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ChessOpenings.Models
@@ -13,6 +14,17 @@ namespace ChessOpenings.Models
         public string lastMove { get; set; }
 
         public string Id { get; set; }
+
+        public string ShortName
+        {
+            get
+            {
+                Regex reg = new Regex(@"(:|,)\s *\d");
+                Match m = reg.Match(Name);
+
+                return Name.Substring(0, m.Success ? m.Index : Name.Length);
+            }
+        }
 
         // public List<Opening> ChildOpenings { get; set; }
 

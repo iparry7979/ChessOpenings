@@ -150,5 +150,21 @@ namespace ChessOpenings.Models
             }
             return false;
         }
+
+        public bool PathIsObstructed(Square toSquare)
+        {
+            foreach (Square s in Sequence)
+            {
+                if (s.Equals(toSquare))
+                {
+                    return false;
+                }
+                else if (s.ContainsPiece())
+                {
+                    return true;
+                }
+            }
+            return true;
+        }
     }
 }

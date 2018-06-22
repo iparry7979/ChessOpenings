@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace ChessOpenings.Droid.Views
 {
-    class SquareGridLayout : GridLayout
+    public class SquareGridLayout : GridLayout
     {
         public SquareGridLayout(Context context) : base(context)
         {

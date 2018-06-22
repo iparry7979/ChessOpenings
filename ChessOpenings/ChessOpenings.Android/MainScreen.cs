@@ -22,6 +22,7 @@ namespace ChessOpenings.Droid
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
+            Window.RequestFeature(WindowFeatures.NoTitle);
             SetContentView(Resource.Layout.Main);
 
             var boardFragment = new BoardFragment();

@@ -93,6 +93,7 @@ namespace ChessOpenings.UnitTests.Models
             Assert.IsTrue(notation == "exd4");
 
             //En Passant
+            board.ChangeTurn();
 
             move = new Move(board.GetSquareByNotation("g7"), board.GetSquareByNotation("g5"));
             board.MakeMove(move);

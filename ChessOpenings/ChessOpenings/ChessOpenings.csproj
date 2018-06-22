@@ -34,8 +34,11 @@
     <Compile Include="Controllers\BoardController.cs" />
     <Compile Include="Enums\enums.cs" />
     <Compile Include="Helpers\AlgebraicNotationGenerator.cs" />
+    <Compile Include="Helpers\AlgebraicNotationParser.cs" />
+    <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\OpeningAccessor.cs" />
     <Compile Include="Models\Board.cs" />
+    <Compile Include="Models\Board.MoveValidation.cs" />
     <Compile Include="Models\Move.cs" />
     <Compile Include="Models\Opening.cs" />
     <Compile Include="Models\Square.cs" />

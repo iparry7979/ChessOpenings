@@ -50,10 +50,13 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\AlgebraicNotationParserTests.cs" />
     <Compile Include="Helpers\OpeningAccessorTests.cs" />
     <Compile Include="Models\AlgebraicNotaionGenarationTests.cs" />
     <Compile Include="Models\BoardTests.cs" />
+    <Compile Include="Models\BoardTests.MoveValidation.cs" />
     <Compile Include="Models\BoardVectorTests.cs" />
+    <Compile Include="Models\OpeningTests.cs" />
     <Compile Include="Models\PieceTests.cs" />
     <Compile Include="Models\SquareTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

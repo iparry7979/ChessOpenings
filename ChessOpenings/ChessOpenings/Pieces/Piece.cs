@@ -35,5 +35,26 @@ namespace ChessOpenings.Pieces
             }
             return false;
         }
+
+        public static Piece CreatePiece(string pieceNotation, Enums.Colour colour)
+        {
+            switch (pieceNotation)
+            {
+                case "P":
+                    return new Pawn(colour);
+                case "N":
+                    return new Knight(colour);
+                case "B":
+                    return new Bishop(colour);
+                case "R":
+                    return new Rook(colour);
+                case "Q":
+                    return new Queen(colour);
+                case "K":
+                    return new King(colour);
+                default:
+                    return null;
+            }
+        }
     }
 }

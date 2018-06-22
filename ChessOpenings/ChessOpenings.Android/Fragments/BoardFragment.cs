@@ -25,6 +25,8 @@ namespace ChessOpenings.Droid.Fragments
     {
         private GridLayout boardTable { get; set; }
         private LinearLayout boardLayout { get; set; }
+        private LinearLayout tileLayout { get; set; }
+        private LinearLayout secondaryLinesLayout { get; set; }
         private TextView openingName;
         private ListView lvNextMoves;
         public BoardController boardController { get; set; }
@@ -39,10 +41,19 @@ namespace ChessOpenings.Droid.Fragments
         {
             view = inflater.Inflate(Resource.Layout.boardView, container, false);
             boardLayout = view.FindViewById<LinearLayout>(Resource.Id.boardLayout);
+            tileLayout = view.FindViewById<LinearLayout>(Resource.Id.tileView);
+            secondaryLinesLayout = view.FindViewById<LinearLayout>(Resource.Id.tile_scroll_view);
             openingName = view.FindViewById<TextView>(Resource.Id.openingName);
             lvNextMoves = view.FindViewById<ListView>(Resource.Id.next_move_list);
             boardController = new BoardController(this);
             boardController.DrawBoard();
+            boardController.UpdateOpening();
+            boardController.UpdateOpeningList();
+            //tileLayout.AddView(new TileLayout(this.Activity, new Pieces.Knight(Enums.Colour.White), 0.15, 0.30, false));
+            //secondaryLinesLayout.AddView(new TileLayout(this.Activity, new Pieces.Knight(Enums.Colour.White), 0.15, 0.30, true));
+            //secondaryLinesLayout.AddView(new TileLayout(this.Activity, new Pieces.Knight(Enums.Colour.White), 0.15, 0.30, true));
+            //secondaryLinesLayout.AddView(new TileLayout(this.Activity, new Pieces.Knight(Enums.Colour.White), 0.15, 0.30, true));
+            //secondaryLinesLayout.AddView(new TileLayout(this.Activity, new Pieces.Knight(Enums.Colour.White), 0.15, 0.30, true));
             InitialiseButtons();
             return view;
         }
@@ -121,6 +132,14 @@ namespace ChessOpenings.Droid.Fragments
                 return;
             }
             boardController.SquareTapped(tappedSquare.squareModel);
+        }
+
+        public void OpeningTileClicked(object sender, EventArgs args)
+        {
+            if (sender is TileLayout)
+            {
+                boardController.MakeMove(((TileLayout)sender).MoveNotation);
+            }
         }
 
         public void BackClicked(object sender, EventArgs args)
@@ -214,7 +233,33 @@ namespace ChessOpenings.Droid.Fragments
 
         public void UpdateOpeningList(List<Opening> openings)
         {
-            lvNextMoves.Adapter = new NextMoveDisplayAdapter(openings);
+            bool firstOpeningFlag = true;
+            tileLayout.RemoveAllViews();
+            secondaryLinesLayout.RemoveAllViews();
+            for(int i = 0; i < openings.Count(); i++)
+            {
+                if (firstOpeningFlag)
+                {
+                    TileLayout t = new TileLayout(this.Activity, openings[i], false, boardController.Board.Turn);
+                    t.Click += OpeningTileClicked;
+                    tileLayout.AddView(t);
+                }
+                else
+                {
+                    TileLayout t = new TileLayout(this.Activity, openings[i], true, boardController.Board.Turn);
+                    Color c = new Color();
+                    int colourOffset = (127 / openings.Count() - 1) * i;
+                    c.G = (byte)(127 - colourOffset);
+                    c.R = (byte)(127 + colourOffset);
+                    c.B = 0;
+                    c.A = 255;
+                    t.TileColour = c;
+                    secondaryLinesLayout.AddView(t);
+                    t.Click += OpeningTileClicked;
+                }
+                firstOpeningFlag = false;
+            }
+            
         }
     }
 }

@@ -35,8 +35,8 @@ namespace ChessOpenings.Controllers
             XDocument doc = XDocument.Load(BoardView.ParseOpenings());
             OAccessor = new OpeningAccessor(doc);
             Board.InitialiseBoard();
-            UpdateOpening();
-            UpdateOpeningList();
+            //UpdateOpening();
+            //UpdateOpeningList();
         }
 
         public void SquareTapped(Square tappedSquare)
@@ -61,11 +61,32 @@ namespace ChessOpenings.Controllers
                 NextMove.ToSquare = tappedSquare;
                 Board.MakeMove(NextMove);
                 DrawBoard();
-                BoardView.UnselectSquare(selectedSquare);
                 UpdateOpening();
                 UpdateOpeningList();
+                BoardView.UnselectSquare(selectedSquare);
                 selectedSquare = null;
                 NextMove = new Move();
+            }
+        }
+
+        public void MakeMove(Move move)
+        {
+            Board.MakeMove(move);
+            DrawBoard();
+            UpdateOpening();
+            UpdateOpeningList();
+            BoardView.UnselectSquare(selectedSquare);
+            selectedSquare = null;
+            NextMove = new Move();
+        }
+
+        public void MakeMove(string moveNotation)
+        {
+            AlgebraicNotationParser parser = new AlgebraicNotationParser(moveNotation, Board.Turn, Board);
+            Move m = parser.GetMove();
+            if (m != null)
+            {
+                MakeMove(m);
             }
         }
 
@@ -110,7 +131,7 @@ namespace ChessOpenings.Controllers
 
         public void UpdateOpening()
         {
-            BoardView.UpdateOpeningName(GetOpening().Name);
+            BoardView.UpdateOpeningName(GetOpening().ShortName);
         }
 
         public void UpdateOpeningList()
@@ -127,5 +148,7 @@ namespace ChessOpenings.Controllers
         {
             return OAccessor.GetChildrenOfOpening(Board.GetAllMovesByNotation());
         }
+
+
     }
 }
