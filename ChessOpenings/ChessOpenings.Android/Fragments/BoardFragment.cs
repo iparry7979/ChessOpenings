@@ -49,11 +49,6 @@ namespace ChessOpenings.Droid.Fragments
             boardController.DrawBoard();
             boardController.UpdateOpening();
             boardController.UpdateOpeningList();
-            //tileLayout.AddView(new TileLayout(this.Activity, new Pieces.Knight(Enums.Colour.White), 0.15, 0.30, false));
-            //secondaryLinesLayout.AddView(new TileLayout(this.Activity, new Pieces.Knight(Enums.Colour.White), 0.15, 0.30, true));
-            //secondaryLinesLayout.AddView(new TileLayout(this.Activity, new Pieces.Knight(Enums.Colour.White), 0.15, 0.30, true));
-            //secondaryLinesLayout.AddView(new TileLayout(this.Activity, new Pieces.Knight(Enums.Colour.White), 0.15, 0.30, true));
-            //secondaryLinesLayout.AddView(new TileLayout(this.Activity, new Pieces.Knight(Enums.Colour.White), 0.15, 0.30, true));
             InitialiseButtons();
             return view;
         }

@@ -34,6 +34,16 @@ namespace ChessOpenings.UnitTests.Helpers
             "d4", "d5", "Nc3", "Nf6", "e4", "dxe4", "f3", "exf3"
         };
 
+        private List<string> English_Closed = new List<string>
+        {
+            "c4", "e5", "Nc3", "Nc6", "g3", "g6", "Bg2", "Bg7", "d3", "d6", "Nf3"
+        };
+
+        private List<string> Blackmar_Diemer_Tartakower = new List<string>
+        {
+            "d4", "d5", "Nc3", "Nf6", "e4",  "dxe4", "f3", "exf3", "Nxf3", "Bg4"
+        };
+
         public OpeningAccessor GetTestObject()
         {
             String path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)) + "/../../../ChessOpenings/ChessOpenings/Data/openings.xml";
@@ -73,6 +83,24 @@ namespace ChessOpenings.UnitTests.Helpers
             Assert.IsTrue(blackmar.lastMove == "exf3");
             Assert.IsTrue(blackmar.Id == "D00v");
 
+            //Test Case English Closed
+
+            Opening english = accessor.GetOpening(English_Closed);
+
+            Assert.IsTrue(english.Name == "English: Closed, 5.d3 d6 6.Nf3");
+            Assert.IsTrue(english.ShortName == "English: Closed");
+            Assert.IsTrue(english.lastMove == "Nf3");
+            Assert.IsTrue(english.Id == "A26");
+
+            //Test Case Blackmar-Diemer Tartakower Defence
+
+            Opening tartakower = accessor.GetOpening(Blackmar_Diemer_Tartakower);
+
+            Assert.IsTrue(tartakower.Name == "Blackmar-Diemer: Tartakower Defence");
+            Assert.IsTrue(tartakower.ShortName == "Blackmar-Diemer: Tartakower Defence");
+            Assert.IsTrue(tartakower.lastMove == "Bg4");
+            Assert.IsTrue(tartakower.Id == "D00w");
+
             //Test Case Start of game
 
             Opening start = accessor.GetOpening(new List<string>());
@@ -102,6 +130,9 @@ namespace ChessOpenings.UnitTests.Helpers
             Assert.IsTrue(moves.Contains("b6"));
             Assert.IsTrue(moves.Contains("Nc6"));
             Assert.IsTrue(moves.Contains("c6"));
+
+            List<Opening> tartakowerChildren = accessor.GetChildrenOfOpening(Blackmar_Diemer_Tartakower);
+            Assert.IsTrue(tartakowerChildren.Count() == 0);
 
             //check first move
 

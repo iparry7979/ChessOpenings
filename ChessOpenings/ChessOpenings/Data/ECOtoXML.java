@@ -7,7 +7,7 @@ import java.util.*;
 
 public class ECOtoXML {
 	
-	public static final String PATH = "D:/Dev/Data Files/Chess/";
+	public static final String PATH = "./";
 	public static final String FILENAME = "scid.eco";
 	public static final String OUTPUTFILE = "openings.xml";
 	public static String currentLine = null;
@@ -16,6 +16,7 @@ public class ECOtoXML {
 	public static Document xmlDoc = null;
 	public static Element root;
 	public static List<Opening> allOpenings;
+	public static List<Game> gameList;
 	
 
 	public static void main(String[] args) {
@@ -28,6 +29,7 @@ public class ECOtoXML {
 			System.out.println(currentOpeningString);
 		}
 		Element root = ConvertToXml(allOpenings);
+		determineOpeningFrequencys(root, new ArrayList<String>());
 		xmlDoc.setRootElement(root);
 		OutputXML(xmlDoc, getFilePath(OUTPUTFILE));
 		System.out.println("END");
@@ -72,6 +74,9 @@ public class ECOtoXML {
 		{
 			e.printStackTrace();
 		}
+		PgnReader r = new PgnReader();
+		System.out.println("Reading Games...");
+		gameList = r.getGamesList();
 		Element root = new Element("Openings");
 		xmlDoc = new Document(root);
 	}
@@ -149,6 +154,74 @@ public class ECOtoXML {
 		catch (Exception e)
 		{
 			System.out.println("Error writing file");
+		}
+	}
+
+	public static void determineOpeningFrequencys(Element element, List<String> moves)
+	{
+		if (element.getAttributeValue("Move") != null)
+		{
+			moves.add(element.getAttributeValue("Move"));
+			//System.out.println("Move added - " + element.getAttributeValue("Move"));
+		}
+		if (element.getAttributeValue("Name").equals("English"))
+		{
+			System.out.println("English found - Moves size = " + moves.size());
+		}
+		List<Element> children = element.getChildren();
+		if (children == null || children.size() == 0) return;
+		List<Integer> gameCountList = new ArrayList<Integer>();
+		List<Float> successRateList = new ArrayList<Float>();
+		//get the counts for each child opening
+		for (Element e : children)
+		{
+			float successRate = 0;
+			//List<Float> successCountList = new ArrayList<Float>();
+			List<String> movesForChild = new ArrayList<String>();
+			movesForChild.addAll(moves);
+			movesForChild.add(e.getAttributeValue("Move"));
+			int count = 0;
+			float successCount = 0;
+			for (Game g : gameList)
+			{
+				if (g.employsOpening(movesForChild))
+				{
+					count++;
+					successCount += g.getResult();
+				}
+			}
+			gameCountList.add(count);
+			
+			if (count > 0)
+			{
+				successRate = successCount / (float)count;
+			}
+			successRateList.add(successRate);
+		}
+		int total = 0;
+		for (int i : gameCountList)
+		{
+			total += i;
+		}
+		for (int i = 0; i < children.size(); i++)
+		{
+			double proportion = 0;
+			if (total != 0)
+			{
+				proportion = (double)(gameCountList.get(i)) / (double)total;
+				//System.out.println("count = " + gameCountList.get(i) + " total = " + total + " frequency = " + proportion);
+				
+			}
+			float successRate = successRateList.get(i);
+			children.get(i).setAttribute("Frequency", Double.valueOf(proportion).toString());
+			children.get(i).setAttribute("Success_Rate", Float.valueOf(successRate).toString());
+			
+		}
+		for (Element child : children)
+		{
+			List<String> movesCopy = new ArrayList<String>();
+			movesCopy.addAll(moves);
+			determineOpeningFrequencys(child, movesCopy);
 		}
 	}
 	
