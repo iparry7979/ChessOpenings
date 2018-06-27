@@ -15,6 +15,10 @@ namespace ChessOpenings.Models
 
         public string Id { get; set; }
 
+        public double Frequency { get; set; }
+
+        public double SuccessRate { get; set; }
+
         public string ShortName
         {
             get

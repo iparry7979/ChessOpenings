@@ -44,6 +44,11 @@ namespace ChessOpenings.UnitTests.Helpers
             "d4", "d5", "Nc3", "Nf6", "e4",  "dxe4", "f3", "exf3", "Nxf3", "Bg4"
         };
 
+        private List<string> Open_Game = new List<string>
+        {
+            "e4", "e5", "Nf3"
+        };
+
         public OpeningAccessor GetTestObject()
         {
             String path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)) + "/../../../ChessOpenings/ChessOpenings/Data/openings.xml";
@@ -108,6 +113,17 @@ namespace ChessOpenings.UnitTests.Helpers
             Assert.IsTrue(start.Name == "Start");
             Assert.IsTrue(start.Id == "Start");
             Assert.IsTrue(string.IsNullOrEmpty(start.lastMove));
+
+            //Test Case Open Game - test success and frequency
+
+            Opening open = accessor.GetOpening(Open_Game);
+
+            Assert.IsTrue(open.Name == "Open Game");
+            Assert.IsTrue(open.ShortName == "Open Game");
+            Assert.IsTrue(open.lastMove == "Nf3");
+            Assert.IsTrue(open.Id == "C40a");
+            Assert.IsTrue(open.Frequency == 0.9615384615384616);
+            Assert.IsTrue(open.SuccessRate == 0.5);
         }
 
         [TestMethod]

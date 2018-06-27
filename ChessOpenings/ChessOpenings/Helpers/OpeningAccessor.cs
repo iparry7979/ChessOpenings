@@ -48,6 +48,13 @@ namespace ChessOpenings.Helpers
             rtn.Name = element.Attribute("Name")?.Value;
             rtn.lastMove = element.Attribute("Move")?.Value;
             rtn.Id = element.Name.LocalName;
+
+            string freq = element.Attribute("Frequency")?.Value;
+            string succRate = element.Attribute("Success_Rate")?.Value;
+
+            rtn.Frequency = Convert.ToDouble(freq);
+            rtn.SuccessRate = Convert.ToDouble(succRate);
+
             return rtn;
         }
 
