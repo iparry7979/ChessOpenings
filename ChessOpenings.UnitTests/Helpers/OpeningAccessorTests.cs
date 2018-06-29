@@ -22,6 +22,11 @@ namespace ChessOpenings.UnitTests.Helpers
             "d4", "f5", "c4", "Nf6", "g3", "e6", "Bg2", "Be7", "Nf3", "O-O", "O-O", "d5", "b3"
         };
 
+        private List<string> Open_Game_Nf6 = new List<string>
+        {
+            "e4", "e5", "Nf3", "Nc6"
+        };
+
         //line 12991 scid.eco
         private List<string> Queens_Gambit = new List<string>
         {
@@ -155,6 +160,14 @@ namespace ChessOpenings.UnitTests.Helpers
             List<Opening> firstMoves = accessor.GetChildrenOfOpening(new List<string>());
 
             Assert.IsTrue(firstMoves.Count() == 20);
+
+            List<Opening> openChildren = accessor.GetChildrenOfOpening(Open_Game_Nf6);
+
+            Assert.IsTrue(openChildren.Count() == 11);
+            for (int i = 0; i < openChildren.Count() - 1; i++)
+            {
+                Assert.IsTrue(openChildren[i].Frequency >= openChildren[i + 1].Frequency);
+            }
         }
     }
 }

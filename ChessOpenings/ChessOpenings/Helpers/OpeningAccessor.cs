@@ -38,6 +38,7 @@ namespace ChessOpenings.Helpers
             {
                 childOpenings.Add(ElementToOpening(child));
             }
+            childOpenings = childOpenings.OrderByDescending(o => o.Frequency).ToList();
             return childOpenings;
         }
 

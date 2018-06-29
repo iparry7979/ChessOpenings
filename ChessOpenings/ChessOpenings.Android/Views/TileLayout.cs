@@ -65,7 +65,8 @@ namespace ChessOpenings.Droid.Views
             ivPieceImageIcon.SetImageResource(GetPieceIconResource(subjectPiece));
             tvDestinationSquare.Text = anp.ExtractDestinationSquare();
             tvOpeningName.Text = opening.ShortName;
-            tvWinRate.Text = "50%";
+            double successPercentage = Math.Round(opening.SuccessRate, 2) * 100;
+            tvWinRate.Text = successPercentage.ToString() + "%";
         }
 
         protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
