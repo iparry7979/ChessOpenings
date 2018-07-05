@@ -18,6 +18,9 @@ using Android.Graphics;
 using Java.IO;
 using System.IO;
 using ChessOpenings.Droid.Adapters;
+using Android.Support.V7.RecyclerView;
+using Android.Support.V7.CardView;
+using Android.Support.V7.Widget;
 
 namespace ChessOpenings.Droid.Fragments
 {
@@ -31,6 +34,9 @@ namespace ChessOpenings.Droid.Fragments
         private ListView lvNextMoves;
         public BoardController boardController { get; set; }
         private View view;
+        private RecyclerView recyclerView;
+        private RecyclerView.LayoutManager rvLayoutManager;
+        private OpeningAdapter rvAdapter;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -45,6 +51,9 @@ namespace ChessOpenings.Droid.Fragments
             secondaryLinesLayout = view.FindViewById<LinearLayout>(Resource.Id.tile_scroll_view);
             openingName = view.FindViewById<TextView>(Resource.Id.openingName);
             lvNextMoves = view.FindViewById<ListView>(Resource.Id.next_move_list);
+            recyclerView = view.FindViewById<RecyclerView>(Resource.Id.recyclerView);
+            rvLayoutManager = new LinearLayoutManager(this.Activity);
+            recyclerView.SetLayoutManager(rvLayoutManager);
             boardController = new BoardController(this);
             boardController.DrawBoard();
             boardController.UpdateOpening();
@@ -134,6 +143,14 @@ namespace ChessOpenings.Droid.Fragments
             if (sender is TileLayout)
             {
                 boardController.MakeMove(((TileLayout)sender).MoveNotation);
+            }
+        }
+
+        public void OpeningCardClicked(object sender, Opening opening)
+        {
+            if (opening != null)
+            {
+                boardController.MakeMove(opening.lastMove);
             }
         }
 
@@ -228,7 +245,7 @@ namespace ChessOpenings.Droid.Fragments
 
         public void UpdateOpeningList(List<Opening> openings)
         {
-            bool firstOpeningFlag = true;
+            /*bool firstOpeningFlag = true;
             tileLayout.RemoveAllViews();
             secondaryLinesLayout.RemoveAllViews();
             for(int i = 0; i < openings.Count(); i++)
@@ -253,7 +270,14 @@ namespace ChessOpenings.Droid.Fragments
                     t.Click += OpeningTileClicked;
                 }
                 firstOpeningFlag = false;
-            }
+            }*/
+
+            rvAdapter = new OpeningAdapter(openings);
+            rvAdapter.ItemClick += OpeningCardClicked;
+            rvAdapter.Turn = boardController.Board.Turn;
+            recyclerView.SetAdapter(rvAdapter);
+                
+            
             
         }
     }

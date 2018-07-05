@@ -8,37 +8,36 @@
     android:layout_marginBottom="4dp"
     android:gravity="center"
     android:background="@android:color/holo_green_dark">
-  <LinearLayout
+    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp">
-      <ImageView
-          android:id="@+id/piece_image"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:src="@drawable/icon_knight_white"/>
-      <ImageView
-          android:id="@+id/arrow"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:src="@drawable/rightArrow"/>
-      <TextView
-          android:id="@+id/tv_destination_square"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:text ="a1"
-          android:textSize="14sp"/>
-  </LinearLayout>
-    
+        <ImageView
+            android:id="@+id/piece_image"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_knight_white" />
+        <ImageView
+            android:id="@+id/arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/rightArrow" />
+        <TextView
+            android:id="@+id/tv_destination_square"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="a1"
+            android:textSize="14sp" />
+    </LinearLayout>
     <TextView
         android:id="@+id/tv_next_opening_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Queen's Gambit"
         android:layout_marginTop="4dp"
-        android:textSize="14sp"/>
+        android:textSize="14sp" />
     <TextView
         android:id="@+id/winrate_heading"
         android:layout_width="wrap_content"
@@ -53,5 +52,4 @@
         android:text="50%"
         android:layout_marginTop="4dp"
         android:textSize="14sp" />
-        
 </LinearLayout>

@@ -8,7 +8,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-      <!-- contents of boardLayout generated programatically-->
+    <!-- contents of boardLayout generated programatically-->
         <LinearLayout
             android:id="@+id/boardLayout"
             android:orientation="vertical"
@@ -24,24 +24,24 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp">
-          <Button
-              android:id="@+id/back_one_move_button"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:text="Back" />
-          <Button
-              android:id="@+id/reset_board_button"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:text="Reset" />
-          <Button
-              android:id="@+id/flip_board_button"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:text="Flip" />
+            <Button
+                android:id="@+id/back_one_move_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Back" />
+            <Button
+                android:id="@+id/reset_board_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Reset" />
+            <Button
+                android:id="@+id/flip_board_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Flip" />
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp">
-        <LinearLayout
+      <LinearLayout
             android:id="@+id/current_opening_holder"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -59,21 +59,27 @@
                 android:id="@+id/openingLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text ="Current Opening"
+                android:text="Current Opening"
                 android:textSize="10sp" />
             <TextView
                 android:id="@+id/openingName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Placeholder"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
         </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+           android:id="@+id/recyclerView"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:scrollbars="vertical" />
         <LinearLayout
             android:id="@+id/next_move_tile_layout"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp">
+            android:layout_marginTop="12dp"
+            android:visibility="gone">
             <LinearLayout
                 android:id="@+id/main_line_layout"
                 android:orientation="vertical"
@@ -85,12 +91,11 @@
                     android:layout_height="wrap_content"
                     android:text="Main Line"
                     android:textColor="#202020"
-                    android:background="#aaaaaa"/>
+                    android:background="#aaaaaa" />
                 <LinearLayout
                     android:id="@+id/tileView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-              
+                    android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/secondary_lines_layout"
@@ -101,19 +106,18 @@
                 android:layout_weight="1"
                 android:layout_marginRight="8dp">
                 <TextView
-                      android:id="@+id/secondary_line_heading"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:text="Other Lines"
-                      android:textColor="#202020"
-                      android:background="#aaaaaa"/>
-
+                    android:id="@+id/secondary_line_heading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Other Lines"
+                    android:textColor="#202020"
+                    android:background="#aaaaaa" />
                 <HorizontalScrollView
-                      android:id="@+id/tsv"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:minWidth="25px"
-                      android:minHeight="25px" >
+                    android:id="@+id/tsv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="25px"
+                    android:minHeight="25px">
                     <LinearLayout
                         android:id="@+id/tile_scroll_view"
                         android:layout_width="wrap_content"
@@ -137,13 +141,12 @@
                         android:text="button4"/> -->
                     </LinearLayout>
                 </HorizontalScrollView>
-              
             </LinearLayout>
         </LinearLayout>
         <ListView
             android:id="@+id/next_move_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>
