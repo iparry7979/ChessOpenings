@@ -214,9 +214,9 @@ namespace ChessOpenings.Droid.Fragments
 
         public void InitialiseButtons()
         {
-            Button backOneButton = view.FindViewById<Button>(Resource.Id.back_one_move_button);
-            Button resetButton = view.FindViewById<Button>(Resource.Id.reset_board_button);
-            Button flipBoardButton = view.FindViewById<Button>(Resource.Id.flip_board_button);
+            ImageButton backOneButton = view.FindViewById<ImageButton>(Resource.Id.back_one_move_button);
+            ImageButton resetButton = view.FindViewById<ImageButton>(Resource.Id.reset_board_button);
+            ImageButton flipBoardButton = view.FindViewById<ImageButton>(Resource.Id.flip_board_button);
 
             backOneButton.Click += BackClicked;
             resetButton.Click += ResetClicked;

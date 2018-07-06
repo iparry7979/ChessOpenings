@@ -1,8 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@drawable/wood_back"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
+    <android.support.v7.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="16dp"
+      android:layout_marginRight="16dp"
+      card_view:contentPaddingLeft="6dp"
+      card_view:contentPaddingRight="6dp"
+      card_view:contentPaddingTop="3dp"
+      card_view:contentPaddingBottom="3dp"
+      card_view:cardBackgroundColor="#ecded1"
+      card_view:cardElevation="4dp"
+      card_view:cardUseCompatPadding="true"
+      card_view:cardCornerRadius="5dp">
+      <LinearLayout
+          android:id="@+id/current_opening_holder"
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+          <TextView
+              android:id="@+id/openingLabel"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Current Opening"
+              android:textSize="10sp" />
+          <TextView
+              android:id="@+id/openingName"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Placeholder"
+              android:textSize="18sp" />
+      </LinearLayout>
+    
+    </android.support.v7.widget.CardView>
     <LinearLayout
         android:id="@+id/boardAndButtons"
         android:orientation="vertical"
@@ -14,7 +49,10 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:elevation="6dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:background="@android:color/holo_blue_bright"
             android:gravity="center" />
         <LinearLayout
@@ -24,24 +62,27 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp">
-            <Button
+            <ImageButton
                 android:id="@+id/back_one_move_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Back" />
-            <Button
+                android:elevation="3dp"
+                android:src="@drawable/icon_back_circle" />
+            <ImageButton
                 android:id="@+id/reset_board_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Reset" />
-            <Button
+                android:elevation="3dp"
+                android:src="@drawable/icon_skip_back" />
+            <ImageButton
                 android:id="@+id/flip_board_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Flip" />
+                android:elevation="3dp"
+                android:src="@drawable/icon_rotate_180" />
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
@@ -50,7 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp">
-      <LinearLayout
+      <!-- <LinearLayout
             android:id="@+id/current_opening_holder"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -67,7 +108,16 @@
                 android:layout_height="wrap_content"
                 android:text="Placeholder"
                 android:textSize="18sp" />
-        </LinearLayout>
+        </LinearLayout> -->
+      <TextView
+        android:id="@+id/next_move_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="3dp"
+        android:text="Next Moves"
+        android:textSize="14sp"/>
         <android.support.v7.widget.RecyclerView
            android:id="@+id/recyclerView"
            android:layout_width="match_parent"
@@ -123,22 +173,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
-                      <!-- <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="button1"/>
-                      <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="button2"/>
-                      <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="button3"/>
-                      <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="button4"/> -->
                     </LinearLayout>
                 </HorizontalScrollView>
             </LinearLayout>

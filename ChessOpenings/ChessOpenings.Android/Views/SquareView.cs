@@ -53,8 +53,14 @@ namespace ChessOpenings.Droid.Views
 
         public void UpdateBackgroundColor()
         {
-            Color squareColor = squareModel.Colour == Enums.Colour.White ? Color.White : Color.Black;
-            this.SetBackgroundColor(squareColor);
+            if (squareModel.Colour == Enums.Colour.White)
+            {
+                this.SetBackgroundResource(Resource.Drawable.WhiteSquare);
+            }
+            else
+            {
+                this.SetBackgroundResource(Resource.Drawable.BlackSquare);
+            }
         }
 
         public void DrawPiece()
