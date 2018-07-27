@@ -32,13 +32,16 @@ namespace ChessOpenings.Helpers
         public List<Opening> GetChildrenOfOpening(List<string> moves)
         {
             XElement thisOpening = GetOpeningElement(moves);
-            List<XElement> children = thisOpening.Elements().ToList();
             List<Opening> childOpenings = new List<Opening>();
-            foreach (XElement child in children)
+            if (thisOpening.Attribute("Name").Value == "Start" || moves.LastOrDefault() == thisOpening.Attribute("Move").Value)
             {
-                childOpenings.Add(ElementToOpening(child));
+                List<XElement> children = thisOpening.Elements().ToList();
+                foreach (XElement child in children)
+                {
+                    childOpenings.Add(ElementToOpening(child));
+                }
+                childOpenings = childOpenings.OrderByDescending(o => o.Frequency).ToList();
             }
-            childOpenings = childOpenings.OrderByDescending(o => o.Frequency).ToList();
             return childOpenings;
         }
 

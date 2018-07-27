@@ -129,6 +129,9 @@
     <AndroidResource Include="Resources\layout\opening_card_view.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout-land\Main.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
@@ -175,7 +178,9 @@
     <AndroidResource Include="Resources\drawable-hdpi\YellowR.ico" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\openings.xml" />
+    <AndroidAsset Include="Assets\openings.xml">
+      <SubType>Designer</SubType>
+    </AndroidAsset>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\rightArrow.png" />
