@@ -15,7 +15,7 @@ using ChessOpenings.Droid.Fragments;
 
 namespace ChessOpenings.Droid
 {
-    [Activity(Label = "ChessOpenings.Android", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "ChessOpenings.Android")]
     public class MainScreen : Activity
     {
         
