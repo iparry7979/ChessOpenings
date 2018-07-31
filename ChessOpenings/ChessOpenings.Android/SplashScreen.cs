@@ -10,19 +10,28 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ChessOpenings.Droid
 {
-    [Activity(Label = "Chess Openings", MainLauncher = true, Theme = "@style/Theme.Splash", NoHistory = true, Icon = "@drawable/Title")]
+    [Activity(Label = "Chess Openings", Theme = "@style/Theme.Splash", MainLauncher = true, NoHistory = true, Icon = "@drawable/Title")]
     public class SplashScreen : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            Thread.Sleep(4000);
+            SetContentView(Resource.Layout.splash);
 
-            StartActivity(typeof(MainScreen));
+            //Thread.Sleep(4000);
+
+            Task.Run(() =>
+           {
+               Thread.Sleep(4000);
+               StartActivity(typeof(MainScreen));
+           });
+
+            //StartActivity(typeof(MainScreen));
         }
     }
 }

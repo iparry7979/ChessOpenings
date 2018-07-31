@@ -64,14 +64,13 @@ namespace ChessOpenings.Droid.Fragments
 
         public void DrawBoard(bool inverted)
         {
+            
             boardLayout.RemoveAllViews();
             boardTable = new SquareGridLayout(this.Activity);
             boardTable.LayoutParameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.WrapContent);
             boardTable.RowCount = 8;
             boardTable.ColumnCount = 8;
-
             BuildBoard(boardTable, inverted);
-
             boardLayout.AddView(boardTable);
         }
 

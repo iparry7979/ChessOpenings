@@ -59,6 +59,7 @@ namespace ChessOpenings.Controllers
                     return;
                 }
                 NextMove.ToSquare = tappedSquare;
+               
                 Board.MakeMove(NextMove);
                 DrawBoard();
                 UpdateOpening();
