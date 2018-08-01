@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace ChessOpenings.Droid
 {
-    [Activity(Label = "Chess Openings", Theme = "@style/Theme.Splash", MainLauncher = true, NoHistory = true, Icon = "@drawable/Title")]
+    [Activity(Label = "Chess Openings", Theme = "@style/Theme.Splash", MainLauncher = true, NoHistory = true, Icon = "@drawable/CheckIcon")]
     public class SplashScreen : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
