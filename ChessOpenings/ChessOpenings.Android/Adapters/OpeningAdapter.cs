@@ -49,6 +49,7 @@ namespace ChessOpenings.Droid.Adapters
             double whiteWinRate = Math.Round(Openings[position].SuccessRate, 2) * 100;
             double blackWinRate = 100 - whiteWinRate;
             vh.WinRate.Text = Turn == Enums.Colour.White ? whiteWinRate.ToString() + "%" : blackWinRate.ToString() + "%";
+            vh.WinRate.Text += " - " + Openings[position].Count + " games";
         }
 
         public void OnClick(int position)

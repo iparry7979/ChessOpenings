@@ -57,7 +57,9 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Data\ECOtoXML.java" />
+    <Content Include="Data\Game.java" />
     <Content Include="Data\Opening.java" />
+    <Content Include="Data\PgnReader.java" />
     <None Include="Data\openings.xml">
       <SubType>Designer</SubType>
     </None>

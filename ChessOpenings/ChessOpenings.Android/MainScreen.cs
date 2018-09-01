@@ -12,10 +12,11 @@ using Android.Graphics;
 using ChessOpenings.Droid.Views;
 using ChessOpenings.Controllers;
 using ChessOpenings.Droid.Fragments;
+using Android.Content.PM;
 
 namespace ChessOpenings.Droid
 {
-    [Activity(Label = "ChessOpenings.Android")]
+    [Activity(Label = "ChessOpenings.Android", ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainScreen : Activity
     {
         

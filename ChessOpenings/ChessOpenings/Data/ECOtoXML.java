@@ -7,7 +7,7 @@ import java.util.*;
 
 public class ECOtoXML {
 	
-	public static final String PATH = "./";
+	public static final String PATH = "D:/Dev/Data Files/Chess/";
 	public static final String FILENAME = "scid.eco";
 	public static final String OUTPUTFILE = "openings.xml";
 	public static String currentLine = null;
@@ -108,7 +108,7 @@ public class ECOtoXML {
 		Element currentElement = root;
 		for (String move : opening.getMoves())
 		{
-			boolean added = false;
+			//boolean added = false;
 			//while (!added)
 			//{
 				List<Element> eList = currentElement.getChildren();
@@ -120,7 +120,7 @@ public class ECOtoXML {
 					child.setAttribute("Move", move);
 					child.setAttribute("Name", opening.name);
 					currentElement.addContent(child);
-					added = true;
+					//added = true;
 				}
 				else
 				{
@@ -213,8 +213,10 @@ public class ECOtoXML {
 				
 			}
 			float successRate = successRateList.get(i);
+			int gameCount = gameCountList.get(i);
 			children.get(i).setAttribute("Frequency", Double.valueOf(proportion).toString());
 			children.get(i).setAttribute("Success_Rate", Float.valueOf(successRate).toString());
+			children.get(i).setAttribute("Count", Integer.valueOf(gameCount).toString());
 			
 		}
 		for (Element child : children)

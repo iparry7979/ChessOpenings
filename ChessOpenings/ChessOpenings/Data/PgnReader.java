@@ -3,8 +3,8 @@ import java.util.*;
 
 public class PgnReader
 {
-	public static final String PATH = "e:/JavaDev/";
-	public static final String FILENAME = "WijkaanZee2018.pgn";
+	public static final String PATH = "D:/Dev/Data Files/Chess/";
+	public static final String FILENAME = "ficsgamesdb_201801_standard2000_nomovetimes_1543578.pgn";
 	public BufferedReader br = null;
 	public FileReader fr = null;
 	public List<Game> games = new ArrayList<Game>();
