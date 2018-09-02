@@ -127,8 +127,8 @@ namespace ChessOpenings.UnitTests.Helpers
             Assert.IsTrue(open.ShortName == "Open Game");
             Assert.IsTrue(open.lastMove == "Nf3");
             Assert.IsTrue(open.Id == "C40a");
-            Assert.IsTrue(open.Frequency == 0.9615384615384616);
-            Assert.IsTrue(open.SuccessRate == 0.5);
+            Assert.IsTrue(open.Frequency == 0.8276385725132878);
+            Assert.IsTrue(open.SuccessRate == 0.52844036);
         }
 
         [TestMethod]

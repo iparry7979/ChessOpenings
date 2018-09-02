@@ -244,40 +244,10 @@ namespace ChessOpenings.Droid.Fragments
 
         public void UpdateOpeningList(List<Opening> openings)
         {
-            /*bool firstOpeningFlag = true;
-            tileLayout.RemoveAllViews();
-            secondaryLinesLayout.RemoveAllViews();
-            for(int i = 0; i < openings.Count(); i++)
-            {
-                if (firstOpeningFlag)
-                {
-                    TileLayout t = new TileLayout(this.Activity, openings[i], false, boardController.Board.Turn);
-                    t.Click += OpeningTileClicked;
-                    tileLayout.AddView(t);
-                }
-                else
-                {
-                    TileLayout t = new TileLayout(this.Activity, openings[i], true, boardController.Board.Turn);
-                    Color c = new Color();
-                    int colourOffset = (127 / openings.Count() - 1) * i;
-                    c.G = (byte)(127 - colourOffset);
-                    c.R = (byte)(127 + colourOffset);
-                    c.B = 0;
-                    c.A = 255;
-                    t.TileColour = c;
-                    secondaryLinesLayout.AddView(t);
-                    t.Click += OpeningTileClicked;
-                }
-                firstOpeningFlag = false;
-            }*/
-
             rvAdapter = new OpeningAdapter(openings);
             rvAdapter.ItemClick += OpeningCardClicked;
             rvAdapter.Turn = boardController.Board.Turn;
             recyclerView.SetAdapter(rvAdapter);
-                
-            
-            
         }
     }
 }

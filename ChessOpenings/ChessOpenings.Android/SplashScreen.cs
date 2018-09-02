@@ -27,7 +27,7 @@ namespace ChessOpenings.Droid
 
             Task.Run(() =>
            {
-               Thread.Sleep(4000);
+               Thread.Sleep(1500);
                StartActivity(typeof(MainScreen));
            });
 
