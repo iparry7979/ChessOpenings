@@ -39,6 +39,7 @@
     <Compile Include="Helpers\OpeningAccessor.cs" />
     <Compile Include="Models\Board.cs" />
     <Compile Include="Models\Board.MoveValidation.cs" />
+    <Compile Include="Models\BoardPosition.cs" />
     <Compile Include="Models\Move.cs" />
     <Compile Include="Models\Opening.cs" />
     <Compile Include="Models\Square.cs" />

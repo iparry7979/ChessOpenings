@@ -53,6 +53,7 @@
     <Compile Include="Helpers\AlgebraicNotationParserTests.cs" />
     <Compile Include="Helpers\OpeningAccessorTests.cs" />
     <Compile Include="Models\AlgebraicNotaionGenarationTests.cs" />
+    <Compile Include="Models\BoardPositionTests.cs" />
     <Compile Include="Models\BoardTests.cs" />
     <Compile Include="Models\BoardTests.MoveValidation.cs" />
     <Compile Include="Models\BoardVectorTests.cs" />

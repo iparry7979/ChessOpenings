@@ -54,6 +54,28 @@ namespace ChessOpenings.UnitTests.Helpers
             "e4", "e5", "Nf3"
         };
 
+        //Ruy Lopez position through normal string of moves
+        private List<string> Ruy_Lopez_Standard = new List<string>
+        {
+            "e4", "e5", "Nf3", "Nc6", "Bb5"
+        };
+
+        //Ruy Lopez position through non-standard series of moves - used to test transition from unknown opening
+        private List<string> Ruy_Lopez_Mixed = new List<string>
+        {
+            "Nf3", "Nf6", "e4", "e5", "Bb5"
+        };
+
+        private List<string> French_Sstandard = new List<string>
+        {
+            "e4", "e6", "Nf3"
+        }; //scid.eco line 8391
+
+        private List<string> French_Transpose_From_Reti = new List<string>
+        {
+            "Nf3", "e6", "e4"  
+        };
+
         public OpeningAccessor GetTestObject()
         {
             String path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)) + "/../../../ChessOpenings/ChessOpenings/Data/openings.xml";
@@ -129,6 +151,26 @@ namespace ChessOpenings.UnitTests.Helpers
             Assert.IsTrue(open.Id == "C40a");
             Assert.IsTrue(open.Frequency == 0.8276385725132878);
             Assert.IsTrue(open.SuccessRate == 0.52844036);
+
+            //Test Transpositions
+
+            Opening ruy_lopez_standard = accessor.GetOpening(Ruy_Lopez_Standard);
+
+            Assert.IsTrue(ruy_lopez_standard.Name == "Spanish (Ruy Lopez)");
+
+            Opening ruy_lopez_non_standard = accessor.GetOpening(Ruy_Lopez_Mixed);
+
+            Assert.IsTrue(ruy_lopez_non_standard.Name == "Spanish (Ruy Lopez)", "Failed Ruy Lopez Transposition");
+
+            Opening french = accessor.GetOpening(French_Sstandard);
+
+            Assert.IsTrue(french.Name == "French: 2.Nf3");
+
+            Opening frenchTransposition = accessor.GetOpening(French_Transpose_From_Reti);
+
+            Assert.IsTrue(frenchTransposition.Name == "French: 2.Nf3", "Failed French Transposition");
+
+
         }
 
         [TestMethod]

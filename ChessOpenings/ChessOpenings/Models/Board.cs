@@ -1015,5 +1015,18 @@ namespace ChessOpenings.Models
             }
             return rtn;
         }
+
+        public BoardPosition ToBoardPosition()
+        {
+            Dictionary<string, Piece> position = new Dictionary<string, Piece>();
+            foreach (Square square in squaresArray)
+            {
+                if (square.ContainsPiece())
+                {
+                    position.Add(square.Notation, square.Piece);
+                }
+            }
+            return new BoardPosition(position);
+        }
     }
 }

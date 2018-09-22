@@ -1,0 +1,9 @@
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.DataConversion\bin\Debug\ChessOpenings.DataConversion.exe.config
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.DataConversion\bin\Debug\ChessOpenings.DataConversion.exe
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.DataConversion\bin\Debug\ChessOpenings.DataConversion.pdb
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.DataConversion\bin\Debug\ChessOpenings.dll
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.DataConversion\bin\Debug\ChessOpenings.pdb
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.DataConversion\obj\Debug\ChessOpenings.DataConversion.csprojResolveAssemblyReference.cache
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.DataConversion\obj\Debug\ChessOpenings.DataConversion.csproj.CoreCompileInputs.cache
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.DataConversion\obj\Debug\ChessOpenings.DataConversion.exe
+D:\Dev\XamarinApps\ChessOpenings\ChessOpenings.DataConversion\obj\Debug\ChessOpenings.DataConversion.pdb

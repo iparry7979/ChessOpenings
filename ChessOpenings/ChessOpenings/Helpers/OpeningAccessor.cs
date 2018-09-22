@@ -57,8 +57,8 @@ namespace ChessOpenings.Helpers
             string succRate = element.Attribute("Success_Rate")?.Value;
             string count = element.Attribute("Count")?.Value;
 
-            rtn.Frequency = Convert.ToDouble(freq);
-            rtn.SuccessRate = Convert.ToDouble(succRate);
+            rtn.Frequency = Convert.ToDouble(freq, System.Globalization.CultureInfo.InvariantCulture);
+            rtn.SuccessRate = Convert.ToDouble(succRate, System.Globalization.CultureInfo.InvariantCulture);
             rtn.Count = Convert.ToInt32(count);
 
             return rtn;

@@ -1444,6 +1444,49 @@ namespace ChessOpenings.UnitTests
             Assert.IsTrue(CompareBoardPositions(result, queensGambitPosition));
         }
 
+        [TestMethod]
+        public void TestToBoardPosition()
+        {
+            Board board = new Board();
+            BoardPosition position = board.ToBoardPosition();
+            Piece p;
+            Assert.IsTrue(position.Position.Count == 32);
+            if (position.Position.TryGetValue("a1", out p))
+            {
+                Assert.IsTrue(p.GetPieceNotation() == "WR", "Wrong piece at a1");
+            }
+            else
+            {
+                Assert.Fail("No piece at a1");
+            }
+            if (position.Position.TryGetValue("b2", out p))
+            {
+                Assert.IsTrue(p.GetPieceNotation() == "WP", "Wrong piece at b2");
+            }
+            else
+            {
+                Assert.Fail("No piece at b2");
+            }
+            if (position.Position.TryGetValue("e8", out p))
+            {
+                Assert.IsTrue(p.GetPieceNotation() == "BK", "Wrong piece at e8");
+            }
+            else
+            {
+                Assert.Fail("No piece at e8");
+            }
+            if (position.Position.TryGetValue("e7", out p))
+            {
+                Assert.IsTrue(p.GetPieceNotation() == "BP", "Wrong piece at e7");
+            }
+            else
+            {
+                Assert.Fail("No piece at e7");
+            }
+            Assert.IsFalse(position.Position.ContainsKey("a3"));
+
+        }
+
         private bool CompareBoardPositions(Dictionary<string, Piece> p1, Dictionary<string, Piece> p2)
         {
             bool equal = true;
