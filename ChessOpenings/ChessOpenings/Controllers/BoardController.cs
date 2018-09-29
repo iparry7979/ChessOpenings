@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
 using ChessOpenings.Helpers;
+using ChessOpenings.Pieces;
 
 namespace ChessOpenings.Controllers
 {
@@ -59,7 +60,10 @@ namespace ChessOpenings.Controllers
                     return;
                 }
                 NextMove.ToSquare = tappedSquare;
-               
+                if (NextMove.IsPromotion())
+                {
+                    NextMove.PromotionPiece = new Queen(NextMove.SubjectPiece.colour);
+                }
                 Board.MakeMove(NextMove);
                 DrawBoard();
                 UpdateOpening();

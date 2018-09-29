@@ -1,6 +1,7 @@
 ﻿using ChessOpenings.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,9 +58,9 @@ namespace ChessOpenings.Helpers
             string succRate = element.Attribute("Success_Rate")?.Value;
             string count = element.Attribute("Count")?.Value;
 
-            rtn.Frequency = Convert.ToDouble(freq);
-            rtn.SuccessRate = Convert.ToDouble(succRate);
-            rtn.Count = Convert.ToInt32(count);
+            rtn.Frequency = Convert.ToDouble(freq, CultureInfo.InvariantCulture);
+            rtn.SuccessRate = Convert.ToDouble(succRate, CultureInfo.InvariantCulture);
+            rtn.Count = Convert.ToInt32(count, CultureInfo.InvariantCulture);
 
             return rtn;
         }
