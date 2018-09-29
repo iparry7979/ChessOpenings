@@ -124,11 +124,11 @@ namespace ChessOpenings.Models
 
         public bool IsPromotion()
         {
-            if (ToSquare.Rank == 8 && ToSquare.Piece is Pawn && ToSquare.Piece.colour == Enums.Colour.White)
+            if (ToSquare.Rank == 8 && SubjectPiece is Pawn && SubjectPiece.colour == Enums.Colour.White)
             {
                 return true;
             }
-            if (ToSquare.Rank == 1 && ToSquare.Piece is Pawn && ToSquare.Piece.colour == Enums.Colour.Black)
+            if (ToSquare.Rank == 1 && SubjectPiece is Pawn && SubjectPiece.colour == Enums.Colour.Black)
             {
                 return true;
             }
