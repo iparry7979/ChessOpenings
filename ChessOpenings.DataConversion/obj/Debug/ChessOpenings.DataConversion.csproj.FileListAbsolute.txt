@@ -12,10 +12,8 @@ E:\ChessOpenings\ChessOpenings.DataConversion\bin\Debug\ChessOpenings.DataConver
 E:\ChessOpenings\ChessOpenings.DataConversion\bin\Debug\ChessOpenings.DataConversion.pdb
 E:\ChessOpenings\ChessOpenings.DataConversion\bin\Debug\ChessOpenings.dll
 E:\ChessOpenings\ChessOpenings.DataConversion\bin\Debug\ChessOpenings.pdb
-C:\Developer\Temp\ChessOpenings.DataConversion.exe.config
-C:\Developer\Temp\ChessOpenings.DataConversion.exe
-C:\Developer\Temp\ChessOpenings.DataConversion.pdb
 E:\ChessOpenings\ChessOpenings.DataConversion\obj\Debug\ChessOpenings.DataConversion.csprojResolveAssemblyReference.cache
 E:\ChessOpenings\ChessOpenings.DataConversion\obj\Debug\ChessOpenings.DataConversion.csproj.CoreCompileInputs.cache
 E:\ChessOpenings\ChessOpenings.DataConversion\obj\Debug\ChessOpenings.DataConversion.exe
 E:\ChessOpenings\ChessOpenings.DataConversion\obj\Debug\ChessOpenings.DataConversion.pdb
+F:\ChessOpenings\ChessOpenings.DataConversion\obj\Debug\ChessOpenings.DataConversion.csproj.CoreCompileInputs.cache

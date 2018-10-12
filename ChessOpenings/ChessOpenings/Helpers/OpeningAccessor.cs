@@ -51,7 +51,8 @@ namespace ChessOpenings.Helpers
 
         public List<Opening> GetChildrenOfOpening(List<string> moves)
         {
-            XElement thisOpening = GetOpeningElement(moves);
+            Opening opening = GetOpening(moves);
+            XElement thisOpening = GetOpeningElement(opening.Moves);
             List<Opening> childOpenings = new List<Opening>();
             if (thisOpening.Attribute("Name").Value == "Start" || moves.LastOrDefault() == thisOpening.Attribute("Move").Value)
             {
