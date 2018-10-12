@@ -24,7 +24,27 @@ namespace ChessOpenings.Helpers
 
             if (thisOpening != null)
             {
-                return ElementToOpening(thisOpening);
+                Opening result = ElementToOpening(thisOpening);
+                if (moves.Count > 0)
+                {
+                    if (moves[moves.Count - 1] != result.lastMove)
+                    {
+                        Board board = new Board(moves);
+                        BoardPosition position = board.ToBoardPosition();
+                        int comparisonValue = position.GenerateComparisonValue();
+                        List<Opening> candidateOpenings = GetOpeningsForComparisonValue(comparisonValue);
+                        foreach (Opening candidate in candidateOpenings)
+                        {
+                            Board candidateBoard = new Board(candidate.Moves);
+                            BoardPosition candidatePosition = candidateBoard.ToBoardPosition();
+                            if (position.Equals(candidatePosition))
+                            {
+                                result = candidate;
+                            }
+                        }
+                    }
+                }
+                return result;
             }
             return null;
         }
@@ -45,7 +65,7 @@ namespace ChessOpenings.Helpers
             return childOpenings;
         }
 
-        private Opening ElementToOpening(XElement element)
+        private Opening ElementToOpening(XElement element, bool includeMoveList = false)
         {
             if (element == null) return null;
             Opening rtn = new Opening();
@@ -61,7 +81,28 @@ namespace ChessOpenings.Helpers
             rtn.SuccessRate = Convert.ToDouble(succRate, System.Globalization.CultureInfo.InvariantCulture);
             rtn.Count = Convert.ToInt32(count);
 
+            if (includeMoveList)
+            {
+                rtn.Moves = BuildMoveList(element);
+            }
+
             return rtn;
+        }
+
+        private List<string> BuildMoveList(XElement element)
+        {
+            List<string> moves = new List<string>();
+            XElement currentElement = element;
+            while (currentElement != null)
+            {
+                if (!string.IsNullOrEmpty(currentElement.Attribute("Move")?.Value))
+                {
+                    moves.Add(currentElement.Attribute("Move").Value);
+                }
+                currentElement = currentElement.Parent;
+            }
+            moves.Reverse();
+            return moves;
         }
 
         private XElement GetOpeningElement(List<string> moves)
@@ -86,6 +127,36 @@ namespace ChessOpenings.Helpers
                 }
             }
             return thisOpening;
+        }
+
+        private List<Opening> GetOpeningsForComparisonValue(int comparisonValue)
+        {
+            List<Opening> rtn = new List<Opening>();
+            XElement root = XmlDocument.Root;
+            GetOpeningsForComparisonValueRecursive(root, comparisonValue, rtn);
+            return rtn;
+
+        }
+
+        private void GetOpeningsForComparisonValueRecursive(XElement currentElement, int comparisonValue, List<Opening> openingList)
+        {
+            string openingValue = currentElement.Attribute("ComparisonValue")?.Value;
+            if (!string.IsNullOrEmpty(openingValue))
+            {
+                int cv = 0;
+                if (int.TryParse(openingValue, out cv))
+                {
+                    if (cv == comparisonValue)
+                    {
+                        openingList.Add(ElementToOpening(currentElement, true));
+                    }
+                }
+            }
+            List<XElement> children = currentElement.Elements().ToList();
+            foreach (XElement e in children)
+            {
+                GetOpeningsForComparisonValueRecursive(e, comparisonValue, openingList);
+            }
         }
     }
 }

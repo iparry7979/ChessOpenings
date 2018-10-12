@@ -63,7 +63,7 @@ namespace ChessOpenings.UnitTests.Helpers
         //Ruy Lopez position through non-standard series of moves - used to test transition from unknown opening
         private List<string> Ruy_Lopez_Mixed = new List<string>
         {
-            "Nf3", "Nf6", "e4", "e5", "Bb5"
+            "Nf3", "Nc6", "e4", "e5", "Bb5"
         };
 
         private List<string> French_Sstandard = new List<string>
@@ -78,7 +78,7 @@ namespace ChessOpenings.UnitTests.Helpers
 
         public OpeningAccessor GetTestObject()
         {
-            String path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)) + "/../../../ChessOpenings/ChessOpenings/Data/openings.xml";
+            String path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)) + "/../../../ChessOpenings.DataConversion/DataFiles/openings.xml";
 
             Stream fs = File.OpenRead(path);
             XDocument XDocument = XDocument.Load(fs);
@@ -149,8 +149,8 @@ namespace ChessOpenings.UnitTests.Helpers
             Assert.IsTrue(open.ShortName == "Open Game");
             Assert.IsTrue(open.lastMove == "Nf3");
             Assert.IsTrue(open.Id == "C40a");
-            Assert.IsTrue(open.Frequency == 0.8276385725132878);
-            Assert.IsTrue(open.SuccessRate == 0.52844036);
+            Assert.IsTrue(open.Frequency == 0.827638572513288);
+            Assert.IsTrue(open.SuccessRate == 0.5284404);
 
             //Test Transpositions
 

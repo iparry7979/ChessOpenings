@@ -16123,7 +16123,7 @@
       ]
     },
     "Microsoft.NETCore.UniversalWindowsPlatform/5.2.2": {
-      "sha512": "9UHv2YObWmcF8gqtBoDC4UW5gdHzFRtaZ5KtB9QKvCy+NC9LH1DMYyOI/ltupjVZlwYEulj3msjBXys9/QI6nw==",
+      "sha512": "eHccUiYTkiY8xeixRA0DV9mcFpi9GA9UzKt3v0d6NtNGrGefhmqwnb60PSWQPe49tXbxZaP0x+W0ghvj6hflHg==",
       "type": "package",
       "path": "microsoft.netcore.universalwindowsplatform/5.2.2",
       "files": [
@@ -22265,30 +22265,30 @@
     "UAP,Version=v10.0.10586": []
   },
   "packageFolders": {
-    "C:\\Users\\Ian\\.nuget\\packages\\": {}
+    "C:\\Users\\IP2560\\.nuget\\packages\\": {}
   },
   "project": {
     "restore": {
-      "projectUniqueName": "D:\\Dev\\XamarinApps\\ChessOpenings\\ChessOpenings\\ChessOpenings.UWP\\ChessOpenings.UWP.csproj",
+      "projectUniqueName": "E:\\ChessOpenings\\ChessOpenings\\ChessOpenings.UWP\\ChessOpenings.UWP.csproj",
       "projectName": "ChessOpenings.UWP",
-      "projectPath": "D:\\Dev\\XamarinApps\\ChessOpenings\\ChessOpenings\\ChessOpenings.UWP\\ChessOpenings.UWP.csproj",
-      "projectJsonPath": "D:\\Dev\\XamarinApps\\ChessOpenings\\ChessOpenings\\ChessOpenings.UWP\\project.json",
-      "packagesPath": "C:\\Users\\Ian\\.nuget\\packages\\",
-      "outputPath": "D:\\Dev\\XamarinApps\\ChessOpenings\\ChessOpenings\\ChessOpenings.UWP\\obj\\",
+      "projectPath": "E:\\ChessOpenings\\ChessOpenings\\ChessOpenings.UWP\\ChessOpenings.UWP.csproj",
+      "projectJsonPath": "E:\\ChessOpenings\\ChessOpenings\\ChessOpenings.UWP\\project.json",
+      "packagesPath": "C:\\Users\\IP2560\\.nuget\\packages\\",
+      "outputPath": "E:\\ChessOpenings\\ChessOpenings\\ChessOpenings.UWP\\obj\\",
       "projectStyle": "ProjectJson",
       "configFilePaths": [
-        "C:\\Users\\Ian\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\IP2560\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "\\\\epretfs001\\NuGetPackagesMain": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "uap10.0.10586": {
           "projectReferences": {
-            "D:\\Dev\\XamarinApps\\ChessOpenings\\ChessOpenings\\ChessOpenings\\ChessOpenings.csproj": {
-              "projectPath": "D:\\Dev\\XamarinApps\\ChessOpenings\\ChessOpenings\\ChessOpenings\\ChessOpenings.csproj"
+            "E:\\ChessOpenings\\ChessOpenings\\ChessOpenings\\ChessOpenings.csproj": {
+              "projectPath": "E:\\ChessOpenings\\ChessOpenings\\ChessOpenings\\ChessOpenings.csproj"
             }
           }
         }

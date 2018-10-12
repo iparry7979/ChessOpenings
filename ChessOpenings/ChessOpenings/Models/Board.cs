@@ -146,6 +146,23 @@ namespace ChessOpenings.Models
             }
         }
 
+        public Board(List<string> moves)
+        {
+            Turn = Enums.Colour.White;
+            gameHistory = new Stack<Move>();
+            squaresArray = InitialiseBoard();
+
+            if (moves != null)
+            {
+                foreach (string currentMove in moves)
+                {
+                    AlgebraicNotationParser parser = new AlgebraicNotationParser(currentMove, Turn, this);
+                    Move move = parser.GetMove();
+                    this.MakeMove(move);
+                }
+            }
+        }
+
         public Square[,] InitialiseBoard()
         {
             Square[,] board = new Square[8, 8];

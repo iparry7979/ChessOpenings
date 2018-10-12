@@ -97,6 +97,10 @@ namespace ChessOpenings.Models
                                 rtn = false;
                             }
                         }
+                        else
+                        {
+                            rtn = false;
+                        }
                     }
                     return rtn;
                 }
