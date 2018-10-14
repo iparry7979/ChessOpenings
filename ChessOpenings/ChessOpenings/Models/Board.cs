@@ -146,6 +146,23 @@ namespace ChessOpenings.Models
             }
         }
 
+        public Board(List<string> moves)
+        {
+            Turn = Enums.Colour.White;
+            gameHistory = new Stack<Move>();
+            squaresArray = InitialiseBoard();
+
+            if (moves != null)
+            {
+                foreach (string currentMove in moves)
+                {
+                    AlgebraicNotationParser parser = new AlgebraicNotationParser(currentMove, Turn, this);
+                    Move move = parser.GetMove();
+                    this.MakeMove(move);
+                }
+            }
+        }
+
         public Square[,] InitialiseBoard()
         {
             Square[,] board = new Square[8, 8];
@@ -1014,6 +1031,19 @@ namespace ChessOpenings.Models
                 }
             }
             return rtn;
+        }
+
+        public BoardPosition ToBoardPosition()
+        {
+            Dictionary<string, Piece> position = new Dictionary<string, Piece>();
+            foreach (Square square in squaresArray)
+            {
+                if (square.ContainsPiece())
+                {
+                    position.Add(square.Notation, square.Piece);
+                }
+            }
+            return new BoardPosition(position);
         }
     }
 }

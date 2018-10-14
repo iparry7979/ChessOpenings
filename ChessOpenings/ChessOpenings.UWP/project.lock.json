@@ -22269,12 +22269,12 @@
   },
   "project": {
     "restore": {
-      "projectUniqueName": "D:\\Dev\\XamarinApps\\ChessOpenings\\ChessOpenings\\ChessOpenings.UWP\\ChessOpenings.UWP.csproj",
+      "projectUniqueName": "F:\\ChessOpenings\\ChessOpenings\\ChessOpenings.UWP\\ChessOpenings.UWP.csproj",
       "projectName": "ChessOpenings.UWP",
-      "projectPath": "D:\\Dev\\XamarinApps\\ChessOpenings\\ChessOpenings\\ChessOpenings.UWP\\ChessOpenings.UWP.csproj",
-      "projectJsonPath": "D:\\Dev\\XamarinApps\\ChessOpenings\\ChessOpenings\\ChessOpenings.UWP\\project.json",
+      "projectPath": "F:\\ChessOpenings\\ChessOpenings\\ChessOpenings.UWP\\ChessOpenings.UWP.csproj",
+      "projectJsonPath": "F:\\ChessOpenings\\ChessOpenings\\ChessOpenings.UWP\\project.json",
       "packagesPath": "C:\\Users\\Ian\\.nuget\\packages\\",
-      "outputPath": "D:\\Dev\\XamarinApps\\ChessOpenings\\ChessOpenings\\ChessOpenings.UWP\\obj\\",
+      "outputPath": "F:\\ChessOpenings\\ChessOpenings\\ChessOpenings.UWP\\obj\\",
       "projectStyle": "ProjectJson",
       "configFilePaths": [
         "C:\\Users\\Ian\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -22287,8 +22287,8 @@
       "frameworks": {
         "uap10.0.10586": {
           "projectReferences": {
-            "D:\\Dev\\XamarinApps\\ChessOpenings\\ChessOpenings\\ChessOpenings\\ChessOpenings.csproj": {
-              "projectPath": "D:\\Dev\\XamarinApps\\ChessOpenings\\ChessOpenings\\ChessOpenings\\ChessOpenings.csproj"
+            "F:\\ChessOpenings\\ChessOpenings\\ChessOpenings\\ChessOpenings.csproj": {
+              "projectPath": "F:\\ChessOpenings\\ChessOpenings\\ChessOpenings\\ChessOpenings.csproj"
             }
           }
         }

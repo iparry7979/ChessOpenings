@@ -331,6 +331,31 @@ namespace ChessOpenings.UnitTests
             }
         }
 
+        [TestMethod]
+        public void TestConstructorWithStringList()
+        {
+            List<string> moves = new List<string>()
+            {
+                "e4", "e5", "Nf3", "Nc6", "Bb5"
+            };
+
+            Board testBoard = new Board(moves);
+
+            Square e4 = testBoard.GetSquareByNotation("e4");
+            Square e5 = testBoard.GetSquareByNotation("e5");
+            Square b5 = testBoard.GetSquareByNotation("b5");
+            Square e1 = testBoard.GetSquareByNotation("e1");
+            Square a8 = testBoard.GetSquareByNotation("a8");
+            Square e2 = testBoard.GetSquareByNotation("e2");
+
+            Assert.IsTrue(e4.Piece is Pawn && e4.Piece.colour == Enums.Colour.White);
+            Assert.IsTrue(e5.Piece is Pawn && e5.Piece.colour == Enums.Colour.Black);
+            Assert.IsTrue(b5.Piece is Bishop && b5.Piece.colour == Enums.Colour.White);
+            Assert.IsTrue(e1.Piece is King && e1.Piece.colour == Enums.Colour.White);
+            Assert.IsTrue(a8.Piece is Rook && a8.Piece.colour == Enums.Colour.Black);
+            Assert.IsFalse(e2.ContainsPiece());
+        }
+
         #region Test Moves
         [TestMethod]
         public void TestMakeMove()
@@ -1442,6 +1467,49 @@ namespace ChessOpenings.UnitTests
             result = board.GetBoardPosition();
 
             Assert.IsTrue(CompareBoardPositions(result, queensGambitPosition));
+        }
+
+        [TestMethod]
+        public void TestToBoardPosition()
+        {
+            Board board = new Board();
+            BoardPosition position = board.ToBoardPosition();
+            Piece p;
+            Assert.IsTrue(position.Position.Count == 32);
+            if (position.Position.TryGetValue("a1", out p))
+            {
+                Assert.IsTrue(p.GetPieceNotation() == "WR", "Wrong piece at a1");
+            }
+            else
+            {
+                Assert.Fail("No piece at a1");
+            }
+            if (position.Position.TryGetValue("b2", out p))
+            {
+                Assert.IsTrue(p.GetPieceNotation() == "WP", "Wrong piece at b2");
+            }
+            else
+            {
+                Assert.Fail("No piece at b2");
+            }
+            if (position.Position.TryGetValue("e8", out p))
+            {
+                Assert.IsTrue(p.GetPieceNotation() == "BK", "Wrong piece at e8");
+            }
+            else
+            {
+                Assert.Fail("No piece at e8");
+            }
+            if (position.Position.TryGetValue("e7", out p))
+            {
+                Assert.IsTrue(p.GetPieceNotation() == "BP", "Wrong piece at e7");
+            }
+            else
+            {
+                Assert.Fail("No piece at e7");
+            }
+            Assert.IsFalse(position.Position.ContainsKey("a3"));
+
         }
 
         private bool CompareBoardPositions(Dictionary<string, Piece> p1, Dictionary<string, Piece> p2)

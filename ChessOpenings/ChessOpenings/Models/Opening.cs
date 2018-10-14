@@ -19,6 +19,8 @@ namespace ChessOpenings.Models
 
         public double SuccessRate { get; set; }
 
+        public List<string> Moves { get; set; }
+
         public int Count { get; set; }
 
         public string ShortName

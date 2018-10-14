@@ -82,7 +82,26 @@ namespace ChessOpenings.Helpers
             }
             //if this point is reached disambiguation is required
             string disambiguationString = ExtractDisambiguationString(destinationSquare.Notation);
-            if (disambiguationString == null) return null;
+
+            if (disambiguationString == null)
+            {
+                //if no disambiguation string is found, one of the candidate square moves may be illegal
+                List<Square> legalSquares = new List<Square>();
+                foreach (Square s in candidateSquares)
+                {
+                    Move m = new Move(s, Board.GetSquareByNotation(ExtractDestinationSquare()));
+                    m.SubjectPiece = piece;
+                    if (Board.ValidateMove(m))
+                    {
+                        legalSquares.Add(s);
+                    }
+                }
+                if (legalSquares.Count == 1)
+                {
+                    return legalSquares[0];
+                }
+                return null;
+            }
             List<Square> disambiguatedSquares = new List<Square>();
             foreach(Square s in candidateSquares)
             {

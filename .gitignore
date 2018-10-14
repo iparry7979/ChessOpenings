@@ -10,3 +10,5 @@ ChessOpenings/ChessOpenings.iOS/bin/
 ChessOpenings/ChessOpenings.iOS.ChessOpenings.iOS.csproj.user
 ChessOpenings.UnitTests/obj/
 ChessOpenings.UnitTests/bin/
+ChessOpenings.DataConversion/obj/
+ChessOpenings.DataConversion/bin/
